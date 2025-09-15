@@ -1,0 +1,18 @@
+import 'package:life_book/models/stats.dart';
+
+class Character with Stats {
+  int _age = 0;
+
+  int get age => _age;
+
+  void incrementAge() {
+    _age++;
+    print(_age);
+    // final random = Random();
+    // // Generate random changes between -5 and 5
+    // updateStat(happiness, random.nextDouble() * 0.1 - 0.05);
+    // updateStat(health, random.nextDouble() * 0.1 - 0.05);
+    // updateStat(smarts, random.nextDouble() * 0.1 - 0.05);
+    // updateStat(looks, random.nextDouble() * 0.1 - 0.05);
+  }
+}
