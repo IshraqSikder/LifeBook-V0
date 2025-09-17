@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
+import 'package:life_book/screens/activities/activity_screen.dart';
 import 'package:life_book/theme.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -61,7 +62,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       _buildNavBarItem(
                         'Activities',
                         'assets/icons/activities.svg',
-                        () {},
+                        () {
+                          // handle activities button
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ActivityScreen(player: widget.player),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
