@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/appbar/appbar.dart';
 import 'package:life_book/theme.dart';
 
-class MenuScreen extends StatelessWidget {
-  MenuScreen({super.key});
+class MenuScreen extends StatefulWidget {
+  final Character player;
+  const MenuScreen({super.key, required this.player});
 
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
   List<MenuItem> MenuItems = [
     MenuItem(
       imageUrl: "assets/images/menu/human.png",
@@ -26,7 +33,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(player: widget.player),
       body: Column(
         children: [
           Expanded(
@@ -34,9 +41,19 @@ class MenuScreen extends StatelessWidget {
               itemCount: MenuItems.length,
               itemBuilder: (BuildContext context, int index) {
                 final item = MenuItems[index];
-                return SizedBox(
+                return Container(
                   width: double.infinity,
                   height: 70.h,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 1.w,
+                        color: Colors.black,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.zero,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -112,11 +129,11 @@ class MenuScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Divider(
-                        height: 1.h,
-                        thickness: 0.50,
-                        color: Colors.black,
-                      ),
+                      // Divider(
+                      //   height: 1.h,
+                      //   thickness: 0.50,
+                      //   color: Colors.black,
+                      // ),
                     ],
                   ),
                 );
@@ -127,9 +144,12 @@ class MenuScreen extends StatelessWidget {
             width: double.infinity,
             height: 68.h,
             padding: EdgeInsets.all(10).r,
-            decoration: ShapeDecoration(
+            decoration: BoxDecoration(
               color: AppColors.pasteColor,
-              shape: RoundedRectangleBorder(side: BorderSide(width: 0.50.w)),
+              border: Border(
+                bottom: BorderSide(width: 1.w, color: Colors.black),
+              ),
+              borderRadius: BorderRadius.zero,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,

@@ -2,62 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/appbar/appbar.dart';
+import 'package:life_book/screens/home/home.dart';
 import 'package:life_book/screens/start/create.dart';
+import 'package:life_book/screens/start/tutorial.dart';
 import 'package:life_book/theme.dart';
 
 class StartScreen extends StatelessWidget {
+  // final Character player;
   const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      // appBar: CustomAppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(height: 20.h),
-            SizedBox(
-              height: 105.h,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 78.h,
-                    color: Colors.black,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      spacing: 10,
-                      children: [
-                        // Container(height: 78, width: 0.5, color: Colors.black),
-                        SizedBox(width: 104.w, height: 104.h),
-
-                        // Container(height: 78, width: 0.5, color: Colors.black),
-                      ],
+        child: Container(
+          margin: EdgeInsets.only(bottom: 120.h),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: 105.h,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 78.h,
+                      color: Colors.black,
                     ),
-                  ),
-                  Positioned(
-                    top: -15.h,
-                    left: 50.w,
-                    right: 50.w,
-                    child: Center(child: _buildFAB(context)),
-                  ),
-                ],
+                    Positioned(
+                      top: -15.h,
+                      left: 50.w,
+                      right: 50.w,
+                      child: Center(child: _buildNLB(context)),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget _buildFAB(context) {
+Widget _buildNLB(context) {
   return GestureDetector(
     onTap: () {
-      showCreateCharacterScreen(context);
+      // showCreateCharacterScreen(context);
+      showCreateCharacterScreen(context, (Character newPlayer) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home(player: newPlayer)),
+        );
+      });
     },
     child: Container(
       width: 105.w,

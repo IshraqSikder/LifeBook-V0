@@ -8,7 +8,8 @@ import 'package:life_book/screens/home/profile_header.dart';
 import 'package:life_book/screens/home/stats_new.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final Character player;
+  const Home({super.key, required this.player});
 
   @override
   State<Home> createState() => _HomeState();
@@ -18,10 +19,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(player: widget.player,),
       body: Column(
         children: [
-          ProfileHeader(player: Character()),
+          ProfileHeader(player: widget.player),
           Expanded(
             child: SingleChildScrollView(
               child: Container(
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          BottomNavBar(player: Character()),
+          BottomNavBar(player: widget.player),
           StatsNew(),
         ],
       ),

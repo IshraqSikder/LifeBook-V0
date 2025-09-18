@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/start/tutorial.dart';
 import 'package:life_book/theme.dart';
 
@@ -30,54 +31,55 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.all(32.r),
+        padding: EdgeInsets.all(32).r,
         decoration: BoxDecoration(
           backgroundBlendMode: BlendMode.hardLight,
-          color: Colors.black54,
+          color: Colors.black.withValues(alpha: 0.8),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24.h,
           children: [
-            Column(
-              spacing: 5.h,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 5.w,
-                  children: [
-                    Image.asset(
-                      'assets/images/world.png',
-                      width: 16.w,
-                      height: 16.h,
-                    ),
-
-                    Text(
-                      'Become someone else in LifeBook',
-                      style: TextStyle(
-                        color: AppColors.yellowColor,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
+            Container(
+              margin: EdgeInsets.only(top: 120.h, bottom: 50.h),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/world.png',
+                        width: 16.w,
+                        height: 16.h,
                       ),
-                    ),
-                  ],
-                ),
-                Text(
-                  'Start a new life!',
-                  style: TextStyle(
-                    color: AppColors.yellowColor,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      SizedBox(width: 10.w),
+                      Text(
+                        'Become someone else in LifeBook',
+                        style: TextStyle(
+                          color: AppColors.yellowColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Start a new life!',
+                    style: TextStyle(
+                      color: AppColors.yellowColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
-
+            SizedBox(height: 32.h),
             // Full Name Label
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 8.h,
               children: [
                 Text(
                   'Full Name',
@@ -87,11 +89,12 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                SizedBox(height: 8.h),
                 // Name Input Field
                 Container(
                   decoration: BoxDecoration(
                     color: Color(0xFFE2FFE7),
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: BorderRadius.circular(9.r),
                   ),
                   child: TextField(
                     controller: _nameController,
@@ -117,13 +120,10 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                 ),
               ],
             ),
-
-            // SizedBox(height: 20),
-
+            SizedBox(height: 16.h),
             // Select Gender Label
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 12.h,
               children: [
                 Text(
                   'Select Gender',
@@ -133,7 +133,7 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-
+                SizedBox(height: 8.h),
                 // Gender Selection Buttons
                 Row(
                   spacing: 24.w,
@@ -151,7 +151,7 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                             color: _selectedGender == 'Male'
                                 ? AppColors.greenColor
                                 : Color(0xFFE2FFE7),
-                            borderRadius: BorderRadius.circular(12.r),
+                            borderRadius: BorderRadius.circular(9.r),
                           ),
                           child: Text(
                             'Male',
@@ -180,7 +180,7 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                             color: _selectedGender == 'Female'
                                 ? AppColors.greenColor
                                 : Color(0xFFE2FFE7),
-                            borderRadius: BorderRadius.circular(12.r),
+                            borderRadius: BorderRadius.circular(9.r),
                           ),
                           child: Text(
                             'Female',
@@ -200,24 +200,54 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                 ),
               ],
             ),
-
+            SizedBox(height: 32.h),
+            Divider(color: AppColors.textColor, thickness: 2.5.h),
+            SizedBox(height: 32.h),
             // Start Life Button
             SizedBox(
               width: double.infinity,
+              height: 50.h,
               child: ElevatedButton(
                 onPressed: () {
+                  // if (_nameController.text.trim().isNotEmpty) {
+                  //   widget.onCharacterCreated(
+                  //     _nameController.text.trim(),
+                  //     _selectedGender,
+                  //   );
+                  //   Navigator.of(context).push(
+                  //     MaterialPageRoute(
+                  //       builder: (context) =>
+                  //           TutorialScreen(player: widget.player),
+                  //     ),
+                  //   );
+                  // } else {
+                  //   // Show error message or highlight the field
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     SnackBar(
+                  //       content: Text('Please enter your name'),
+                  //       backgroundColor: Colors.red,
+                  //     ),
+                  //   );
+                  // }
                   if (_nameController.text.trim().isNotEmpty) {
-                    widget.onCharacterCreated(
-                      _nameController.text.trim(),
-                      _selectedGender,
+                    // Create the player object
+                    Character newPlayer = Character(
+                      name: _nameController.text.trim(),
+                      gender: _selectedGender,
                     );
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => TutorialScreen()),
+
+                    // Call the callback to inform the parent about the new player
+                    widget.onCharacterCreated(newPlayer.name, newPlayer.gender);
+
+                    // Navigate to TutorialScreen with the newly created player
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => TutorialScreen(player: newPlayer),
+                      ),
                     );
                   } else {
-                    // Show error message or highlight the field
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Please enter your name'),
                         backgroundColor: Colors.red,
                       ),
@@ -249,14 +279,33 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
   }
 }
 
-void showCreateCharacterScreen(BuildContext context) {
+// void showCreateCharacterScreen(BuildContext context) {
+//   showDialog(
+//     context: context,
+//     barrierDismissible: true,
+//     builder: (BuildContext context) {
+//       return CreateCharacterScreen(
+//         onCharacterCreated: (String name, String gender) {
+//           print('Character created: $name, $gender');
+//         },
+//         player: widget.player,
+//       );
+//     },
+//   );
+// }
+void showCreateCharacterScreen(
+  BuildContext context,
+  Function(Character) onCharacterCreated,
+) {
   showDialog(
     context: context,
     barrierDismissible: true,
-    builder: (BuildContext context) {
+    builder: (BuildContext dialogContext) {
+      // Use dialogContext to avoid name collision
       return CreateCharacterScreen(
         onCharacterCreated: (String name, String gender) {
-          print('Character created: $name, $gender');
+          Character newPlayer = Character(name: name, gender: gender);
+          onCharacterCreated(newPlayer);
         },
       );
     },

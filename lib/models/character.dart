@@ -2,6 +2,10 @@ import 'package:life_book/models/stats.dart';
 
 class Character with Stats {
   int _age = 0;
+  final String name;
+  final String gender;
+
+  Character({required this.name, required this.gender});
 
   int get age => _age;
 

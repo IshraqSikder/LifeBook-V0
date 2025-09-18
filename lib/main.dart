@@ -21,7 +21,7 @@ class LifeBook extends StatelessWidget {
           title: 'Life Book',
           theme: primaryTheme,
           debugShowCheckedModeBanner: false,
-          home: Home(),
+          home: StartScreen(),
         );
       },
     );

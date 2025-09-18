@@ -47,7 +47,6 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8.h,
                 children: [
                   SizedBox(
                     width: 14.w,
@@ -57,6 +56,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                       fit: BoxFit.contain,
                     ),
                   ),
+                  SizedBox(height: 6.h),
                   SizedBox(
                     width: 14.w,
                     height: 14.h,
@@ -71,7 +71,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 2.h,
+                spacing: 4.h,
                 children: [
                   Text(
                     'Julian Slaughter',
