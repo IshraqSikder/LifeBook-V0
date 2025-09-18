@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
-import 'package:life_book/screens/appbar/appbar.dart';
 import 'package:life_book/screens/home/home.dart';
 import 'package:life_book/screens/start/create.dart';
 import 'package:life_book/screens/start/tutorial.dart';
 import 'package:life_book/theme.dart';
 
 class StartScreen extends StatelessWidget {
-  // final Character player;
   const StartScreen({super.key});
 
   @override
@@ -53,11 +51,12 @@ class StartScreen extends StatelessWidget {
 Widget _buildNLB(context) {
   return GestureDetector(
     onTap: () {
-      // showCreateCharacterScreen(context);
       showCreateCharacterScreen(context, (Character newPlayer) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Home(player: newPlayer)),
+          MaterialPageRoute(
+            builder: (context) => TutorialScreen(player: newPlayer),
+          ),
         );
       });
     },

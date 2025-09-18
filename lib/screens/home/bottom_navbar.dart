@@ -48,7 +48,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   ),
                 ),
                 // Container(height: 78, width: 0.5, color: Colors.black),
-                SizedBox(width: 102.w, height: 102.h),
+                SizedBox(width: 75.w, height: 105.h),
                 // Container(height: 78, width: 0.5, color: Colors.black),
                 Expanded(
                   child: Row(
@@ -81,8 +81,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           Positioned(
             top: -15.h,
-            left: 50.w,
-            right: 50.w,
+            left: 35.w,
+            right: 40.w,
             child: Center(child: _buildFAB()),
           ),
         ],
@@ -98,7 +98,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 65.w,
+        width: 68.w,
         height: 75.h,
         padding: EdgeInsets.symmetric(vertical: 4.h),
         child: Column(

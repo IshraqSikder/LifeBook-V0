@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -57,7 +58,7 @@ class ProfilePopup extends StatelessWidget {
                           ),
                           SizedBox(width: 5.w),
                           Text(
-                            'Julian Slaughter',
+                            player.name,
                             style: GoogleFonts.inter(
                               color: AppColors.brownColor,
                               fontSize: 13.sp,
@@ -121,9 +122,9 @@ class ProfilePopup extends StatelessWidget {
                         children: [
                           _buildProfileDetail('Relationship:', 'User'),
                           SizedBox(height: 8),
-                          _buildProfileDetail('Age:', '1'),
+                          _buildProfileDetail('Age:', player.age.toString()),
                           SizedBox(height: 8),
-                          _buildProfileDetail('Gender:', 'Male'),
+                          _buildProfileDetail('Gender:', player.gender),
                           SizedBox(height: 8),
                           _buildProfileDetail('Occupation:', 'None'),
                         ],

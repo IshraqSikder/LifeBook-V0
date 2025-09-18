@@ -5,17 +5,13 @@ import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/home/home.dart';
 import 'package:life_book/theme.dart';
 
-class TutorialScreen extends StatefulWidget {
+class TutorialScreen extends StatelessWidget {
   final Character player;
   const TutorialScreen({super.key, required this.player});
 
   @override
-  State<TutorialScreen> createState() => _TutorialScreenState();
-}
-
-class _TutorialScreenState extends State<TutorialScreen> {
-  @override
   Widget build(BuildContext context) {
+    // log("Tutorial Player Age: ${player.age}");
     return Material(
       color: Colors.transparent,
       child: Center(
@@ -101,7 +97,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
               ),
               SizedBox(height: 32.h),
               // Age Button
-              _buildFAB(context),
+              _buildFAB(context, player),
             ],
           ),
         ),
@@ -110,11 +106,11 @@ class _TutorialScreenState extends State<TutorialScreen> {
   }
 
   // Built Age Button
-  Widget _buildFAB(BuildContext context) {
+  Widget _buildFAB(BuildContext context, Character player) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Home(player: widget.player)),
+        MaterialPageRoute(builder: (context) => Home(player: player)),
       ),
 
       child: Container(

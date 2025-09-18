@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -74,7 +76,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 spacing: 4.h,
                 children: [
                   Text(
-                    'Julian Slaughter',
+                    widget.player.name,
                     style: GoogleFonts.inter(
                       color: AppColors.blueColor,
                       fontSize: 17.sp,
