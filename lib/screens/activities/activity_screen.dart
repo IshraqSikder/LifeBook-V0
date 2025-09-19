@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/models/activity_model.dart';
+import 'package:life_book/screens/activities/activity_model.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/activities/activity_popup.dart';
 import 'package:life_book/screens/home/profile_header.dart';
@@ -140,7 +140,7 @@ class ActivityScreen extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 // Handle icon tap
-                                showActivityPopup(context, player);
+                                showActivityPopup(context, player, item);
                               },
                               child: SizedBox(
                                 width: 35.w,

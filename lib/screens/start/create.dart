@@ -209,26 +209,6 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
               height: 50.h,
               child: ElevatedButton(
                 onPressed: () {
-                  // if (_nameController.text.trim().isNotEmpty) {
-                  //   widget.onCharacterCreated(
-                  //     _nameController.text.trim(),
-                  //     _selectedGender,
-                  //   );
-                  //   Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //       builder: (context) =>
-                  //           TutorialScreen(player: widget.player),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   // Show error message or highlight the field
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     SnackBar(
-                  //       content: Text('Please enter your name'),
-                  //       backgroundColor: Colors.red,
-                  //     ),
-                  //   );
-                  // }
                   if (_nameController.text.trim().isNotEmpty) {
                     // Create the player object
                     Character newPlayer = Character(
@@ -279,20 +259,6 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
   }
 }
 
-// void showCreateCharacterScreen(BuildContext context) {
-//   showDialog(
-//     context: context,
-//     barrierDismissible: true,
-//     builder: (BuildContext context) {
-//       return CreateCharacterScreen(
-//         onCharacterCreated: (String name, String gender) {
-//           print('Character created: $name, $gender');
-//         },
-//         player: widget.player,
-//       );
-//     },
-//   );
-// }
 void showCreateCharacterScreen(
   BuildContext context,
   Function(Character) onCharacterCreated,

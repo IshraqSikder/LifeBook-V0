@@ -1,9 +1,11 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/activities/activity_screen.dart';
+import 'package:life_book/screens/events/age_popup.dart';
 import 'package:life_book/theme.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -83,7 +85,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             top: -15.h,
             left: 35.w,
             right: 40.w,
-            child: Center(child: _buildFAB()),
+            child: Center(child: _buildFAB(widget.player.age)),
           ),
         ],
       ),
@@ -140,9 +142,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
     );
   }
 
-  Widget _buildFAB() {
+  Widget _buildFAB(playerAge) {
     return GestureDetector(
-      onTap: () => widget.player.incrementAge(),
+      onTap: () {
+        widget.player.incrementAge();
+        showAgePopup(context, widget.player.age);
+      },
       child: Container(
         width: 105.w,
         height: 105.h,

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:life_book/models/character.dart';
-import 'package:life_book/screens/appbar/appbar.dart';
+import 'package:life_book/screens/appbar/custom_appbar.dart';
 import 'package:life_book/screens/home/bottom_navbar.dart';
 import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/screens/home/profile_header.dart';
 import 'package:life_book/screens/home/stats_new.dart';
 import 'package:life_book/screens/menu/menu_screen.dart';
 
-class Home extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final Character player;
-  Home({super.key, required this.player});
+  HomeScreen({super.key, required this.player});
 
   bool isMenuToggled = false;
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // log("Player Age in Home: ${widget.player.age}");

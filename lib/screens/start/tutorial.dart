@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
+import 'package:life_book/screens/events/age_popup.dart';
 import 'package:life_book/screens/home/home.dart';
 import 'package:life_book/theme.dart';
 
@@ -11,7 +12,6 @@ class TutorialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // log("Tutorial Player Age: ${player.age}");
     return Material(
       color: Colors.transparent,
       child: Center(
@@ -79,7 +79,7 @@ class TutorialScreen extends StatelessWidget {
                   Text(
                     'Make choices as you go.',
                     style: GoogleFonts.inter(
-                      color: Color(0xFFFFEE02),
+                      color: AppColors.yellowColor,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                     ),
@@ -88,7 +88,7 @@ class TutorialScreen extends StatelessWidget {
                   Text(
                     'Live your best(or worst) life.',
                     style: GoogleFonts.inter(
-                      color: Color(0xFFFFEE02),
+                      color: AppColors.yellowColor,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                     ),
@@ -97,7 +97,7 @@ class TutorialScreen extends StatelessWidget {
               ),
               SizedBox(height: 32.h),
               // Age Button
-              _buildFAB(context, player),
+              _buildTAB(context, player),
             ],
           ),
         ),
@@ -106,13 +106,33 @@ class TutorialScreen extends StatelessWidget {
   }
 
   // Built Age Button
-  Widget _buildFAB(BuildContext context, Character player) {
+  Widget _buildTAB(BuildContext context, Character player) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Home(player: player)),
-      ),
+      onTap: () async {
+        await showAgePopup(context, player.age);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
+        );
+      },
+      // onTap: () async {
+      //   // Make onPressed async to use await
+      //   // 1. Navigate to HomeScreen, replacing TutorialScreen
+      //   await Navigator.pushReplacement(
+      //     // Await the navigation to ensure it's complete
+      //     context,
+      //     MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
+      //   );
 
+      //   // 2. Add a small, imperceptible delay to yield the frame.
+      //   //    This ensures HomeScreen has fully rendered before attempting to show the dialog on top.
+      //   await Future.delayed(
+      //     Duration(milliseconds: 3000),
+      //   ); // Or Duration(milliseconds: 10) if still experiencing issues
+
+      //   // 3. Then, show the AgePopup.
+      //   showAgePopup(context, player.age);
+      // },
       child: Container(
         height: 110.h,
         width: 100.w,

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
+import 'package:life_book/screens/activities/activity_model.dart';
 import 'package:life_book/theme.dart';
 
 class ActivityPopup extends StatelessWidget {
   final Character player;
+  final ActivityItem item;
 
-  const ActivityPopup({super.key, required this.player});
+  const ActivityPopup({super.key, required this.player, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,9 @@ class ActivityPopup extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+              // Activity Title
               child: Text(
-                'Read A Book',
+                item.title,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   color: Color(0xFF176FD1),
@@ -44,7 +47,7 @@ class ActivityPopup extends StatelessWidget {
               width: 240.w,
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               child: Text(
-                'You read about simple strategies for building wealth and investing wisely. You feel more knowledgeable about managing your money.',
+                item.description,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   color: Colors.black,
@@ -66,15 +69,15 @@ class ActivityPopup extends StatelessWidget {
                   Text(
                     'Cost: ',
                     style: GoogleFonts.inter(
-                      color: const Color(0xFF3D010B),
+                      color: AppColors.brownColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                   Text(
-                    '\$250',
+                    item.price.toString(),
                     style: GoogleFonts.inter(
-                      color: const Color(0xFF3D010B),
+                      color: AppColors.brownColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                     ),
@@ -139,12 +142,17 @@ class ActivityPopup extends StatelessWidget {
 }
 
 // Function to show the profile popup
-void showActivityPopup(BuildContext context, Character character) {
-  showDialog(
+Future<dynamic> showActivityPopup(
+  BuildContext context,
+  Character character,
+  ActivityItem item,
+) {
+  return showDialog(
     context: context,
     barrierDismissible: true,
+    barrierColor: Colors.black54.withValues(alpha: 0.95),
     builder: (BuildContext context) {
-      return ActivityPopup(player: character);
+      return ActivityPopup(player: character, item: item);
     },
   );
 }
