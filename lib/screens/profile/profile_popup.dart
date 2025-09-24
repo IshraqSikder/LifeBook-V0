@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -302,6 +301,7 @@ void showProfilePopup(BuildContext context, Character character) {
   showDialog(
     context: context,
     barrierDismissible: true,
+    barrierColor: Colors.black54.withValues(alpha: 0.90),
     builder: (BuildContext context) {
       return ProfilePopup(player: character);
     },

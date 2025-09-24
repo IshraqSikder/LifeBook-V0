@@ -23,15 +23,12 @@ class LifeStory extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(
-          width: double.infinity,
-          child: Text(
-            description,
-            style: GoogleFonts.inter(
-              color: AppColors.textColor,
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w300,
-            ),
+        Text(
+          description,
+          style: GoogleFonts.inter(
+            color: AppColors.textColor,
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ],

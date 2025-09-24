@@ -141,7 +141,7 @@ class ActivityPopup extends StatelessWidget {
   }
 }
 
-// Function to show the profile popup
+// Function to show the activity popup
 Future<dynamic> showActivityPopup(
   BuildContext context,
   Character character,

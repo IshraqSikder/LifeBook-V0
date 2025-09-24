@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/models/age_popup_list.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/appbar/custom_appbar.dart';
 import 'package:life_book/screens/home/bottom_navbar.dart';
@@ -7,18 +11,23 @@ import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/screens/home/profile_header.dart';
 import 'package:life_book/screens/home/stats_new.dart';
 import 'package:life_book/screens/menu/menu_screen.dart';
+import 'package:life_book/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   final Character player;
-  HomeScreen({super.key, required this.player});
 
-  bool isMenuToggled = false;
+  HomeScreen({super.key, required this.player});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isMenuToggled = false;
+  final List<LifeStory> _lifeStoryDiaryEntries = [
+    LifeStory(0, "You're now 0 years old!"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     // log("Player Age in Home: ${widget.player.age}");
@@ -29,11 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
         onMenuToggle: (value) {
           setState(() {
             // Update any state if needed when menu is toggled
-            widget.isMenuToggled = !widget.isMenuToggled;
+            isMenuToggled = !isMenuToggled;
           });
         },
       ),
-      body: widget.isMenuToggled
+      body: isMenuToggled
           ? MenuScreen(player: widget.player)
           : Column(
               children: [
@@ -52,28 +61,36 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 10.h,
                         children: [
-                          LifeStory(
-                            13,
-                            "My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds, I earned the massive contracts, won the Super Bowl, and lived the celebrity life for a while. I thought that was everything.",
-                          ),
-                          LifeStory(
-                            14,
-                            "My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds, I earned the massive contracts, won the Super Bowl, and lived the celebrity life for a while. I thought that was everything.",
-                          ),
-                          LifeStory(
-                            15,
-                            "My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds, I earned the massive contracts, won the Super Bowl, and lived the celebrity life for a while. I thought that was everything.",
-                          ),
-                          LifeStory(
-                            16,
-                            "My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds, I earned the massive contracts, won the Super Bowl, and lived the celebrity life for a while. I thought that was everything.",
-                          ),
+                          // List of life story entries
+                          ..._lifeStoryDiaryEntries.map((entry) {
+                            return Column(
+                              children: [
+                                agePopupList.containsKey(entry.age)
+                                    ? LifeStory(
+                                        entry.age,
+                                        "${entry.description}\n${agePopupList[entry.age]}",
+                                      )
+                                    : LifeStory(entry.age, entry.description),
+                              ],
+                            );
+                          }).toList(),
                         ],
                       ),
                     ),
                   ),
                 ),
-                BottomNavBar(player: widget.player),
+                BottomNavBar(
+                  player: widget.player,
+                  lifeStoryDiaryEntries: _lifeStoryDiaryEntries,
+                  onAgeIncrement: () {
+                    // Add a callback for when age increments
+                    setState(() {
+                      // This setState will trigger HomeScreen to rebuild
+                      // and show the updated lifeStoryDiaryEntries.
+                      // The BottomNavBar will add to the list directly.
+                    });
+                  },
+                ),
                 StatsNew(),
               ],
             ),

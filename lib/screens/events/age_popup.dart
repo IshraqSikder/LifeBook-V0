@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,6 +49,7 @@ class _AgePopupState extends State<AgePopup> {
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                // popup text from age_popup_list.dart based on playerAge
                 child: Text(
                   agePopupList[widget.playerAge] ?? "Another year older!",
                   textAlign: TextAlign.center,

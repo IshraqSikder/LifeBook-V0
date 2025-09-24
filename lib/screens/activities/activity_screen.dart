@@ -9,7 +9,7 @@ import 'package:life_book/screens/home/profile_header.dart';
 import 'package:life_book/theme.dart';
 
 class ActivityScreen extends StatelessWidget {
-  ActivityScreen({super.key, required this.player});
+  const ActivityScreen({super.key, required this.player});
 
   final Character player;
 

@@ -1,16 +1,27 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/activities/activity_screen.dart';
+import 'package:life_book/screens/death/death_screen.dart';
 import 'package:life_book/screens/events/age_popup.dart';
+import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/theme.dart';
 
 class BottomNavBar extends StatefulWidget {
   final Character player;
-  const BottomNavBar({super.key, required this.player});
+  final List<LifeStory> lifeStoryDiaryEntries;
+  final VoidCallback onAgeIncrement; // Add a callback
+
+  BottomNavBar({
+    super.key,
+    required this.player,
+    required this.lifeStoryDiaryEntries,
+    required this.onAgeIncrement, // Required callback
+  });
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -85,7 +96,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             top: -15.h,
             left: 35.w,
             right: 40.w,
-            child: Center(child: _buildFAB(widget.player.age)),
+            child: Center(child: _buildFAB()),
           ),
         ],
       ),
@@ -142,11 +153,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
     );
   }
 
-  Widget _buildFAB(playerAge) {
+  Widget _buildFAB() {
     return GestureDetector(
       onTap: () {
         widget.player.incrementAge();
-        showAgePopup(context, widget.player.age);
+        setState(() {
+          widget.lifeStoryDiaryEntries.add(
+            LifeStory(
+              widget.player.age,
+              "You're now ${widget.player.age} years old!",
+            ),
+          );
+        });
+        // Notify the parent (HomeScreen) to rebuild
+        widget.onAgeIncrement();
+        // showAgePopup(context, widget.player.age);
+        if (widget.player.age == 20) {
+          showDeathScreeenPopup(context, widget.player);
+        }
       },
       child: Container(
         width: 105.w,

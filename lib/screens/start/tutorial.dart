@@ -108,31 +108,19 @@ class TutorialScreen extends StatelessWidget {
   // Built Age Button
   Widget _buildTAB(BuildContext context, Character player) {
     return GestureDetector(
-      onTap: () async {
-        await showAgePopup(context, player.age);
+      // onTap: () async {
+      //   await showAgePopup(context, player.age);
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
+      //   );
+      // },
+      onTap: () {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
         );
       },
-      // onTap: () async {
-      //   // Make onPressed async to use await
-      //   // 1. Navigate to HomeScreen, replacing TutorialScreen
-      //   await Navigator.pushReplacement(
-      //     // Await the navigation to ensure it's complete
-      //     context,
-      //     MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
-      //   );
-
-      //   // 2. Add a small, imperceptible delay to yield the frame.
-      //   //    This ensures HomeScreen has fully rendered before attempting to show the dialog on top.
-      //   await Future.delayed(
-      //     Duration(milliseconds: 3000),
-      //   ); // Or Duration(milliseconds: 10) if still experiencing issues
-
-      //   // 3. Then, show the AgePopup.
-      //   showAgePopup(context, player.age);
-      // },
       child: Container(
         height: 110.h,
         width: 100.w,

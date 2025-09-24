@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:life_book/models/stats.dart';
 
