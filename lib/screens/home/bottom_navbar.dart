@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/activities/activity_screen.dart';
 import 'package:life_book/screens/death/death_screen.dart';
-import 'package:life_book/screens/events/age_popup.dart';
+import 'package:life_book/screens/events/event_popup.dart';
 import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/theme.dart';
 
@@ -157,11 +157,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return GestureDetector(
       onTap: () {
         widget.player.incrementAge();
+        eventOccurs(context);
         setState(() {
           widget.lifeStoryDiaryEntries.add(
             LifeStory(
-              widget.player.age,
-              "You're now ${widget.player.age} years old!",
+              age: widget.player.age,
+              description: "You're now ${widget.player.age} years old!",
             ),
           );
         });
@@ -212,5 +213,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
       ),
     );
+  }
+}
+
+void eventOccurs(BuildContext context) {
+  final random = Random();
+  int number = random.nextInt(100) + 1; // 1 to 100
+  if (number <= 40) {
+    showEventPopup(context);
   }
 }

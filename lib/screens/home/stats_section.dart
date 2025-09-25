@@ -4,96 +4,119 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/theme.dart';
 
-class StatsSection extends StatefulWidget {
-  final Character character;
-  const StatsSection({super.key, required this.character});
+class StatsSection extends StatelessWidget {
+  final Character player;
+  const StatsSection({super.key, required this.player});
 
-  @override
-  State<StatsSection> createState() => _StatsSectionState();
-}
-
-class _StatsSectionState extends State<StatsSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
+      margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
+      child: // Stats section
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Column 1: Labels
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: player.allStats.entries
+                .map((stat) => _buildStatLabel(stat.key))
+                .toList(),
+          ),
 
-      // padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 15.h),
-      child: Container(
-        color: Colors.yellow,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildStatRow(
-              'Happiness',
-              'assets/images/stats/happiness.png',
-              widget.character.happiness,
+          SizedBox(width: 15.w),
+
+          // Column 2: Icons
+          Column(
+            children: [
+              _buildStatIcon("assets/images/stats/happiness.png"),
+              _buildStatIcon("assets/images/stats/health.png"),
+              _buildStatIcon("assets/images/stats/smarts.png"),
+              _buildStatIcon("assets/images/stats/looks.png"),
+            ],
+          ),
+
+          SizedBox(width: 15.w),
+
+          // Column 3: Progress Bars
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: Colors.grey,
+                    style: BorderStyle.solid,
+                    // strokeAlign: BorderSide.strokeAlignCenter,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: player.allStats.entries
+                    .map((stat) => _buildStatProgressBar(stat.value))
+                    .toList(),
+              ),
             ),
-            _buildStatRow(
-              'Health',
-              'assets/images/stats/health.png',
-              widget.character.health,
-            ),
-            _buildStatRow(
-              'Smarts',
-              'assets/images/stats/smarts.png',
-              widget.character.smarts,
-            ),
-            _buildStatRow(
-              'Looks',
-              'assets/images/stats/looks.png',
-              widget.character.looks,
-            ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget _buildStatLabel(String label) {
+    return Container(
+      height: 35.h,
+      alignment: Alignment.centerRight,
+      child: Text(
+        label,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.bold,
+          color: AppColors.blueColor,
         ),
       ),
     );
   }
 
-  Widget _buildStatRow(String label, String iconPath, double progress) {
+  static Widget _buildStatIcon(String iconPath) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      height: 35.h,
+      alignment: Alignment.center,
+      child: Image.asset(iconPath, height: 20.h, width: 20.w),
+    );
+  }
+
+  Widget _buildStatProgressBar(int progress) {
+    return Container(
+      height: 35.h,
+      alignment: Alignment.centerLeft,
+      child: Stack(
+        alignment: Alignment.centerLeft,
         children: [
-          SizedBox(
-            width: 90.w,
+          Container(
+            width: 250.w,
+            height: 20.h,
+            decoration: BoxDecoration(color: AppColors.profileHeaderColor),
+          ),
+          Container(
+            width: (250 * (progress / 100)).w,
+            height: 20.h,
+            decoration: BoxDecoration(
+              color: progress >= 20
+                  ? AppColors.greenColor
+                  : AppColors.orangeColor,
+            ),
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 5.w),
             child: Text(
-              label,
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-                color: AppColors.blueColor,
+              '$progress%',
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w400,
               ),
             ),
-          ),
-          Image.asset(iconPath, height: 20.h, width: 20.w),
-          Stack(
-            children: [
-              Container(
-                width: 200.w,
-                height: 20.h,
-                decoration: BoxDecoration(color: Colors.grey.shade300),
-              ),
-              Container(
-                width: (200 * progress).w,
-                height: 20.h,
-                decoration: progress >= 0.20
-                    ? BoxDecoration(color: AppColors.greenColor)
-                    : BoxDecoration(color: AppColors.orangeColor),
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(right: 5.w),
-                child: Text(
-                  '${(progress * 100).toInt()}%',
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),

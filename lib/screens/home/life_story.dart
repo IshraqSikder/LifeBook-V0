@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/theme.dart';
 
 class LifeStory extends StatelessWidget {
-  final int age;
+  final int? age;
   final String description;
 
-  const LifeStory(this.age, this.description, {super.key});
+  const LifeStory({super.key, this.age, required this.description});
 
   @override
   Widget build(BuildContext context) {

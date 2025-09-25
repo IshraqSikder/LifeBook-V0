@@ -35,109 +35,100 @@ class _MenuScreenState extends State<MenuScreen> {
       // appBar: CustomAppBar(player: widget.player),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: MenuItems.length,
-              itemBuilder: (BuildContext context, int index) {
-                final item = MenuItems[index];
-                return Container(
-                  width: double.infinity,
-                  height: 70.h,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        width: 1.w,
-                        color: Colors.black,
-                        style: BorderStyle.solid,
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: MenuItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = MenuItems[index];
+              return Container(
+                width: double.infinity,
+                height: 70.h,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 1.w,
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  borderRadius: BorderRadius.zero,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 10.h,
+                      ),
+                      child: Row(
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 5.w,
+                            children: [
+                              // image
+                              SizedBox(
+                                width: 35.w,
+                                height: 35.h,
+                                child: Image.asset(
+                                  item.imageUrl,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: 4.h,
+                                  children: [
+                                    // title
+                                    Text(
+                                      item.title,
+                                      style: GoogleFonts.inter(
+                                        color: AppColors.blueColor,
+                                        fontSize: 17.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    // subtitle
+                                    Text(
+                                      item.subtitle,
+                                      style: GoogleFonts.inter(
+                                        color: AppColors.blueColor,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.36.sp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          // icon
+                          SizedBox(
+                            width: 35.w,
+                            height: 35.h,
+                            child: SvgPicture.asset(
+                              item.iconUrl,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.w,
-                          vertical: 10.h,
-                        ),
-                        child: Row(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              spacing: 5.w,
-                              children: [
-                                // image
-                                SizedBox(
-                                  width: 35.w,
-                                  height: 35.h,
-                                  child: Image.asset(
-                                    item.imageUrl,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 4.w,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    spacing: 4.h,
-                                    children: [
-                                      // title
-                                      Text(
-                                        item.title,
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.blueColor,
-                                          fontSize: 17.sp,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      // subtitle
-                                      Text(
-                                        item.subtitle,
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.blueColor,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 0.36.sp,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            // icon
-                            SizedBox(
-                              width: 35.w,
-                              height: 35.h,
-                              child: SvgPicture.asset(
-                                item.iconUrl,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Divider(
-                      //   height: 1.h,
-                      //   thickness: 0.50,
-                      //   color: Colors.black,
-                      // ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                  ],
+                ),
+              );
+            },
           ),
           Container(
             width: double.infinity,

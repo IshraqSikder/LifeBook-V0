@@ -1,17 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/age_popup_list.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/appbar/custom_appbar.dart';
 import 'package:life_book/screens/home/bottom_navbar.dart';
 import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/screens/home/profile_header.dart';
-import 'package:life_book/screens/home/stats_new.dart';
+import 'package:life_book/screens/home/stats_section.dart';
 import 'package:life_book/screens/menu/menu_screen.dart';
-import 'package:life_book/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   final Character player;
@@ -25,13 +21,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isMenuToggled = false;
   final List<LifeStory> _lifeStoryDiaryEntries = [
-    LifeStory(0, "You're now 0 years old!"),
+    LifeStory(age: 0, description: "You're now 0 years old!"),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // log("Player Age in Home: ${widget.player.age}");
-    // log("Player name in Home: ${widget.player.name}");
     return Scaffold(
       appBar: CustomAppBar(
         player: widget.player,
@@ -67,13 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 agePopupList.containsKey(entry.age)
                                     ? LifeStory(
-                                        entry.age,
-                                        "${entry.description}\n${agePopupList[entry.age]}",
+                                        age: entry.age,
+                                        description:
+                                            "${entry.description}\n${agePopupList[entry.age]}",
                                       )
-                                    : LifeStory(entry.age, entry.description),
+                                    : LifeStory(
+                                        age: entry.age,
+                                        description: entry.description,
+                                      ),
                               ],
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                     ),
@@ -91,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                 ),
-                StatsNew(),
+                StatsSection(player: widget.player),
               ],
             ),
     );

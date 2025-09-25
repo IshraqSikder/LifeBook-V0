@@ -16,6 +16,11 @@ class ActivityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.profileHeaderColor,
+        toolbarHeight: 0.h,
+        elevation: 0,
+      ),
       body: Column(
         children: [
           ProfileHeader(player: player),
@@ -28,7 +33,6 @@ class ActivityScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 106,
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
@@ -39,6 +43,7 @@ class ActivityScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
+                SizedBox(width: 105.w),
                 Text(
                   'Activites',
                   textAlign: TextAlign.center,
@@ -70,79 +75,86 @@ class ActivityScreen extends StatelessWidget {
               itemCount: activityItems.length,
               itemBuilder: (BuildContext context, int index) {
                 final item = activityItems[index];
-                return SizedBox(
-                  width: double.infinity,
-                  height: 70.h,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.w,
-                          vertical: 10.h,
-                        ),
-                        child: Row(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              spacing: 5.w,
-                              children: [
-                                // image
-                                SizedBox(
-                                  width: 35.w,
-                                  height: 35.h,
-                                  child: Image.asset(
-                                    item.imageUrl,
-                                    fit: BoxFit.contain,
+                return GestureDetector(
+                  onTap: () {
+                    // Handle icon tap
+                    showActivityPopup(context, player, item);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 70.h,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 0.50.w, color: Colors.black),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 15.w,
+                            vertical: 10.h,
+                          ),
+                          child: Row(
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                spacing: 5.w,
+                                children: [
+                                  // image
+                                  SizedBox(
+                                    width: 35.w,
+                                    height: 35.h,
+                                    child: Image.asset(
+                                      item.imageUrl,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 4.w,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    spacing: 4.h,
-                                    children: [
-                                      // title
-                                      Text(
-                                        item.title,
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.blueColor,
-                                          fontSize: 17.sp,
-                                          fontWeight: FontWeight.w700,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 4.w,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      spacing: 4.h,
+                                      children: [
+                                        // title
+                                        Text(
+                                          item.title,
+                                          style: GoogleFonts.inter(
+                                            color: AppColors.blueColor,
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                                      // subtitle
-                                      Text(
-                                        item.subtitle,
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.blueColor,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 0.36.sp,
+                                        // subtitle
+                                        Text(
+                                          item.subtitle,
+                                          style: GoogleFonts.inter(
+                                            color: AppColors.blueColor,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 0.36.sp,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            // icon
-                            GestureDetector(
-                              onTap: () {
-                                // Handle icon tap
-                                showActivityPopup(context, player, item);
-                              },
-                              child: SizedBox(
+                                ],
+                              ),
+                              Spacer(),
+                              // icon
+                              SizedBox(
                                 width: 35.w,
                                 height: 35.h,
                                 child: SvgPicture.asset(
@@ -150,16 +162,16 @@ class ActivityScreen extends StatelessWidget {
                                   fit: BoxFit.contain,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Divider(
-                        height: 1.h,
-                        thickness: 0.50,
-                        color: Colors.black,
-                      ),
-                    ],
+                        // Divider(
+                        //   height: 1.h,
+                        //   thickness: 0.50,
+                        //   color: Colors.black,
+                        // ),
+                      ],
+                    ),
                   ),
                 );
               },

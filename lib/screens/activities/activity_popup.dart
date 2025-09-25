@@ -85,11 +85,10 @@ class ActivityPopup extends StatelessWidget {
                 ],
               ),
             ),
-            // SizedBox(height: 16.h),
-            Container(
+            SizedBox(height: 16.h),
+            SizedBox(
               width: double.infinity,
               height: 40.h,
-              margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -1,18 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/age_popup_list.dart';
 
-class AgePopup extends StatefulWidget {
+class AgePopup extends StatelessWidget {
   final int playerAge;
   const AgePopup(this.playerAge, {super.key});
 
-  @override
-  State<AgePopup> createState() => _AgePopupState();
-}
-
-class _AgePopupState extends State<AgePopup> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +30,7 @@ class _AgePopupState extends State<AgePopup> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                 child: Text(
-                  "Age : ${widget.playerAge}",
+                  "Age : $playerAge",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: const Color(0xFF176FD1),
@@ -51,7 +45,7 @@ class _AgePopupState extends State<AgePopup> {
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                 // popup text from age_popup_list.dart based on playerAge
                 child: Text(
-                  agePopupList[widget.playerAge] ?? "Another year older!",
+                  agePopupList[playerAge] ?? "Another year older!",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     color: const Color(0xFF0A386C),

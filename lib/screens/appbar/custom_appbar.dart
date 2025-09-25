@@ -71,16 +71,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   width: 38.w,
                   height: 38.h,
                   clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(), // Added const
+                  decoration: const BoxDecoration(),
                   child: SvgPicture.asset("assets/icons/logo.svg"),
                 ),
                 SizedBox(width: 8.w),
                 Text(
                   'LifeBook',
-                  style: TextStyle(
+                  style: GoogleFonts.jaro(
                     color: AppColors.yellowColor,
                     fontSize: 28.sp,
-                    fontFamily: GoogleFonts.jaro().fontFamily,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

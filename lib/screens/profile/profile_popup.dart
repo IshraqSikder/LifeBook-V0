@@ -260,7 +260,7 @@ Widget _buildStatLabel(String label) {
   );
 }
 
-Widget _buildStatProgressBar(double progress) {
+Widget _buildStatProgressBar(int progress) {
   return Container(
     height: 30.h,
     alignment: Alignment.centerLeft,
@@ -273,17 +273,17 @@ Widget _buildStatProgressBar(double progress) {
           decoration: BoxDecoration(color: AppColors.profileHeaderColor),
         ),
         Container(
-          width: (180 * progress).w,
+          width: (180 * (progress / 100)).w,
           height: 20.h,
           decoration: BoxDecoration(
-            color: progress >= 0.20
+            color: progress >= 20
                 ? AppColors.greenColor
                 : AppColors.orangeColor,
           ),
           alignment: Alignment.centerRight,
           padding: EdgeInsets.only(right: 5.w),
           child: Text(
-            '${(progress * 100).toInt()}%',
+            '$progress%',
             style: GoogleFonts.inter(
               color: Colors.white,
               fontSize: 10.sp,
