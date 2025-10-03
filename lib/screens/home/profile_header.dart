@@ -19,60 +19,49 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => showProfilePopup(context, widget.player),
-
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
-        decoration: BoxDecoration(color: AppColors.profileHeaderColor),
+        decoration: BoxDecoration(
+          color: AppColors.profileHeaderColor,
+          border: Border(
+            top: BorderSide(width: 1.w, color: const Color(0xFF303F52)),
+            bottom: BorderSide(width: 1.w, color: const Color(0xFF303F52)),
+          ),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            SizedBox(
+              width: 40.w,
+              height: 40.h,
+              child: SvgPicture.asset(
+                "assets/icons/profiles/baby.svg",
+                fit: BoxFit.contain,
+              ),
+            ),
+            SizedBox(width: 5.w),
+            Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 5.w,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 38.w,
-                  height: 38.h,
-                  child: SvgPicture.asset(
-                    "assets/icons/profiles/baby.svg",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                Column(
+                Row(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 14.w,
-                      height: 14.h,
+                      width: 13.w,
+                      height: 13.h,
                       child: Image.asset(
                         "assets/images/flags/usa.png",
                         fit: BoxFit.contain,
                       ),
                     ),
-                    SizedBox(height: 6.h),
-                    SizedBox(
-                      width: 14.w,
-                      height: 14.h,
-                      child: Image.asset(
-                        "assets/images/apple.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 4.h,
-                  children: [
+                    SizedBox(width: 5.w),
                     Text(
                       widget.player.name,
                       style: GoogleFonts.inter(
@@ -83,6 +72,28 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                         decorationColor: AppColors.blueColor,
                       ),
                     ),
+                    SizedBox(width: 5.w),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10.h),
+                      child: SvgPicture.asset("assets/icons/profiles/info.svg"),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 3.h),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 13.w,
+                      height: 13.h,
+                      child: Image.asset(
+                        "assets/images/apple.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(width: 5.w),
                     Text(
                       'Infant',
                       style: GoogleFonts.inter(
@@ -96,11 +107,11 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 ),
               ],
             ),
+            Spacer(),
             Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
-              spacing: 4.h,
               children: [
                 Text(
                   '\$0',
@@ -111,6 +122,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                     letterSpacing: 0.48.sp,
                   ),
                 ),
+                SizedBox(height: 4.h),
                 Text(
                   'Bank Balance',
                   style: GoogleFonts.inter(

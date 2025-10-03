@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
-import 'package:life_book/screens/events/age_popup.dart';
 import 'package:life_book/screens/home/home.dart';
 import 'package:life_book/theme.dart';
 
@@ -13,9 +12,9 @@ class TutorialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
-      child: Center(
-        child: Container(
+      child: Scaffold(
+        backgroundColor: Colors.black54,
+        body: Container(
           width: double.infinity,
           height: double.infinity,
           padding: EdgeInsets.all(32.r),
@@ -108,17 +107,10 @@ class TutorialScreen extends StatelessWidget {
   // Built Age Button
   Widget _buildTAB(BuildContext context, Character player) {
     return GestureDetector(
-      // onTap: () async {
-      //   await showAgePopup(context, player.age);
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
-      //   );
-      // },
       onTap: () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
+          MaterialPageRoute(builder: (context) => HomeScreen(player: player!)),
         );
       },
       child: Container(

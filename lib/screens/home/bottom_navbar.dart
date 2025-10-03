@@ -16,7 +16,7 @@ class BottomNavBar extends StatefulWidget {
   final List<LifeStory> lifeStoryDiaryEntries;
   final VoidCallback onAgeIncrement; // Add a callback
 
-  BottomNavBar({
+  const BottomNavBar({
     super.key,
     required this.player,
     required this.lifeStoryDiaryEntries,
@@ -41,60 +41,56 @@ class _BottomNavBarState extends State<BottomNavBar> {
             color: AppColors.blueColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              spacing: 10,
+              // spacing: 10,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      _buildNavBarItem(
-                        'School',
-                        'assets/icons/school.svg',
-                        () {},
-                      ),
-                      // Container(height: 78, width: 0.5, color: Colors.black),
-                      _buildNavBarItem(
-                        'Assets',
-                        'assets/icons/assets.svg',
-                        () {},
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    _buildNavBarItem(
+                      'School',
+                      'assets/icons/school.svg',
+                      () {},
+                    ),
+                    // Container(height: 78, width: 0.5, color: Colors.black),
+                    _buildNavBarItem(
+                      'Assets',
+                      'assets/icons/assets.svg',
+                      () {},
+                    ),
+                  ],
                 ),
                 // Container(height: 78, width: 0.5, color: Colors.black),
-                SizedBox(width: 75.w, height: 105.h),
+                SizedBox(width: 95.w, height: 105.h),
                 // Container(height: 78, width: 0.5, color: Colors.black),
-                Expanded(
-                  child: Row(
-                    children: [
-                      _buildNavBarItem(
-                        'Relationships',
-                        'assets/icons/relationships.svg',
-                        () {},
-                      ),
-                      // Container(height: 78, width: 0.5, color: Colors.black),
-                      _buildNavBarItem(
-                        'Activities',
-                        'assets/icons/activities.svg',
-                        () {
-                          // handle activities button
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ActivityScreen(player: widget.player),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    _buildNavBarItem(
+                      'Relationships',
+                      'assets/icons/relationships.svg',
+                      () {},
+                    ),
+                    // Container(height: 78, width: 0.5, color: Colors.black),
+                    _buildNavBarItem(
+                      'Activities',
+                      'assets/icons/activities.svg',
+                      () {
+                        // handle activities button
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ActivityScreen(player: widget.player),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           Positioned(
             top: -15.h,
-            left: 35.w,
+            left: 40.w,
             right: 40.w,
             child: Center(child: _buildFAB()),
           ),
@@ -111,9 +107,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 68.w,
+        width: 70.w,
         height: 75.h,
-        padding: EdgeInsets.symmetric(vertical: 4.h),
+        padding: EdgeInsets.symmetric(horizontal: 1.w),
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              color: Colors.black,
+              width: 0.20.w,
+              style: BorderStyle.solid,
+              strokeAlign: BorderSide.strokeAlignInside,
+            ),
+            right: BorderSide(
+              color: Colors.black,
+              width: 0.20.w,
+              style: BorderStyle.solid,
+              strokeAlign: BorderSide.strokeAlignInside,
+            ),
+          ),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -121,8 +133,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           spacing: 4,
           children: [
             Container(
-              width: 40.w,
-              height: 40.h,
+              width: 32.w,
+              height: 32.h,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 color: label == 'School'
@@ -157,15 +169,23 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return GestureDetector(
       onTap: () {
         widget.player.incrementAge();
-        eventOccurs(context);
-        setState(() {
-          widget.lifeStoryDiaryEntries.add(
-            LifeStory(
-              age: widget.player.age,
-              description: "You're now ${widget.player.age} years old!",
-            ),
-          );
-        });
+        bool isEvent = eventOccurs(
+          context,
+          widget.lifeStoryDiaryEntries,
+          widget.player.age,
+          widget.onAgeIncrement,
+        );
+        if (!isEvent) {
+          setState(() {
+            widget.lifeStoryDiaryEntries.add(
+              LifeStory(
+                age: widget.player.age,
+                description: "You're now ${widget.player.age} years old!",
+              ),
+            );
+          });
+        }
+
         // Notify the parent (HomeScreen) to rebuild
         widget.onAgeIncrement();
         // showAgePopup(context, widget.player.age);
@@ -174,16 +194,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
         }
       },
       child: Container(
-        width: 105.w,
-        height: 105.h,
+        width: 90.w,
+        height: 110.h,
         padding: EdgeInsets.all(5.r),
         decoration: BoxDecoration(
           color: AppColors.greenColor,
           shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 0,
+            ),
+          ],
         ),
         child: Container(
-          width: 105.w,
-          height: 105.h,
+          width: 95.w,
+          height: 110.h,
           padding: EdgeInsets.all(10.r),
           decoration: BoxDecoration(
             color: AppColors.greenColor,
@@ -216,10 +244,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
-void eventOccurs(BuildContext context) {
+bool eventOccurs(
+  BuildContext context,
+  List<LifeStory> lifeStories,
+  int age,
+  VoidCallback func,
+) {
   final random = Random();
   int number = random.nextInt(100) + 1; // 1 to 100
   if (number <= 40) {
-    showEventPopup(context);
+    showEventPopup(context, lifeStories, age, func);
+    return true;
   }
+  return false;
 }

@@ -39,23 +39,22 @@ class StatsSection extends StatelessWidget {
           SizedBox(width: 15.w),
 
           // Column 3: Progress Bars
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(
-                    color: Colors.grey,
-                    style: BorderStyle.solid,
-                    // strokeAlign: BorderSide.strokeAlignCenter,
-                  ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  width: 2.w,
+                  color: Colors.grey[300]!,
+                  style: BorderStyle.solid,
+                  // strokeAlign: BorderSide.strokeAlignCenter,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: player.allStats.entries
-                    .map((stat) => _buildStatProgressBar(stat.value))
-                    .toList(),
-              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: player.allStats.entries
+                  .map((stat) => _buildStatProgressBar(stat.value))
+                  .toList(),
             ),
           ),
         ],
@@ -95,12 +94,12 @@ class StatsSection extends StatelessWidget {
         alignment: Alignment.centerLeft,
         children: [
           Container(
-            width: 250.w,
+            width: 200.w,
             height: 20.h,
             decoration: BoxDecoration(color: AppColors.profileHeaderColor),
           ),
           Container(
-            width: (250 * (progress / 100)).w,
+            width: (200 * (progress / 100)).w,
             height: 20.h,
             decoration: BoxDecoration(
               color: progress >= 20

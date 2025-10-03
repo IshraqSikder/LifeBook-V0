@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:life_book/models/age_popup_list.dart';
@@ -10,9 +12,9 @@ import 'package:life_book/screens/home/stats_section.dart';
 import 'package:life_book/screens/menu/menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Character player;
-
-  HomeScreen({super.key, required this.player});
+  final Character? player;
+  final dynamic choice;
+  const HomeScreen({super.key, this.player, this.choice});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -26,9 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // log(widget.choice.toString());
     return Scaffold(
       appBar: CustomAppBar(
-        player: widget.player,
+        player: widget.player!,
         onMenuToggle: (value) {
           setState(() {
             // Update any state if needed when menu is toggled
@@ -37,10 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       body: isMenuToggled
-          ? MenuScreen(player: widget.player)
+          ? MenuScreen(player: widget.player!)
           : Column(
               children: [
-                ProfileHeader(player: widget.player),
+                ProfileHeader(player: widget.player!),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
@@ -59,16 +62,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ..._lifeStoryDiaryEntries.map((entry) {
                             return Column(
                               children: [
-                                agePopupList.containsKey(entry.age)
-                                    ? LifeStory(
-                                        age: entry.age,
-                                        description:
-                                            "${entry.description}\n${agePopupList[entry.age]}",
-                                      )
-                                    : LifeStory(
-                                        age: entry.age,
-                                        description: entry.description,
-                                      ),
+                                if (agePopupList.containsKey(entry.age))
+                                  LifeStory(
+                                    age: entry.age,
+                                    description:
+                                        "${entry.description}\n${agePopupList[entry.age]}",
+                                    flavor: entry.flavor,
+                                  )
+                                else
+                                  LifeStory(
+                                    age: entry.age,
+                                    description: entry.description,
+                                    flavor: entry.flavor,
+                                  ),
                               ],
                             );
                           }),
@@ -78,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 BottomNavBar(
-                  player: widget.player,
+                  player: widget.player!,
                   lifeStoryDiaryEntries: _lifeStoryDiaryEntries,
                   onAgeIncrement: () {
                     // Add a callback for when age increments
@@ -89,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                 ),
-                StatsSection(player: widget.player),
+                StatsSection(player: widget.player!),
               ],
             ),
     );

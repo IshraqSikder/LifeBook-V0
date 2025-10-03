@@ -1,4 +1,3 @@
-
 import 'package:life_book/models/stats.dart';
 
 class Character with Stats {
@@ -12,11 +11,15 @@ class Character with Stats {
 
   void incrementAge() {
     _age++;
-    // final random = Random();
-    // // Generate random changes between -5 and 5
-    // updateStat(happiness, random.nextDouble() * 0.1 - 0.05);
-    // updateStat(health, random.nextDouble() * 0.1 - 0.05);
-    // updateStat(smarts, random.nextDouble() * 0.1 - 0.05);
-    // updateStat(looks, random.nextDouble() * 0.1 - 0.05);
   }
+
+  factory Character.fromJson(Map<String, dynamic> json) => Character(
+    name: json["name"],
+    gender: json["gender"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "gender": gender,
+  };
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/start/tutorial.dart';
+import 'package:life_book/services/local_service.dart';
 import 'package:life_book/theme.dart';
 
 class CreateCharacterScreen extends StatefulWidget {
@@ -271,6 +272,7 @@ void showCreateCharacterScreen(
       return CreateCharacterScreen(
         onCharacterCreated: (String name, String gender) {
           Character newPlayer = Character(name: name, gender: gender);
+          LocalService().storeUser(newPlayer);
           onCharacterCreated(newPlayer);
         },
       );

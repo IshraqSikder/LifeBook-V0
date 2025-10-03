@@ -4,16 +4,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/theme.dart';
 
 class LifeStory extends StatelessWidget {
-  final int? age;
+  final int age;
   final String description;
+  final String? flavor;
 
-  const LifeStory({super.key, this.age, required this.description});
+  const LifeStory({
+    super.key,
+    required this.age,
+    required this.description,
+    this.flavor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10.h,
       children: [
         Text(
           'Age: $age years',
@@ -23,6 +28,7 @@ class LifeStory extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+        SizedBox(height: 10.h),
         Text(
           description,
           style: GoogleFonts.inter(
@@ -31,6 +37,15 @@ class LifeStory extends StatelessWidget {
             fontWeight: FontWeight.w300,
           ),
         ),
+        if (flavor != null)
+          Text(
+            flavor!,
+            style: GoogleFonts.inter(
+              color: AppColors.textColor,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
       ],
     );
   }

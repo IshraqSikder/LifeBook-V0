@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,17 +7,31 @@ import 'package:life_book/screens/events/events_popup_list.dart';
 import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/theme.dart';
 
-class EventPopup extends StatelessWidget {
+class EventPopup extends StatefulWidget {
   final int rndIndex;
-  const EventPopup(this.rndIndex, {super.key});
+  final List<LifeStory> lifeStories;
+  final int age;
+  final VoidCallback func;
+  const EventPopup(
+    this.rndIndex,
+    this.lifeStories, {
+    super.key,
+    required this.age,
+    required this.func,
+  });
 
   @override
+  State<EventPopup> createState() => _EventPopupState();
+}
+
+class _EventPopupState extends State<EventPopup> {
+  @override
   Widget build(BuildContext context) {
-    var rndEvent = eventsPopupList[rndIndex];
+    var rndEvent = eventsPopupList[widget.rndIndex - 1];
     return Dialog(
       child: Container(
         width: double.infinity,
-        height: 410.h,
+        height: 400.h,
         constraints: BoxConstraints(maxWidth: 350).w,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -46,7 +59,7 @@ class EventPopup extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Car',
+                  'Events',
                   textAlign: TextAlign.end,
                   style: GoogleFonts.inter(
                     color: Colors.white,
@@ -58,7 +71,8 @@ class EventPopup extends StatelessWidget {
             ),
             // Event title with icon
             Container(
-              padding: EdgeInsets.all(12.r),
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 12.h),
+              margin: EdgeInsets.only(right: 3.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,7 +83,14 @@ class EventPopup extends StatelessWidget {
                   //   height: 35.h,
                   //   fit: BoxFit.contain,
                   // ),
-                  SvgPicture.asset("assets/icons/logo.svg"),
+                  Container(
+                    width: 38.w,
+                    height: 38.h,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(),
+                    child: SvgPicture.asset("assets/events/car.svg"),
+                  ),
+                  // SvgPicture.asset("assets/icons/logo.svg"),
                   SizedBox(width: 10.w),
                   Text(
                     rndEvent["title"],
@@ -96,81 +117,71 @@ class EventPopup extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
-            Container(
-              width: 250.w,
-              height: 25.h,
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              decoration: BoxDecoration(color: const Color(0xFFEDECE8)),
-              alignment: Alignment.center,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Repair: ',
-                      style: GoogleFonts.inter(
-                        color: const Color(0xFF3D010B),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '\$265',
-                      style: GoogleFonts.inter(
-                        color: const Color(0xFF3D010B),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 25.h),
+            SizedBox(height: 45.h),
 
             // Choice Buttons
-            _buildChoiceButton(rndEvent["choices"][0]["option"]),
+            _buildChoiceButton(rndEvent["choices"][0]),
             SizedBox(height: 10.h),
-            _buildChoiceButton(rndEvent["choices"][1]["option"]),
+            _buildChoiceButton(rndEvent["choices"][1]),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChoiceButton(dynamic choice) {
+    return Container(
+      width: 250.w,
+      height: 40.h,
+      margin: EdgeInsets.symmetric(horizontal: 20.w),
+
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF007ACF),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.r),
+          ),
+          elevation: 3,
+          shadowColor: const Color(0xFFBAB9B7),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+        ),
+        onPressed: () {
+          // Add your onPressed logic here
+          setState(() {
+            widget.lifeStories.add(
+              LifeStory(
+                description: "You're now ${widget.age} years old!",
+                age: widget.age,
+                flavor: choice["flavor"],
+              ),
+            );
+          });
+
+          widget.func();
+          Navigator.pop(context);
+        },
+        child: Text(
+          choice["option"],
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(
+            color: Colors.white,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );
   }
 }
 
-Widget _buildChoiceButton(String option) {
-  return SizedBox(
-    width: 250.w,
-    height: 40.h,
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF007ACF),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        elevation: 3,
-        shadowColor: const Color(0xFFBAB9B7),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      ),
-      onPressed: () {
-        // Add your onPressed logic here
-        LifeStory(description: 'rndEvent["choices"][0]["flavor"]');
-      },
-      child: Text(
-        option,
-        textAlign: TextAlign.center,
-        style: GoogleFonts.inter(
-          color: Colors.white,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    ),
-  );
-}
-
 // Function to show the profile popup
-void showEventPopup(BuildContext context) {
-  final random = Random();
+void showEventPopup(
+  BuildContext context,
+  List<LifeStory> lifeStories,
+  int age,
+  VoidCallback func,
+) {
+  final random = math.Random();
   int rndnumber =
       random.nextInt(eventsPopupList.length) + 1; // 1 to size of EventPopupList
   showDialog(
@@ -178,7 +189,7 @@ void showEventPopup(BuildContext context) {
     barrierDismissible: true,
     barrierColor: Colors.black54.withValues(alpha: 0.90),
     builder: (BuildContext context) {
-      return EventPopup(rndnumber);
+      return EventPopup(rndnumber, lifeStories, age: age, func: func);
     },
   );
 }
