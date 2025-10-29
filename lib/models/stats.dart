@@ -1,37 +1,34 @@
+import 'package:get/get.dart'; // Import GetX for Rx types
+
 mixin Stats {
-  final Map<String, int> _stats = {
-    "Happiness": 50,
-    "Health": 50,
-    "Smarts": 50,
-    "Looks": 50,
+  // Use RxInt for each stat to make them observable and mutable
+  final RxInt _happiness = 50.obs;
+  final RxInt _health = 50.obs;
+  final RxInt _smarts = 50.obs;
+  final RxInt _looks = 50.obs;
+
+  // // Getters to expose the RxInt values
+  // RxInt get happiness => _happiness;
+  // RxInt get health => _health;
+  // RxInt get smarts => _smarts;
+  // RxInt get looks => _looks;
+
+  Map<String, RxInt> get allStats => {
+    "Happiness": _happiness,
+    "Health": _health,
+    "Smarts": _smarts,
+    "Looks": _looks,
   };
 
-  int get happiness => _stats["Happiness"] ?? 0;
-  int get health => _stats["Health"] ?? 0;
-  int get smarts => _stats["Smarts"] ?? 0;
-  int get looks => _stats["Looks"] ?? 0;
-
-  // A getter to expose the stats map for iteration
-  Map<String, int> get allStats => _stats;
-
-  // methods
-  // void updateStat(double currentValue, double changeValue) {
-  //   double newValue = (currentValue + changeValue).clamp(0, 100);
-
-  //   if (newValue == currentValue) return;
-  //   switch (currentValue) {
-  //     case double hp when hp == _happiness:
-  //       _happiness = newValue;
-  //       break;
-  //     case double hl when hl == _health:
-  //       _health = newValue;
-  //       break;
-  //     case double sm when sm == _smarts:
-  //       _smarts = newValue;
-  //       break;
-  //     case double lk when lk == _looks:
-  //       _looks = newValue;
-  //       break;
-  //   }
-  // }
+  // Method to apply stat changes
+  void applyStatChanges(Map<String, dynamic> changes) {
+    changes.forEach((statName, value) {
+      final RxInt? stat = allStats[statName];
+      if (stat != null && value is int) {
+        stat.value += value;
+        // Optional: Clamp stats to a min/max range (e.g., 0-100)
+        stat.value = stat.value.clamp(0, 100);
+      }
+    });
+  }
 }

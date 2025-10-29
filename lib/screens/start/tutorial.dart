@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/home/home.dart';
+import 'package:life_book/views/home/home_new.dart';
 import 'package:life_book/theme.dart';
 
 class TutorialScreen extends StatelessWidget {
@@ -110,7 +111,10 @@ class TutorialScreen extends StatelessWidget {
       onTap: () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen(player: player!)),
+          // MaterialPageRoute(builder: (context) => HomeScreen(player: player)),
+          MaterialPageRoute(
+            builder: (context) => HomeScreenNew(player: player),
+          ),
         );
       },
       child: Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/theme.dart';
@@ -164,7 +165,11 @@ class ProfilePopup extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: player.allStats.entries
                                   .map(
-                                    (stat) => _buildStatProgressBar(stat.value),
+                                    (stat) => Obx(
+                                      () => _buildStatProgressBar(
+                                        stat.value.value,
+                                      ),
+                                    ),
                                   )
                                   .toList(),
                             ),

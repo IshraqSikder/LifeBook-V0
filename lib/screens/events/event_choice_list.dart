@@ -1,4 +1,4 @@
-List<Map<String, dynamic>> _eventsPopupList = [
+List<Map<String, dynamic>> _eventsChoiceList = [
   {
     "id": 1,
     "title": "Cold",
@@ -561,6 +561,161 @@ List<Map<String, dynamic>> _eventsPopupList = [
       },
     ],
   },
+
+  // Negative Choice
+  {
+    "id": 30,
+    "title": "Shady Investment Offer",
+    "description": "An acquaintance offers you a 'guaranteed' high-return investment that sounds too good to be true.",
+    "choices": [
+      {
+        "option": "Invest in it.",
+        "result": {"Smarts": -10, "Happiness": -15},
+        "flavor": "You lost a significant amount of money. It was, indeed, too good to be true."
+      },
+      {
+        "option": "Politely decline.",
+        "result": {"Happiness": -5},
+        "flavor": "You feel a brief pang of regret, but your money is safe."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Cut Corners on a Project",
+    "description": "You can finish a big project much faster by cutting some corners and doing a lazy job.",
+    "choices": [
+      {
+        "option": "Do a lazy job.",
+        "result": {"Smarts": -8, "Happiness": -5},
+        "flavor": "You finished early and feel good about your free time, but the quality of your work is noticeably lower."
+      },
+      {
+        "option": "Do it the right way.",
+        "result": {"Happiness": -10},
+        "flavor": "It took longer, and you're tired, but you're proud of your thorough work."
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Office Gossip",
+    "description": "A coworker starts telling you some juicy gossip about a mutual friend.",
+    "choices": [
+      {
+        "option": "Listen and participate.",
+        "result": {"Happiness": -8, "Smarts": -3},
+        "flavor": "You got caught up in the drama, and now you feel a bit guilty."
+      },
+      {
+        "option": "Walk away from the conversation.",
+        "result": {"Happiness": -5},
+        "flavor": "You avoided the gossip, but your coworker gives you a weird look."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Argue with Coworker",
+    "description": "You and a coworker are having a heated disagreement over a work-related issue.",
+    "choices": [
+      {
+        "option": "Escalate the argument to win.",
+        "result": {"Happiness": -10},
+        "flavor": "You 'won' the argument, but the tension between you and your coworker is palpable."
+      },
+      {
+        "option": "Back down to keep the peace.",
+        "result": {"Happiness": -8},
+        "flavor": "You diffused the situation, but you're annoyed you didn't get your point across."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Cheat on Test",
+    "description": "You are completely unprepared for a major exam, but you see a clear opportunity to cheat.",
+    "choices": [
+      {
+        "option": "Risk it and cheat.",
+        "result": {"Smarts": -15, "Happiness": -15},
+        "flavor": "You barely passed, but the guilt and fear of getting caught weigh heavily on you."
+      },
+      {
+        "option": "Accept your fate and fail.",
+        "result": {"Smarts": -8},
+        "flavor": "You failed the test, but you feel better knowing you were honest."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Extra Work Favor",
+    "description": "Your boss asks you to stay late to help with a task that is not your responsibility.",
+    "choices": [
+      {
+        "option": "Agree to do the favor.",
+        "result": {"Happiness": -10},
+        "flavor": "You stayed late, completing the extra work. You're exhausted and slightly resentful."
+      },
+      {
+        "option": "Say you have other plans.",
+        "result": {"Happiness": -8},
+        "flavor": "You avoided the extra work, but your boss seemed disappointed."
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Procrastination",
+    "description": "You have an important project due tomorrow, but a new season of your favorite show just dropped.",
+    "choices": [
+      {
+        "option": "Watch the show and relax.",
+        "result": {"Smarts": -8, "Health": -5},
+        "flavor": "You enjoyed the show, but now you're stressed about the impending deadline and lack of sleep."
+      },
+      {
+        "option": "Force yourself to do the work.",
+        "result": {"Happiness": -10},
+        "flavor": "You finished the project on time, but missed out on relaxation and feel a bit burnt out."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Ex's Text",
+    "description": "Your ex sends you a text late at night saying they miss you.",
+    "choices": [
+      {
+        "option": "Reply to them.",
+        "result": {"Happiness": -15},
+        "flavor": "You got drawn back into old feelings and drama, leaving you feeling worse than before."
+      },
+      {
+        "option": "Ignore the text.",
+        "result": {"Happiness": -8},
+        "flavor": "You resisted the urge to reply, but the text still bothered you for a while."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Internet Trolls",
+    "description": "You post an opinion online, and a stranger starts leaving insulting comments.",
+    "choices": [
+      {
+        "option": "Argue with the troll.",
+        "result": {"Happiness": -10, "Smarts": -5},
+        "flavor": "You wasted time and energy arguing with a stranger, feeling frustrated and drained."
+      },
+      {
+        "option": "Block them and move on.",
+        "result": {"Happiness": -5},
+        "flavor": "You took the high road and blocked the troll, but the comments still left a sour taste."
+      }
+    ]
+  }
 ];
 
-List<Map<String, dynamic>> get eventsPopupList => _eventsPopupList;
+List<Map<String, dynamic>> get eventsChoiceList => _eventsChoiceList;

@@ -6,19 +6,14 @@ import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/profile/profile_popup.dart';
 import 'package:life_book/theme.dart';
 
-class ProfileHeader extends StatefulWidget {
+class ProfileHeader extends StatelessWidget {
   final Character player;
   const ProfileHeader({super.key, required this.player});
 
   @override
-  State<ProfileHeader> createState() => _ProfileHeaderState();
-}
-
-class _ProfileHeaderState extends State<ProfileHeader> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showProfilePopup(context, widget.player),
+      onTap: () => showProfilePopup(context, player),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
@@ -63,7 +58,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                     ),
                     SizedBox(width: 5.w),
                     Text(
-                      widget.player.name,
+                      player.name,
                       style: GoogleFonts.inter(
                         color: AppColors.blueColor,
                         fontSize: 17.sp,

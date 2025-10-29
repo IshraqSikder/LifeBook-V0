@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'package:life_book/controllers/death_controller.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/theme.dart';
 
-class DeathScreenPopup extends StatelessWidget {
+class DeathScreen extends StatelessWidget {
   final Character player;
 
-  const DeathScreenPopup({super.key, required this.player});
+  const DeathScreen({super.key, required this.player});
+
   @override
   Widget build(BuildContext context) {
+    // Initialize the controller with the player character
+    final DeathScreenController controller = Get.put(
+      DeathScreenController(player),
+    );
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 70.h),
       child: Column(
@@ -20,7 +28,6 @@ class DeathScreenPopup extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              // height: 580.h,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: const Color(0xFF7C837B),
@@ -73,7 +80,8 @@ class DeathScreenPopup extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '\$252,538\n',
+                          text:
+                              '\$252,538\n', // This should probably come from player.netWorth
                           style: GoogleFonts.inter(
                             color: const Color(0xFFDBDBD3),
                             fontSize: 14.sp,
@@ -89,7 +97,8 @@ class DeathScreenPopup extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'Salt Lake City, United States\n',
+                          text:
+                              'Salt Lake City, United States\n', // From player.residence
                           style: GoogleFonts.inter(
                             color: const Color(0xFFDBDBD3),
                             fontSize: 14.sp,
@@ -105,7 +114,7 @@ class DeathScreenPopup extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'Animator\n',
+                          text: 'Animator\n', // From player.career
                           style: GoogleFonts.inter(
                             color: const Color(0xFFDBDBD3),
                             fontSize: 14.sp,
@@ -121,7 +130,7 @@ class DeathScreenPopup extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'University',
+                          text: 'University', // From player.education
                           style: GoogleFonts.inter(
                             color: const Color(0xFFDBDBD3),
                             fontSize: 14.sp,
@@ -133,7 +142,7 @@ class DeathScreenPopup extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    'My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds.',
+                    'My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds.', // From player.deathNarrative or similar
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                       color: const Color(0xFFB1B3A6),
@@ -178,7 +187,8 @@ class DeathScreenPopup extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                width: (180 * 0.6).w,
+                                width: (180 * 0.6)
+                                    .w, // This 0.6 should be player.agreementPercentage
                                 height: 20.h,
                                 decoration: BoxDecoration(
                                   color: 0.6 >= 0.20
@@ -188,7 +198,7 @@ class DeathScreenPopup extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 padding: EdgeInsets.only(right: 5.w),
                                 child: Text(
-                                  '${(0.6 * 100).toInt()}%',
+                                  '${(0.6 * 100).toInt()}%', // Display player.agreementPercentage
                                   style: GoogleFonts.inter(
                                     color: Colors.white,
                                     fontSize: 10.sp,
@@ -220,7 +230,7 @@ class DeathScreenPopup extends StatelessWidget {
                 padding: const EdgeInsets.all(10).r,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                controller.endGame(); // Call the controller's method
               },
               child: Text(
                 'Continue',
@@ -239,14 +249,11 @@ class DeathScreenPopup extends StatelessWidget {
   }
 }
 
-// Function to show the profile popup
+// Function to show the profile popup using Get.dialog
 void showDeathScreeenPopup(BuildContext context, Character character) {
-  showDialog(
-    context: context,
+  Get.dialog(
+    DeathScreen(player: character),
     barrierDismissible: true,
     barrierColor: Colors.black54.withValues(alpha: 0.90),
-    builder: (BuildContext context) {
-      return DeathScreenPopup(player: character);
-    },
   );
 }
