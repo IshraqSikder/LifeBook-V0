@@ -14,7 +14,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  List<MenuItem> MenuItems = [
+  List<MenuItem> menuItems = [
     MenuItem(
       imageUrl: "assets/images/menu/human.png",
       title: "New Life",
@@ -37,9 +37,9 @@ class _MenuScreenState extends State<MenuScreen> {
         children: [
           ListView.builder(
             shrinkWrap: true,
-            itemCount: MenuItems.length,
+            itemCount: menuItems.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = MenuItems[index];
+              final item = menuItems[index];
               return Container(
                 width: double.infinity,
                 height: 70.h,

@@ -22,10 +22,7 @@ class HomeScreenNew extends StatelessWidget {
     );
 
     return Scaffold(
-      appBar: CustomAppBarNew(
-        player: controller.player,
-        // onMenuToggle: controller.toggleMenu(), // Adapted to ValueChanged<bool>
-      ),
+      appBar: CustomAppBarNew(player: controller.player),
       body: Obx(
         () => controller.isMenuToggled.value
             ? MenuScreen(player: controller.player)
@@ -67,13 +64,7 @@ class HomeScreenNew extends StatelessWidget {
                       ),
                     ),
                   ),
-                  BottomNavBarNew(
-                    // player: controller.player,
-                    // lifeStoryDiaryEntries: controller.lifeStoryDiaryEntries, // Pass the observable list
-                    // onAgeIncrement: (LifeStory newStoryEntry) {
-                    //   controller.incrementAgeAndAddStory(newStoryEntry);
-                    // },
-                  ),
+                  BottomNavBarNew(),
                   StatsSection(player: controller.player),
                 ],
               ),

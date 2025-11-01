@@ -6,14 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/screens/activities/activity_screen.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
+import 'package:life_book/views/jobs/job_screen.dart';
 
 class BottomNavBarNew extends StatelessWidget {
-  const BottomNavBarNew({
-    super.key,
-    // required this.player,
-    // required this.lifeStoryDiaryEntries,
-    // required this.onAgeIncrement,
-  });
+  const BottomNavBarNew({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +30,22 @@ class BottomNavBarNew extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _buildNavBarItem('School', 'assets/icons/school.svg', () {
-                      // Handle School button tap
-                    }),
+                    Obx(
+                      () => controller.player.age < 24
+                          ? _buildNavBarItem(
+                              'School',
+                              'assets/icons/school.svg',
+                              () {
+                                // Handle School button tap
+                              },
+                            )
+                          : _buildNavBarItem('Job', 'assets/icons/job.svg', () {
+                              // Handle School button tap
+                              Get.to(
+                                () => JobScreen(player: controller.player),
+                              ); // Use Get.to
+                            }),
+                    ),
                     _buildNavBarItem('Assets', 'assets/icons/assets.svg', () {
                       // Handle Assets button tap
                     }),
@@ -116,7 +125,7 @@ class BottomNavBarNew extends StatelessWidget {
               height: 32.h,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
-                color: label == 'School'
+                color: label == 'School' || label == 'Job'
                     ? AppColors.orangeColor
                     : AppColors.pasteColor,
                 shape: BoxShape.circle,

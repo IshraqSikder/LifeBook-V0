@@ -54,7 +54,10 @@ class StatsSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: player.allStats.entries
-                  .map((stat) =>Obx(()=>_buildStatProgressBar(stat.value.value)))
+                  .map(
+                    (stat) =>
+                        Obx(() => _buildStatProgressBar(stat.value.value)),
+                  )
                   .toList(),
             ),
           ),
@@ -71,7 +74,7 @@ class StatsSection extends StatelessWidget {
         label,
         textAlign: TextAlign.right,
         style: TextStyle(
-          fontSize: 16.sp,
+          fontSize: 15.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.blueColor,
         ),

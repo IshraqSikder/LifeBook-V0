@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart'; // Import GetX
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
 
-
 class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
   final Character player;
-  // final ValueChanged<bool>? onMenuToggle; // No longer needed, as we'll call controller method directly
 
-  const CustomAppBarNew({
-    super.key,
-    required this.player,
-  }); // Remove onMenuToggle from constructor
+  const CustomAppBarNew({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +46,12 @@ class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
       title: Obx(
         () => Row(
-          // Wrap title content in Obx to react to menu state
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // If menu is open, show "MAIN MENU"
-            if (controller.isMenuToggled.value) // Observe here
+            if (controller.isMenuToggled.value)
               Text(
                 'MAIN MENU',
                 textAlign: TextAlign.center,

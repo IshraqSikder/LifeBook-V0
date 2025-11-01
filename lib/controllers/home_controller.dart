@@ -9,7 +9,7 @@ import 'package:life_book/screens/home/life_story.dart';
 class HomeController extends GetxController {
   final Character player;
   final dynamic choice;
-  
+
   HomeController({required this.player, this.choice});
 
   RxBool isMenuToggled = false.obs;
@@ -45,14 +45,14 @@ class HomeController extends GetxController {
       // If no event, add a generic age story
       addLifeStoryEntry(
         LifeStory(
-          age: player.age,
+          age: player.age.value,
           description: "You're now ${player.age} years old!",
         ),
       );
     }
 
     // Check for death
-    if (player.age == 25) {
+    if (player.age.value == 35) {
       Get.to(() => DeathScreen(player: player));
     }
   }
@@ -63,7 +63,7 @@ class HomeController extends GetxController {
     int number = random.nextInt(100) + 1; // 1 to 100
     if (number <= 40) // 40% of chances
     {
-      showEventPopupGetX(player.age);
+      showEventPopupGetX(player.age.value);
       return true;
     }
     return false;

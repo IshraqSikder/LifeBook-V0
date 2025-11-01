@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/profile/profile_popup.dart';
@@ -20,7 +21,7 @@ class ProfileHeader extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.profileHeaderColor,
           border: Border(
-            top: BorderSide(width: 1.w, color: const Color(0xFF303F52)),
+            // top: BorderSide(width: 1.w, color: const Color(0xFF303F52)),
             bottom: BorderSide(width: 1.w, color: const Color(0xFF303F52)),
           ),
         ),
@@ -103,18 +104,21 @@ class ProfileHeader extends StatelessWidget {
               ],
             ),
             Spacer(),
+            // Bank balance
             Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  '\$0',
-                  style: GoogleFonts.inter(
-                    color: AppColors.blueColor,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.48.sp,
+                Obx(
+                  () => Text(
+                    '\$${player.balance.value}',
+                    style: GoogleFonts.inter(
+                      color: AppColors.blueColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.48.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 4.h),

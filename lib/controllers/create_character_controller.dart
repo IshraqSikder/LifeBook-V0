@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/character.dart';
-import 'package:life_book/screens/start/tutorial.dart';
-import 'package:life_book/services/local_service.dart';
+import 'package:life_book/views/start/tutorial_new.dart';
 
 class CreateCharacterController extends GetxController {
   final TextEditingController nameController = TextEditingController();
@@ -44,9 +43,9 @@ class CreateCharacterController extends GetxController {
         gender: selectedGender.value,
       );
 
-      LocalService().storeUser(newPlayer); // Store the character
+      // LocalService().storeUser(newPlayer); // Store the character
 
-      Get.offAll(() => TutorialScreen(player: newPlayer));
+      Get.offAll(() => TutorialScreenNew(player: newPlayer));
     }
   }
 }

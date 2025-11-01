@@ -16,94 +16,91 @@ class TutorialScreenNew extends StatelessWidget {
     final TutorialScreenController controller = Get.put(
       TutorialScreenController(player),
     );
-
-    return Material(
-      child: Scaffold(
-        backgroundColor: Colors.black54,
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: EdgeInsets.all(32.r),
-          decoration: BoxDecoration(
-            backgroundBlendMode: BlendMode.softLight,
-            color: Colors.black.withValues(alpha: 0.54),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/point.png',
-                        width: 16.w,
-                        height: 16.h,
-                        fit: BoxFit.contain,
-                      ),
-                      SizedBox(width: 5.w),
-                      Text(
-                        'Press',
-                        style: GoogleFonts.inter(
-                          color: AppColors.yellowColor,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        ' Age ',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        'to grow older one year',
-                        style: GoogleFonts.inter(
-                          color: AppColors.yellowColor,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        'at a time.',
-                        style: GoogleFonts.inter(
-                          color: AppColors.yellowColor,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    'Make choices as you go.',
-                    style: GoogleFonts.inter(
-                      color: AppColors.yellowColor,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
+    return Scaffold(
+      backgroundColor: Colors.black.withValues(alpha: 0.6),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: EdgeInsets.all(32.r),
+        decoration: BoxDecoration(
+          backgroundBlendMode: BlendMode.softLight,
+          color: Colors.black.withValues(alpha: 0.54),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  runAlignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/point.png',
+                      width: 16.w,
+                      height: 16.h,
+                      fit: BoxFit.contain,
                     ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    'Live your best(or worst) life.',
-                    style: GoogleFonts.inter(
-                      color: AppColors.yellowColor,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
+                    SizedBox(width: 5.w),
+                    Text(
+                      'Press',
+                      style: GoogleFonts.inter(
+                        color: AppColors.yellowColor,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                    Text(
+                      ' Age ',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'to grow older one year',
+                      style: GoogleFonts.inter(
+                        color: AppColors.yellowColor,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'at a time.',
+                      style: GoogleFonts.inter(
+                        color: AppColors.yellowColor,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  'Make choices as you go.',
+                  style: GoogleFonts.inter(
+                    color: AppColors.yellowColor,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
                   ),
-                ],
-              ),
-              SizedBox(height: 32.h),
-              _buildTAB(controller),
-            ],
-          ),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  'Live your best(or worst) life.',
+                  style: GoogleFonts.inter(
+                    color: AppColors.yellowColor,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 32.h),
+            _buildTAB(controller),
+          ],
         ),
       ),
     );
