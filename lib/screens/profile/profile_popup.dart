@@ -3,11 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/models/character.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class ProfilePopup extends StatelessWidget {
-  final Character player;
+  // final Character player;
+  final User player;
 
   const ProfilePopup({super.key, required this.player});
 
@@ -58,7 +59,8 @@ class ProfilePopup extends StatelessWidget {
                           ),
                           SizedBox(width: 5.w),
                           Text(
-                            player.name,
+                            // player.name,
+                            player.userInfo.name,
                             style: GoogleFonts.inter(
                               color: AppColors.brownColor,
                               fontSize: 13.sp,
@@ -122,9 +124,16 @@ class ProfilePopup extends StatelessWidget {
                         children: [
                           _buildProfileDetail('Relationship:', 'User'),
                           SizedBox(height: 8),
-                          _buildProfileDetail('Age:', player.age.toString()),
+                          _buildProfileDetail(
+                            'Age:',
+                            player.gameStats.levels.first.age.toString(),
+                          ),
                           SizedBox(height: 8),
-                          _buildProfileDetail('Gender:', player.gender),
+                          // _buildProfileDetail('Gender:', player.gender),
+                          _buildProfileDetail(
+                            'Gender:',
+                            player.userInfo.gender,
+                          ),
                           SizedBox(height: 8),
                           _buildProfileDetail('Occupation:', 'None'),
                         ],
@@ -139,7 +148,8 @@ class ProfilePopup extends StatelessWidget {
                           // Column 1: Labels
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: player.allStats.entries
+                            // children: player.allStats.entries
+                            children: player.gameStats.allStats.entries
                                 .map((stat) => _buildStatLabel(stat.key))
                                 .toList(),
                           ),
@@ -163,7 +173,8 @@ class ProfilePopup extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: player.allStats.entries
+                              // children: player.allStats.entries
+                              children: player.gameStats.allStats.entries
                                   .map(
                                     (stat) => Obx(
                                       () => _buildStatProgressBar(
@@ -257,7 +268,7 @@ Widget _buildStatLabel(String label) {
       label,
       textAlign: TextAlign.right,
       style: GoogleFonts.inter(
-        fontSize: 14.sp,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w800,
         color: AppColors.brownColor,
       ),
@@ -273,12 +284,12 @@ Widget _buildStatProgressBar(int progress) {
       alignment: Alignment.centerLeft,
       children: [
         Container(
-          width: 180.w,
+          width: 150.w,
           height: 20.h,
           decoration: BoxDecoration(color: AppColors.profileHeaderColor),
         ),
         Container(
-          width: (180 * (progress / 100)).w,
+          width: (150 * (progress / 100)).w,
           height: 20.h,
           decoration: BoxDecoration(
             color: progress >= 20
@@ -302,7 +313,7 @@ Widget _buildStatProgressBar(int progress) {
 }
 
 // Function to show the profile popup
-void showProfilePopup(BuildContext context, Character character) {
+void showProfilePopup(BuildContext context, User character) {
   showDialog(
     context: context,
     barrierDismissible: true,

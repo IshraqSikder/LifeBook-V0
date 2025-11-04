@@ -1,0 +1,63 @@
+// life_book/services/user_service.dart
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:life_book/services/user.dart';
+import 'package:get/get.dart';
+
+class UserService extends GetxService {
+  static const String _userBoxName = 'usersBox';
+  static const String _sessionBoxName = 'sessionBox';
+
+  late Box<User> _userBox;
+  late Box _sessionBox;
+
+  final Rx<User?> _activeUser = Rx<User?>(null);
+  User? get activeUser => _activeUser.value;
+
+  // Make onInit truly handle all initialization logic and be async
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+
+    // These lines are the critical part that must be awaited.
+    _userBox = await Hive.openBox<User>(_userBoxName);
+    _sessionBox = await Hive.openBox(_sessionBoxName);
+
+    final int? activeUserId = _sessionBox.get('activeUserId');
+    if (activeUserId != null) {
+      _activeUser.value = _userBox.get(activeUserId);
+    }
+  }
+
+  Future<void> saveUser(User user) async {
+    await _userBox.put(user.userInfo.id, user);
+    await setActiveUser(user.userInfo.id); // Set as active user upon saving
+  }
+
+  User? getUser(int id) {
+    return _userBox.get(id);
+  }
+
+  Future<void> setActiveUser(int userId) async {
+    await _sessionBox.put('activeUserId', userId);
+    _activeUser.value = _userBox.get(userId);
+  }
+
+  int generateUniqueId() {
+    // This line is safe because onInit (and thus box opening) is awaited by Get.putAsync
+    if (_userBox.isEmpty) {
+      return 1;
+    }
+    int maxId = 0;
+    for (var key in _userBox.keys) {
+      if (key is int && key > maxId) {
+        maxId = key;
+      }
+    }
+    return maxId + 1;
+  }
+
+  Future<void> clearActiveUser() async {
+    await _sessionBox.delete('activeUserId');
+    _activeUser.value = null;
+  }
+}

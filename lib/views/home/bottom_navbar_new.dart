@@ -31,7 +31,9 @@ class BottomNavBarNew extends StatelessWidget {
                 Row(
                   children: [
                     Obx(
-                      () => controller.player.age < 24
+                      // () => controller.player.age < 24
+                      () =>
+                          controller.player.gameStats.levels.first.age.obs < 24
                           ? _buildNavBarItem(
                               'School',
                               'assets/icons/school.svg',

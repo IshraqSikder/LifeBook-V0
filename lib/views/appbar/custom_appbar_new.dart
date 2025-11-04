@@ -3,12 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/models/character.dart';
 import 'package:life_book/controllers/home_controller.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
-  final Character player;
+  // final Character player;
+  final User player;
 
   const CustomAppBarNew({super.key, required this.player});
 

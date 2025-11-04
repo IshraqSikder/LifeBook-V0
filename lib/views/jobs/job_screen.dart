@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-import 'package:life_book/models/character.dart';
 import 'package:life_book/screens/home/profile_header.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/controllers/job_controller.dart';
 import 'package:life_book/views/jobs/job_model.dart';
@@ -12,7 +12,8 @@ import 'package:life_book/views/jobs/job_model.dart';
 class JobScreen extends StatelessWidget {
   const JobScreen({super.key, required this.player});
 
-  final Character player;
+  // final Character player;
+  final User player;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class JobScreen extends StatelessWidget {
       body: Column(
         children: [
           ProfileHeader(
-            player: controller.player,
+            // player: controller.player,
           ), // Use player from controller
           Container(
             width: double.infinity,

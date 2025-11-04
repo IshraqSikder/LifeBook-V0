@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:life_book/models/character.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/views/jobs/job_model.dart';
 import 'package:life_book/views/jobs/job_popup.dart';
 
 class JobController extends GetxController {
-  final Character player;
+  // final Character player;
+  final User player;
 
   JobController({required this.player});
 
@@ -23,7 +24,8 @@ class JobController extends GetxController {
     if (currentJobs.isEmpty) {
       currentJobs.add(jobItem);
       availableJobItems.remove(jobItem);
-      player.balance.value += jobItem.salary;
+      // player.balance.value += jobItem.salary;
+      player.gameStats.balance += jobItem.salary;
 
       Get.dialog(
         barrierDismissible: true,

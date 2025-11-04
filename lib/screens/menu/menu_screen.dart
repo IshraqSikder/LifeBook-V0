@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/models/character.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class MenuScreen extends StatefulWidget {
-  final Character player;
+  // final Character player;
+  final User player;
   const MenuScreen({super.key, required this.player});
 
   @override

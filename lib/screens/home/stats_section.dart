@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/models/character.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class StatsSection extends StatelessWidget {
-  final Character player;
+  // final Character player;
+  final User player;
   const StatsSection({super.key, required this.player});
 
   @override
@@ -20,7 +21,8 @@ class StatsSection extends StatelessWidget {
           // Column 1: Labels
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: player.allStats.entries
+            // children: player.allStats.entries
+            children: player.gameStats.allStats.entries
                 .map((stat) => _buildStatLabel(stat.key))
                 .toList(),
           ),
@@ -53,9 +55,11 @@ class StatsSection extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: player.allStats.entries
+              // children: player.allStats.entries
+              children: player.gameStats.allStats.entries
                   .map(
                     (stat) =>
+                        // Obx(() => _buildStatProgressBar(stat.value.value)),
                         Obx(() => _buildStatProgressBar(stat.value.value)),
                   )
                   .toList(),

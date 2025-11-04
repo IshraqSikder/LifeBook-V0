@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-import 'package:life_book/controllers/session_controller.dart';
-import 'package:life_book/services/local_service.dart';
 import 'package:life_book/theme.dart';
 
 // No need for a controller if StartScreenNew is just a navigation hub
@@ -14,7 +12,7 @@ class StartScreenNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SessionController controller = Get.find<SessionController>();
+    // final SessionController controller = Get.find<SessionController>();
     return Scaffold(
       body: Center(
         child: Container(
@@ -36,7 +34,7 @@ class StartScreenNew extends StatelessWidget {
                       top: -15.h,
                       left: 50.w,
                       right: 50.w,
-                      child: Center(child: _buildNLB(controller)),
+                      child: Center(child: _buildNLB()),
                     ),
                   ],
                 ),
@@ -48,10 +46,10 @@ class StartScreenNew extends StatelessWidget {
     );
   }
 
-  Widget _buildNLB(SessionController controller) {
+  Widget _buildNLB() {
     return GestureDetector(
       onTap: () {
-        controller.generateSessionToken(); // generate session token
+        // controller.generateSessionToken(); // generate session token
         Get.toNamed('/create'); // go to create character screen
       },
       child: Container(

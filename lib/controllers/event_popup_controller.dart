@@ -40,7 +40,7 @@ class EventPopupController extends GetxController {
     // 1. Apply stat changes to the player character
     if (choice.containsKey("result") &&
         choice["result"] is Map<String, dynamic>) {
-      homeController.player.applyStatChanges(choice["result"]);
+      // homeController.player.applyStatChanges(choice["result"]);
     }
 
     // 2. Add a new LifeStory entry based on the choice flavor
@@ -80,7 +80,7 @@ void showEventPopupGetX(int age) {
       final EventPopupController eventController =
           Get.find<EventPopupController>();
 
-      homeController.player.applyStatChanges(
+      homeController.player.gameStats.applyStatChanges(
         eventController.rndPopupEvent["result"],
       );
 

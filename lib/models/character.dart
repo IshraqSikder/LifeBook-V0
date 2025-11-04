@@ -1,37 +1,29 @@
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:life_book/models/stats.dart';
+// import 'package:get/get.dart';
+// import 'package:life_book/models/stats.dart';
 
-@HiveType(typeId: 0) // New: Add HiveType annotation
-class Character with Stats {
-  @HiveField(0) // New: Add HiveField annotation
-  RxInt _age = 0.obs;
+// class Character with Stats {
+//   RxInt _age = 0.obs;
 
-  @HiveField(1)
-  final String name;
+//   final String name;
+//   final String gender;
+//   final RxInt _balance = 0.obs;
 
-  @HiveField(2)
-  final String gender;
+//   Character({required this.name, required this.gender});
 
-  @HiveField(3)
-  final RxInt _balance = 0.obs;
+//   RxInt get age => _age;
+//   RxInt get balance => _balance;
 
-  Character({required this.name, required this.gender});
+//   // void incrementAge() {
+//   //   _age++;
+//   // }
 
-  RxInt get age => _age;
-  RxInt get balance => _balance;
+//   // factory Character.fromJson(Map<String, dynamic> json) => Character(
+//   //   name: json["name"],
+//   //   gender: json["gender"],
+//   // );
 
-  void incrementAge() {
-    _age++;
-  }
-
-  // factory Character.fromJson(Map<String, dynamic> json) => Character(
-  //   name: json["name"],
-  //   gender: json["gender"],
-  // );
-
-  // Map<String, dynamic> toJson() => {
-  //   "name": name,
-  //   "gender": gender,
-  // };
-}
+//   // Map<String, dynamic> toJson() => {
+//   //   "name": name,
+//   //   "gender": gender,
+//   // };
+// }

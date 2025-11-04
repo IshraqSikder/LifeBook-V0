@@ -4,11 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/death_controller.dart';
-import 'package:life_book/models/character.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class DeathScreen extends StatelessWidget {
-  final Character player;
+  // final Character player;
+  final User player;
 
   const DeathScreen({super.key, required this.player});
 
@@ -18,7 +19,7 @@ class DeathScreen extends StatelessWidget {
     final DeathScreenController controller = Get.put(
       DeathScreenController(player),
     );
-
+    
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 70.h),
       child: Column(
@@ -50,7 +51,8 @@ class DeathScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    player.name,
+                    // player.name,
+                    player.userInfo.name,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.jaro(
                       color: const Color(0xFFDADBD3),
@@ -58,15 +60,15 @@ class DeathScreen extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Text(
-                    'AGED ${player.age} YEARS',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.jaro(
-                      color: const Color(0xFFDADBD3),
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                  // Text(
+                  //   'AGED ${player.age} YEARS',
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.jaro(
+                  //     color: const Color(0xFFDADBD3),
+                  //     fontSize: 24.sp,
+                  //     fontWeight: FontWeight.w400,
+                  //   ),
+                  // ),
                   SizedBox(height: 10.h),
                   Text.rich(
                     TextSpan(
@@ -250,7 +252,8 @@ class DeathScreen extends StatelessWidget {
 }
 
 // Function to show the profile popup using Get.dialog
-void showDeathScreeenPopup(BuildContext context, Character character) {
+// void showDeathScreeenPopup(BuildContext context, Character character) {
+void showDeathScreeenPopup(BuildContext context, User character) {
   Get.dialog(
     DeathScreen(player: character),
     barrierDismissible: true,

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/models/character.dart';
+import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/views/jobs/job_model.dart';
 
 class JobPopup extends StatelessWidget {
-  final Character player;
+  // final Character player;
+  final User player;
   final JobItem item;
 
   const JobPopup({super.key, required this.player, required this.item});
