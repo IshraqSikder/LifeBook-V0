@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:life_book/screens/events/event_popup_list.dart';
+import 'package:life_book/models/event_popup_list.dart';
 import 'package:life_book/views/event/event_choice_popup_new.dart';
-import 'package:life_book/screens/events/event_choice_list.dart';
+import 'package:life_book/models/event_choice_list.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/screens/home/life_story.dart';
 import 'package:life_book/views/event/event_popup.dart';
@@ -40,7 +40,7 @@ class EventPopupController extends GetxController {
     // 1. Apply stat changes to the player character
     if (choice.containsKey("result") &&
         choice["result"] is Map<String, dynamic>) {
-      // homeController.player.applyStatChanges(choice["result"]);
+      homeController.applyStatChanges(choice["result"]);
     }
 
     // 2. Add a new LifeStory entry based on the choice flavor
@@ -70,7 +70,8 @@ void showEventPopupGetX(int age) {
     ).then((value) {
       Get.delete<EventPopupController>(); // Clean up the controller
     });
-  } else if (number > 40 && number <= 100) {
+  } else if (number > 40 && number <= 80) // 40% of chances
+  {
     Get.dialog(
       EventPopupNew(),
       barrierDismissible: true,
@@ -80,9 +81,7 @@ void showEventPopupGetX(int age) {
       final EventPopupController eventController =
           Get.find<EventPopupController>();
 
-      homeController.player.gameStats.applyStatChanges(
-        eventController.rndPopupEvent["result"],
-      );
+      homeController.applyStatChanges(eventController.rndPopupEvent["result"]);
 
       homeController.addLifeStoryEntry(
         LifeStory(
@@ -94,12 +93,4 @@ void showEventPopupGetX(int age) {
       Get.delete<EventPopupController>(); // Clean up the controller
     });
   }
-  // Get.put(EventPopupController(age: age));
-  // Get.dialog(
-  //   EventChoicePopupNew(),
-  //   barrierDismissible: false,
-  //   barrierColor: Colors.black54.withValues(alpha: 0.90),
-  // ).then((value) {
-  //   Get.delete<EventPopupController>(); // Clean up the controller
-  // });
 }

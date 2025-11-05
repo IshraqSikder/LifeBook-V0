@@ -120,11 +120,10 @@ class CreateCharacterScreenNew extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
                 // Use Obx for reactive updates to gender buttons
-                Obx(
-                  () {
-                    final String currentSelectedGender =
+                Obx(() {
+                  final String currentSelectedGender =
                       controller.selectedGender.value;
-                    return Row(
+                  return Row(
                     spacing: 24.w,
                     children: [
                       Expanded(
@@ -135,9 +134,7 @@ class CreateCharacterScreenNew extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 16.w),
                             decoration: BoxDecoration(
-                              color:
-                                  currentSelectedGender ==
-                                      'Male' // Access .value for RxString
+                              color: currentSelectedGender == 'Male'
                                   ? AppColors.greenColor
                                   : const Color(0xFFE2FFE7),
                               borderRadius: BorderRadius.circular(9.r),
@@ -164,9 +161,7 @@ class CreateCharacterScreenNew extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 16.r),
                             decoration: BoxDecoration(
-                              color:
-                                  currentSelectedGender ==
-                                      'Female' // Access .value for RxString
+                              color: currentSelectedGender == 'Female'
                                   ? AppColors.greenColor
                                   : const Color(0xFFE2FFE7),
                               borderRadius: BorderRadius.circular(9.r),
@@ -188,8 +183,7 @@ class CreateCharacterScreenNew extends StatelessWidget {
                       ),
                     ],
                   );
-                  },
-                ),
+                }),
               ],
             ),
             SizedBox(height: 32.h),

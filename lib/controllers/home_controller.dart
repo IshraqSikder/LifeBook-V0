@@ -57,7 +57,7 @@ class HomeController extends GetxController {
     }
 
     // Check for death
-    if (currentLevel.age == 10) {
+    if (currentLevel.age == 35) {
       Get.to(() => DeathScreen(player: player));
     }
   }
@@ -73,10 +73,27 @@ class HomeController extends GetxController {
     return false;
   }
 
+  Map<String, RxInt> get allStats => {
+    "Happiness": player.gameStats.happinessRx,
+    "Health": player.gameStats.healthRx,
+    "Smarts": player.gameStats.smartsRx,
+    "Looks": player.gameStats.looksRx,
+  };
+
+  // Method to apply stat changes
+  void applyStatChanges(Map<String, dynamic> changes) async {
+    changes.forEach((statName, value) {
+      final RxInt? stat = allStats[statName];
+      if (stat != null && value is int) {
+        stat.value += value;
+        stat.value = stat.value.clamp(0, 100);
+      }
+    });
+    await userService.saveUser(player);
+  }
+
   // Method to save player level and diary entry
   Future<void> savePlayerLevel(int currentAge, String diaryEntry) async {
-    // Level currentLevel = player.gameStats.levels.first;
-    // currentLevel.experience.add(diaryEntry);
     final newLevel = Level(age: currentAge, experience: [diaryEntry]);
     player.gameStats.levels.add(newLevel);
     await userService.saveUser(player);

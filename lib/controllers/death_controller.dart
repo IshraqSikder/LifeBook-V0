@@ -3,7 +3,6 @@ import 'package:life_book/services/user.dart';
 import 'package:life_book/services/user_service.dart';
 
 class DeathScreenController extends GetxController {
-  // final Character player;
   final User player;
   DeathScreenController(this.player);
 

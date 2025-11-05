@@ -7,9 +7,9 @@ import 'package:life_book/views/appbar/custom_appbar_new.dart';
 import 'package:life_book/views/home/bottom_navbar_new.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/screens/home/life_story.dart';
-import 'package:life_book/screens/home/profile_header.dart';
-import 'package:life_book/screens/home/stats_section.dart';
-import 'package:life_book/screens/menu/menu_screen.dart';
+import 'package:life_book/views/home/profile_header.dart';
+import 'package:life_book/views/home/stats_section.dart';
+import 'package:life_book/views/menu/menu_screen.dart';
 
 class HomeScreenNew extends StatelessWidget {
   final User player;
@@ -23,8 +23,6 @@ class HomeScreenNew extends StatelessWidget {
     );
 
     final UserService userService = Get.find<UserService>();
-
-    print(userService.activeUser!.gameStats.levels.length);
 
     return Scaffold(
       appBar: CustomAppBarNew(player: controller.player),

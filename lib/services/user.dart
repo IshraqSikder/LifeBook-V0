@@ -65,6 +65,7 @@ class GameStats extends HiveObject {
   @HiveField(5)
   int looks;
 
+  late RxList<Level> levelsRx;
   late RxInt balanceRx;
   late RxInt happinessRx;
   late RxInt healthRx;
@@ -80,6 +81,7 @@ class GameStats extends HiveObject {
     required this.looks,
   }) {
     // Initialize reactive variables from stored values
+    levelsRx = levels.obs;
     balanceRx = balance.obs;
     happinessRx = happiness.obs;
     healthRx = health.obs;
@@ -88,6 +90,7 @@ class GameStats extends HiveObject {
 
     // Listen for changes in RxInts and update the backing int fields
     // This is crucial for syncing changes back to Hive.
+    ever<List<Level>>(levelsRx, (newValue) => levels = newValue);
     ever(balanceRx, (newValue) => balance = newValue);
     ever(happinessRx, (newValue) => happiness = newValue);
     ever(healthRx, (newValue) => health = newValue);
@@ -102,16 +105,16 @@ class GameStats extends HiveObject {
     "Looks": looksRx,
   };
 
-  // Method to apply stat changes
-  void applyStatChanges(Map<String, dynamic> changes) {
-    changes.forEach((statName, value) {
-      final RxInt? stat = allStats[statName];
-      if (stat != null && value is int) {
-        stat.value += value;
-        stat.value = stat.value.clamp(0, 100);
-      }
-    });
-  }
+  // // Method to apply stat changes
+  // void applyStatChanges(Map<String, dynamic> changes) {
+  //   changes.forEach((statName, value) {
+  //     final RxInt? stat = allStats[statName];
+  //     if (stat != null && value is int) {
+  //       stat.value += value;
+  //       stat.value = stat.value.clamp(0, 100);
+  //     }
+  //   });
+  // }
 }
 
 @HiveType(typeId: 3)

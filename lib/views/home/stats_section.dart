@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/services/user.dart';
+import 'package:life_book/services/user_service.dart';
 import 'package:life_book/theme.dart';
 
 class StatsSection extends StatelessWidget {
@@ -12,6 +14,8 @@ class StatsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find<HomeController>();
+    final UserService userService = Get.find<UserService>();
     return Container(
       margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
       child: // Stats section
@@ -22,7 +26,7 @@ class StatsSection extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             // children: player.allStats.entries
-            children: player.gameStats.allStats.entries
+            children: controller.allStats.entries
                 .map((stat) => _buildStatLabel(stat.key))
                 .toList(),
           ),
@@ -56,11 +60,19 @@ class StatsSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               // children: player.allStats.entries
-              children: player.gameStats.allStats.entries
+              children: controller.allStats.entries
                   .map(
                     (stat) =>
                         // Obx(() => _buildStatProgressBar(stat.value.value)),
-                        Obx(() => _buildStatProgressBar(stat.value.value)),
+                        Obx(
+                          () => _buildStatProgressBar(
+                            userService
+                                .activeUser!
+                                .gameStats
+                                .allStats[stat.key]!
+                                .value,
+                          ),
+                        ),
                   )
                   .toList(),
             ),

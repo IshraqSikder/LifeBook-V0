@@ -6,7 +6,6 @@ import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class ActivityPopup extends StatelessWidget {
-  // final Character player;
   final User player;
   final ActivityItem item;
 
@@ -144,7 +143,6 @@ class ActivityPopup extends StatelessWidget {
 // Function to show the activity popup
 Future<dynamic> showActivityPopup(
   BuildContext context,
-  // Character character,
   User character,
   ActivityItem item,
 ) {

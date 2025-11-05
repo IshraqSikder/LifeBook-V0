@@ -1,10 +1,19 @@
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
-class JobItem {
+part 'job_model.g.dart';
+
+@HiveType(typeId: 5)
+class JobItem extends HiveObject {
+  @HiveField(0)
   final String imageUrl;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String subtitle;
+  @HiveField(3)
   final String description;
+  @HiveField(4)
   final int salary;
 
   JobItem({

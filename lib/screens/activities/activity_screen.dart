@@ -4,15 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/screens/activities/activity_model.dart';
 import 'package:life_book/screens/activities/activity_popup.dart';
-import 'package:life_book/screens/home/profile_header.dart';
+import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class ActivityScreen extends StatelessWidget {
-  const ActivityScreen({super.key, required this.player});
-
-  // final Character player;
   final User player;
+
+  const ActivityScreen({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,6 @@ class ActivityScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // ProfileHeader(player: player),
           ProfileHeader(),
           Container(
             width: double.infinity,
@@ -167,11 +165,6 @@ class ActivityScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // Divider(
-                        //   height: 1.h,
-                        //   thickness: 0.50,
-                        //   color: Colors.black,
-                        // ),
                       ],
                     ),
                   ),

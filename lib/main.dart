@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/home/home_new.dart';
+import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/views/jobs/job_service.dart';
 import 'package:life_book/views/start/create_new.dart';
 import 'package:life_book/views/start/start_new.dart';
 import 'package:life_book/theme.dart';
@@ -21,20 +23,24 @@ void main() async {
   Hive.registerAdapter(RelationshipAdapter());
   Hive.registerAdapter(GameStatsAdapter());
   Hive.registerAdapter(LevelAdapter());
+  Hive.registerAdapter(JobItemAdapter());
 
   // Initialize and put your UserService
   // The onInit method of UserService will be called automatically here,
   // handling the box initialization.
-  // Get.put(UserService(), permanent: true);
-
-  // Initialize SessionController
-  // Get.put(SessionController(), permanent: true);
+  // Get.put(UserService(), permanent: true);S
 
   // Use Get.putAsync for UserService because its onInit method is asynchronous
   await Get.putAsync<UserService>(() async {
     final userService = UserService();
     await userService.onInit(); // Explicitly await onInit here
     return userService;
+  }, permanent: true);
+
+  await Get.putAsync<JobService>(() async {
+    final jobService = JobService();
+    await jobService.onInit(); // Explicitly await onInit here
+    return jobService;
   }, permanent: true);
 
   runApp(const LifeBook());

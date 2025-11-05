@@ -3,17 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class ProfilePopup extends StatelessWidget {
-  // final Character player;
   final User player;
 
   const ProfilePopup({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find<HomeController>();
     return Dialog(
       child: Stack(
         clipBehavior: Clip.none,
@@ -129,7 +130,6 @@ class ProfilePopup extends StatelessWidget {
                             player.gameStats.levels.first.age.toString(),
                           ),
                           SizedBox(height: 8),
-                          // _buildProfileDetail('Gender:', player.gender),
                           _buildProfileDetail(
                             'Gender:',
                             player.userInfo.gender,
@@ -148,8 +148,7 @@ class ProfilePopup extends StatelessWidget {
                           // Column 1: Labels
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            // children: player.allStats.entries
-                            children: player.gameStats.allStats.entries
+                            children: controller.allStats.entries
                                 .map((stat) => _buildStatLabel(stat.key))
                                 .toList(),
                           ),
@@ -173,8 +172,7 @@ class ProfilePopup extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              // children: player.allStats.entries
-                              children: player.gameStats.allStats.entries
+                              children: controller.allStats.entries
                                   .map(
                                     (stat) => Obx(
                                       () => _buildStatProgressBar(

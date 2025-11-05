@@ -5,14 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/theme.dart';
 
-// No need for a controller if StartScreenNew is just a navigation hub
-
 class StartScreenNew extends StatelessWidget {
   const StartScreenNew({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final SessionController controller = Get.find<SessionController>();
     return Scaffold(
       body: Center(
         child: Container(
@@ -49,7 +46,6 @@ class StartScreenNew extends StatelessWidget {
   Widget _buildNLB() {
     return GestureDetector(
       onTap: () {
-        // controller.generateSessionToken(); // generate session token
         Get.toNamed('/create'); // go to create character screen
       },
       child: Container(

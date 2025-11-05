@@ -5,35 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
-class MenuScreen extends StatefulWidget {
-  // final Character player;
+class MenuScreen extends StatelessWidget {
   final User player;
+
   const MenuScreen({super.key, required this.player});
-
-  @override
-  State<MenuScreen> createState() => _MenuScreenState();
-}
-
-class _MenuScreenState extends State<MenuScreen> {
-  List<MenuItem> menuItems = [
-    MenuItem(
-      imageUrl: "assets/images/menu/human.png",
-      title: "New Life",
-      subtitle: "Start a new one",
-      iconUrl: "assets/images/menu/threedot.svg",
-    ),
-    MenuItem(
-      imageUrl: "assets/images/menu/mic.png",
-      title: "Sound Effects",
-      subtitle: "Game Sound",
-      iconUrl: "assets/images/menu/correct.svg",
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar(player: widget.player),
       body: Column(
         children: [
           ListView.builder(
@@ -183,3 +162,18 @@ class MenuItem {
     required this.iconUrl,
   });
 }
+
+List<MenuItem> menuItems = [
+  MenuItem(
+    imageUrl: "assets/images/menu/human.png",
+    title: "New Life",
+    subtitle: "Start a new one",
+    iconUrl: "assets/images/menu/threedot.svg",
+  ),
+  MenuItem(
+    imageUrl: "assets/images/menu/mic.png",
+    title: "Sound Effects",
+    subtitle: "Game Sound",
+    iconUrl: "assets/images/menu/correct.svg",
+  ),
+];

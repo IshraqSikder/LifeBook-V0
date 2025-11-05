@@ -43,8 +43,6 @@ class CreateCharacterController extends GetxController {
       // Generate a unique ID
       final int newId = _userService.generateUniqueId();
 
-      print('Generated User ID: $newId');
-
       // Create the UserInfo
       final UserInfo userInfo = UserInfo(
         id: newId,
