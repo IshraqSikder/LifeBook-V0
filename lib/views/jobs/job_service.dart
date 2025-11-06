@@ -1,59 +1,93 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
-import 'package:life_book/views/jobs/job_model.dart'; // Import your JobItem model
+import 'package:life_book/services/user_service.dart';
+import 'package:life_book/views/jobs/job_model.dart';
 
 class JobService extends GetxService {
   static const String _jobBoxName = 'jobItemsBox';
+  static const String _currentJobBoxName = 'currentJobItemBox';
+
   late Box<JobItem> _jobBox;
+  late Box<JobItem> _currentJobBox;
 
   final RxList<JobItem> _availableJobs = <JobItem>[].obs;
   RxList<JobItem> get availableJobs => _availableJobs;
 
-  final RxList<JobItem> _currentJobs = <JobItem>[].obs;
-  RxList<JobItem> get currentJobs => _currentJobs;
+  final Rx<JobItem?> _currentJob = Rx<JobItem?>(null);
+  Rx<JobItem?> get currentJob => _currentJob;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     _jobBox = await Hive.openBox<JobItem>(_jobBoxName);
+    _currentJobBox = await Hive.openBox<JobItem>(_currentJobBoxName);
 
-    // Populate the box with initial data if it's empty
     if (_jobBox.isEmpty) {
       for (var item in initialAvailableJobItems) {
-        await _jobBox.add(item); // Use .add() for auto-incrementing keys
+        await _jobBox.add(item);
       }
     }
-
-    // Load all job items from Hive into the reactive list
     _availableJobs.assignAll(_jobBox.values.toList());
+
+    if (_currentJobBox.isNotEmpty) {
+      _currentJob.value = _currentJobBox.values.first;
+    }
   }
 
-  // Example: Add a new job
-  Future<void> addJob(JobItem job) async {
-    // await _jobBox.add(job);
-    _availableJobs.remove(job);
-    _currentJobs.add(job);
+  Future<void> applyForNewJob(JobItem jobItem) async {
+    if (_currentJob.value != null) {
+      return;
+    }
+
+    await removeJobFromAvailable(jobItem); // remove from jobBox and list
+    await _currentJobBox.clear();
+    await _currentJobBox.add(jobItem);
+    _currentJob.value = jobItem;
   }
 
-  // Example: Get a job by its Hive key (if you used put/get with specific keys)
-  // If you used .add() as above, keys are auto-generated ints.
-  JobItem? getJob(int hiveKey) {
-    return _jobBox.get(hiveKey);
+  Future<void> resignCurrentJob() async {
+    final JobItem? jobToResign = _currentJob.value;
+
+    if (jobToResign == null) {
+      return;
+    }
+
+    await _currentJobBox.clear();
+    _currentJob.value = null;
+
+    await addJobToAvailable(jobToResign); // add to jobBox and list
   }
 
-  // Example: Delete a job
-  Future<void> deleteJob(JobItem job) async {
-    await job.delete(); // If JobItem extends HiveObject, this works
-    _availableJobs.remove(job); // Update the reactive list
+  Future<void> addJobToAvailable(JobItem jobItem) async {
+    await _jobBox.add(jobItem);
+    _availableJobs.add(jobItem);
   }
 
-  // Example: Update a job (assuming you have a way to identify it)
-  // This is trickier if using .add() with auto-generated keys.
-  // If you want to update, you might need to iterate or save by a unique ID field.
-  // For simplicity, if you fetch a JobItem, you can call .save() on it
-  // if it extends HiveObject.
-  // For example:
-  // JobItem existingJob = _availableJobs.firstWhere((j) => j.title == "Trooper");
-  // existingJob.salary = 50000;
-  // await existingJob.save();
+  Future<void> removeJobFromAvailable(JobItem jobItem) async {
+    dynamic jobKey;
+    for (var key in _jobBox.keys) {
+      final item = _jobBox.get(key);
+      if (item?.title == jobItem.title) {
+        jobKey = key;
+        break;
+      }
+    }
+    if (jobKey != null) {
+      await _jobBox.delete(jobKey);
+    }
+    _availableJobs.remove(jobItem);
+  }
+
+  Future<void> clearAllJobData() async {
+    await _jobBox.clear();
+    await _currentJobBox.clear();
+
+    if (_jobBox.isEmpty) {
+      for (var item in initialAvailableJobItems) {
+        await _jobBox.add(item);
+      }
+    }
+    _availableJobs.assignAll(_jobBox.values.toList());
+    _currentJob.value = null;
+  }
 }

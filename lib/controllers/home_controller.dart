@@ -57,9 +57,12 @@ class HomeController extends GetxController {
     }
 
     // Check for death
-    if (currentLevel.age == 35) {
+    if (currentLevel.age == 30) {
       Get.to(() => DeathScreen(player: player));
     }
+
+    // add salary after every age up
+    player.gameStats.balance += player.userInfo.job?.salary ?? 0;
   }
 
   bool _eventOccurs() {

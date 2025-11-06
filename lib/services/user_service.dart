@@ -1,4 +1,3 @@
-// life_book/services/user_service.dart
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:life_book/services/user.dart';
 import 'package:get/get.dart';
@@ -59,5 +58,10 @@ class UserService extends GetxService {
   Future<void> clearActiveUser() async {
     await _sessionBox.delete('activeUserId');
     _activeUser.value = null;
+  }
+
+  Future<void> clearAllUsersData() async {
+    await _userBox.clear();
+    await clearActiveUser();
   }
 }

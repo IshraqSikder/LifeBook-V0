@@ -15,7 +15,6 @@ class EventPopupController extends GetxController {
 
   EventPopupController({required this.age});
 
-  // find HomeController
   final HomeController homeController = Get.find<HomeController>();
 
   @override

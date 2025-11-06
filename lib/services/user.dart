@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:life_book/views/jobs/job_model.dart';
 
 part 'user.g.dart';
 
@@ -14,7 +15,7 @@ class UserInfo extends HiveObject {
   @HiveField(3)
   Map<String, dynamic> school;
   @HiveField(4)
-  Map<String, dynamic> job;
+  JobItem? job;
   @HiveField(5)
   List<dynamic> assets;
   @HiveField(6)
@@ -27,7 +28,7 @@ class UserInfo extends HiveObject {
     required this.name,
     required this.gender,
     required this.school,
-    required this.job,
+    this.job,
     required this.assets,
     required this.relationships,
     required this.activities,
@@ -104,17 +105,6 @@ class GameStats extends HiveObject {
     "Smarts": smartsRx,
     "Looks": looksRx,
   };
-
-  // // Method to apply stat changes
-  // void applyStatChanges(Map<String, dynamic> changes) {
-  //   changes.forEach((statName, value) {
-  //     final RxInt? stat = allStats[statName];
-  //     if (stat != null && value is int) {
-  //       stat.value += value;
-  //       stat.value = stat.value.clamp(0, 100);
-  //     }
-  //   });
-  // }
 }
 
 @HiveType(typeId: 3)

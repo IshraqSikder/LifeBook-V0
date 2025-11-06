@@ -8,6 +8,7 @@ import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/controllers/job_controller.dart';
 import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/views/jobs/job_service.dart';
 
 class JobScreen extends StatelessWidget {
   const JobScreen({super.key, required this.player});
@@ -20,6 +21,8 @@ class JobScreen extends StatelessWidget {
       JobController(player: player),
       permanent: true,
     );
+
+    final JobService jobService = Get.find<JobService>();
 
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +82,7 @@ class JobScreen extends StatelessWidget {
           ),
           // Use Obx to react to changes in currentJobs list
           Obx(
-            () => controller.currentJobs.isEmpty
+            () => jobService.currentJob.value == null
                 ? Container(
                     width: double.infinity,
                     height: 70.h,
@@ -93,16 +96,10 @@ class JobScreen extends StatelessWidget {
                       ),
                     ),
                   )
-                : Expanded(
-                    // Use Expanded if you want the list to fill remaining space
-                    child: ListView.builder(
-                      shrinkWrap: true, // Important for ListView inside Column
-                      itemCount: controller.currentJobs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final item = controller.currentJobs[index];
-                        return _buildJobItem(context, controller, item);
-                      },
-                    ),
+                : _buildJobItem(
+                    context,
+                    controller,
+                    jobService.currentJob.value,
                   ),
           ),
           // Available Jobs Section
@@ -148,7 +145,7 @@ class JobScreen extends StatelessWidget {
   Widget _buildJobItem(
     BuildContext context,
     JobController controller,
-    JobItem item,
+    JobItem? item,
   ) {
     return GestureDetector(
       onTap: () {
@@ -180,7 +177,7 @@ class JobScreen extends StatelessWidget {
                       SizedBox(
                         width: 33.w,
                         height: 33.h,
-                        child: Image.asset(item.imageUrl, fit: BoxFit.contain),
+                        child: Image.asset(item!.imageUrl, fit: BoxFit.contain),
                       ),
                       SizedBox(width: 5.w),
                       Container(

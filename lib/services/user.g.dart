@@ -21,7 +21,7 @@ class UserInfoAdapter extends TypeAdapter<UserInfo> {
       name: fields[1] as String,
       gender: fields[2] as String,
       school: (fields[3] as Map).cast<String, dynamic>(),
-      job: (fields[4] as Map).cast<String, dynamic>(),
+      job: fields[4] as JobItem?,
       assets: (fields[5] as List).cast<dynamic>(),
       relationships: (fields[6] as List).cast<Relationship>(),
       activities: (fields[7] as List).cast<Relationship>(),

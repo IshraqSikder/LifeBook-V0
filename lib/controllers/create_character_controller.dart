@@ -49,7 +49,7 @@ class CreateCharacterController extends GetxController {
         name: nameController.text.trim(),
         gender: selectedGender.value,
         school: {}, // Initialize with empty maps/lists
-        job: {},
+        // job: {},
         assets: [],
         relationships: [],
         activities: [],
