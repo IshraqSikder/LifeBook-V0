@@ -13,7 +13,6 @@ class BottomNavBarNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Find the already initialized HomeController
     final HomeController controller = Get.find<HomeController>();
 
     return SizedBox(
@@ -42,10 +41,10 @@ class BottomNavBarNew extends StatelessWidget {
                               },
                             )
                           : _buildNavBarItem('Job', 'assets/icons/job.svg', () {
-                              // Handle School button tap
+                              // Handle Job button tap
                               Get.to(
                                 () => JobScreen(player: controller.player),
-                              ); // Use Get.to
+                              );
                             }),
                     ),
                     _buildNavBarItem('Assets', 'assets/icons/assets.svg', () {
@@ -170,7 +169,6 @@ class BottomNavBarNew extends StatelessWidget {
           color: AppColors.greenColor,
           shape: BoxShape.circle,
           boxShadow: const [
-            // Use const for fixed lists
             BoxShadow(
               color: Color(0x3F000000),
               blurRadius: 4,

@@ -32,9 +32,6 @@ class HomeController extends GetxController {
 
   // You can also add a getter for the combined description if needed
   String getCombinedDescription(Level entry) {
-    if (agePopupList.containsKey(entry.age)) {
-      return "${entry.experience}\n${agePopupList[entry.age]}";
-    }
     return entry.experience.join('\n');
   }
 
@@ -42,8 +39,17 @@ class HomeController extends GetxController {
   void incrementAge() async {
     Level currentLevel = player.gameStats.levels.first;
     currentLevel.incrementAge();
-    String diaryEntry = "You're now ${currentLevel.age} years old!";
-
+    String diaryEntry;
+    String? ageMessage;
+    if (agePopupList.containsKey(currentLevel.age)) {
+      ageMessage = "${agePopupList[currentLevel.age]}";
+    }
+    // Check if ageMessage is not null & empty
+    if (ageMessage != null && ageMessage.isNotEmpty) {
+      diaryEntry = "You're now ${currentLevel.age} years old!\n$ageMessage";
+    } else {
+      diaryEntry = "You're now ${currentLevel.age} years old!";
+    }
     // Save the age and add the diary entry
     await savePlayerLevel(currentLevel.age, diaryEntry);
 
