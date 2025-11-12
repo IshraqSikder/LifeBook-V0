@@ -1,0 +1,21 @@
+EventID,EventTitle,PopupText,Effect
+1,Stranger's Compliment,A stranger stops you on the street just to compliment your style.,Happiness:+8;Looks:+3
+2,Perfect Night's Sleep,"You get a full 8 hours of deep, restful sleep and wake up feeling amazing.",Health:+8;Happiness:+5
+3,Solved a Puzzle,You spent a few minutes on a brain-teaser puzzle and solved it with a clever insight.,Smarts:+5;Happiness:+3
+4,Clear Skin Day,"You wake up, look in the mirror, and realize you're having a perfect skin day.",Looks:+8;Happiness:+5
+5,Favorite Song,Your absolute favorite song starts playing on the radio at the perfect moment.,Happiness:+10
+6,Delicious Healthy Meal,You ate a delicious meal that was also incredibly healthy and nutritious.,Health:+5;Happiness:+5
+7,Learned a Fun Fact,You learned a fascinating new fact that you can't wait to share with someone.,Smarts:+4
+8,Good Hair Day,"For no particular reason, you are having an exceptionally good hair day.",Looks:+5;Happiness:+5
+9,Public Praise,Your boss or teacher praised your excellent work in front of everyone.,Happiness:+10;Smarts:+3
+10,Post-Workout High,You feel a rush of endorphins and energy after a really great workout.,Health:+10;Happiness:+5
+11,Feeling Witty,"You made a quick, clever joke in a conversation, and everyone laughed.",Smarts:+3;Happiness:+8
+12,Sudden Insight,You suddenly understand a complex topic you have been struggling with for a while.,Smarts:+10;Happiness:+5
+13,Feeling Hydrated,You remembered to drink plenty of water all day and your body feels clean and refreshed.,Health:+5
+14,Pleasant Weather,"The weather is absolutely perfect today, and it puts you in a wonderful mood.",Happiness:+8
+15,Looking Good,"You caught your reflection in a shop window and thought, ""Hey, I look pretty good today.""",Looks:+5;Happiness:+8
+16,Finished a Great Book,You just finished reading an amazing book that left you feeling inspired.,Smarts:+5;Happiness:+5
+17,Successful Skincare,"You tried a new skincare routine, and it's making your face glow.",Looks:+8;Health:+3
+18,Deep Meditation,You took some time to meditate and now feel incredibly calm and focused.,Health:+5;Happiness:+8;Smarts:+2
+19,Quick Recovery,"You felt a cold coming on, but you woke up the next day feeling completely fine.",Health:+10
+20,Natural Charm,You charmed your way through a social situation with ease and confidence.,Happiness:+8;Looks:+3

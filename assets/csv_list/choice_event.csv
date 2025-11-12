@@ -1,0 +1,30 @@
+EventID,EventTitle,PopupText,ChoiceAText,ChoiceAEffect,ChoiceBText,ChoiceBEffect
+1,Cold,"Your nose is runny, your throat is scratchy, and you can't stop sneezing. You've definitely caught a cold.",Take some medicine.,Health:+10;Happiness:-3,Power through the day.,Health:-5;Happiness:-5
+2,Injury,You tripped and twisted your ankle. It's swelling up and hurts to walk on.,Go to a doctor.,Health:+15;Happiness:-5,Rest and hope it heals.,Health:-8;Happiness:-8
+3,Vaccination,A clinic is offering the annual flu shot. It can prevent you from getting sick later.,Get the shot.,Health:+5;Happiness:-3,Skip it this year.,Health:-3
+4,Waiting Game,You're stuck in an incredibly long and slow-moving line at the post office.,Wait patiently.,Happiness:-8,Give up and leave.,Happiness:-5
+5,Playing Game with Friend,"You're in a close, competitive game with a friend. You have a clear chance to win.",Crush them and take the win.,Happiness:+8,Let them win to be nice.,Happiness:-5
+6,Shopping with Mom,Your mom wants you to go clothes shopping with her for hours.,Go and try to be helpful.,Happiness:-8,Make an excuse not to go.,Happiness:-5
+7,Giving Money to Friend,Your friend is complaining about their old clothes and wants to go shopping.,Offer to help them find a new style.,Happiness:+5,Say you're too busy to help.,Happiness:-5
+8,Eye Glass,You've been squinting to read things lately and getting headaches. You might need glasses.,Get an eye exam.,Health:+8;Looks:-5;Smarts:+3,Just squint and deal with it.,Health:-5;Happiness:-5
+9,Bully in School/College,A bully is consistently harassing you between classes.,Stand up to them.,Health:-10;Happiness:+10,Ignore them and walk away.,Happiness:-10
+10,Argument with Family,You're in a pointless argument with a family member over the TV remote.,Apologize to end the fight.,Happiness:-10,Double down and insist you're right.,Happiness:-5
+11,Argument with Friend,"After a big disagreement, your friend isn't speaking to you.",Reach out to them to talk.,Happiness:+5,Wait for them to apologize.,Happiness:-8
+12,Vending Machine,"You're standing in front of a vending machine, craving a snack.",Get the sugary candy bar.,Happiness:+5;Health:-3,Get the healthy granola bar.,Health:+3;Happiness:-3
+13,Friend's Call for Hangout,"You were about to go to bed, but your friend calls asking to hang out right now.",Go hang out with them.,Happiness:+10;Health:-5,Say you're too tired and stay in.,Health:+5;Happiness:-5
+14,Phone Screen Cracked,You dropped your phone and the screen is now a web of ugly cracks.,Get it repaired.,Happiness:-5,Learn to live with the cracks.,Happiness:-8
+15,Forgot Friend's Birthday,You just realized that yesterday was your good friend's birthday and you forgot.,Call them immediately to apologize.,Happiness:-5,Just send a late text.,Happiness:-10
+16,Parents' Anniversary,You remembered it's your parents' anniversary today.,Make them a thoughtful card.,Happiness:+8,Send them a quick text message.,Happiness:-3
+17,Big Exam Coming Up,You have a final exam next week that you are not prepared for.,Create a strict study schedule.,Smarts:+8;Happiness:-8,Just cram the night before.,Smarts:+2;Health:-5
+18,Form a Study Group,A classmate suggests forming a study group for the big exam.,Join the group.,Smarts:+5;Happiness:-3,Decide to study alone.,Smarts:+3
+19,Street Vendor Selling,A street vendor is selling food that smells amazing but looks a little questionable.,Buy it and take a chance.,Happiness:+8;Health:-5,Play it safe and walk away.,Health:+1
+20,Shirt Has a Hole,"You notice your favorite shirt has a small, noticeable hole in it.",Try to patch it up neatly.,Smarts:+3;Happiness:+3,Wear it with the hole.,Looks:-5;Happiness:-3
+21,Barber,You're at the barber and it's time to decide on your next haircut.,"Try a bold, new hairstyle.",Looks: +10;Happiness:-5,"Get your usual, safe haircut.",Looks: +3
+22,Charity Worker Donation,A charity worker on the street asks for a moment of your time.,Stop and listen to their cause.,Happiness:+5,Politely say you're in a hurry.,Happiness:-3
+23,Kitchen is Dirty,"The kitchen is a disaster zone, with dirty dishes and food scraps everywhere.",Spend an hour cleaning it up.,Happiness:+10;Health:-3,Leave it for tomorrow.,Happiness:-8;Health:-3
+24,High School Reunion,You received an invitation to your 10-year high school reunion.,RSVP that you will attend.,Happiness:+10;Looks: +5,Throw the invitation away.,Happiness:-5
+25,Friend's Long Story,Your friend launches into a very long and incredibly boring story.,Listen patiently until the end.,Happiness:-8,Make an excuse to leave.,Happiness:-3
+26,Free Evening Plan,You have a completely free evening with nothing scheduled.,Spend it learning a new skill.,Smarts:+5;Happiness:-3,Binge-watch a new TV show.,Happiness:+8
+27,Local Museum,The local museum is featuring a new exhibit on world history.,Spend the afternoon there.,Smarts:+8;Happiness:-3,Decide that sounds boring.,Smarts:-1
+28,Friend's Puzzle,A friend gives you a complex brain-teaser puzzle and challenges you to solve it.,Dedicate time to solving it.,Smarts:+10;Happiness:-5,Give up after a few minutes.,Smarts:-3
+29,Learn New Language,You have an opportunity to sign up for a class to learn a new language.,Commit to the daily lessons.,Smarts:+15;Happiness:-10,Decide it's too much effort.,Happiness:+3

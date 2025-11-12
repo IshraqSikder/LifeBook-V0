@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
 import 'package:life_book/theme.dart';
 
-class EventPopupNew extends StatelessWidget {
-  const EventPopupNew({super.key});
+class EventPopup extends StatelessWidget {
+  const EventPopup({super.key});
 
   @override
   Widget build(BuildContext context) {

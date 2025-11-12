@@ -124,8 +124,7 @@ class Level extends HiveObject {
   }
 
   void incrementAge() {
-    // age++;
-    ageRx.value++; // keep Hive value in sync
+    ageRx.value++;
   }
 }
 

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
-import 'package:life_book/models/age_popup_list.dart';
+import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/death/death_screen.dart';
@@ -20,6 +20,14 @@ class HomeController extends GetxController {
 
   final UserService userService = Get.find<UserService>();
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await loadAgePopup();
+    await loadPositiveEvent();
+    await loadChoiceEvent();
+  }
+
   // Method to toggle the menu state
   void toggleMenu() {
     isMenuToggled.value = !isMenuToggled.value;
@@ -30,26 +38,29 @@ class HomeController extends GetxController {
     lifeStoryDiaryEntries.add(newStoryEntry);
   }
 
-  // You can also add a getter for the combined description if needed
   String getCombinedDescription(Level entry) {
     return entry.experience.join('\n');
   }
 
-  // New method to handle the age increment logic from FAB
   void incrementAge() async {
     Level currentLevel = player.gameStats.levels.first;
     currentLevel.incrementAge();
     String diaryEntry;
-    String? ageMessage;
-    if (agePopupList.containsKey(currentLevel.age)) {
-      ageMessage = "${agePopupList[currentLevel.age]}";
-    }
+
+    // Find matching age entry from the list
+    var ageEntry = agePopupList.firstWhere(
+      (item) => item['age'] == currentLevel.age,
+      orElse: () => {},
+    );
+
     // Check if ageMessage is not null & empty
-    if (ageMessage != null && ageMessage.isNotEmpty) {
-      diaryEntry = "You're now ${currentLevel.age} years old!\n$ageMessage";
+    if (ageEntry.isNotEmpty && ageEntry['ageMessage'] != null) {
+      diaryEntry =
+          "You're now ${currentLevel.age} years old!\n${ageEntry['ageMessage']}";
     } else {
       diaryEntry = "You're now ${currentLevel.age} years old!";
     }
+
     // Save the age and add the diary entry
     await savePlayerLevel(currentLevel.age, diaryEntry);
 

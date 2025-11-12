@@ -1,12 +1,11 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:life_book/models/event_popup_list.dart';
-import 'package:life_book/views/event/event_choice_popup_new.dart';
-import 'package:life_book/models/event_choice_list.dart';
+import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/views/event/choice_event_popup.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/screens/home/life_story.dart';
-import 'package:life_book/views/event/event_popup.dart';
+import 'package:life_book/views/event/positive_event_popup.dart';
 
 class EventPopupController extends GetxController {
   final int age;
@@ -18,28 +17,30 @@ class EventPopupController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _initializeEvent();
   }
 
   void _initializeEvent() {
     final random = math.Random();
-    rndChoiceIndex = random.nextInt(
-      eventsChoiceList.length,
-    ); // 0-indexed event choice list
-    rndChoiceEvent = eventsChoiceList[rndChoiceIndex].obs;
-    rndPopupIndex = random.nextInt(
-      eventsPopupList.length,
-    ); // 0-indexed event popup list
-    rndPopupEvent = eventsPopupList[rndPopupIndex].obs;
+    // for choiceEvent
+    rndChoiceIndex = random.nextInt(choiceEventList.length);
+    rndChoiceEvent = choiceEventList[rndChoiceIndex].obs;
+
+    // for positiveEvent
+    rndPopupIndex = random.nextInt(positiveEventList.length);
+    rndPopupEvent = positiveEventList[rndPopupIndex].obs;
   }
 
-  void handleChoice(Map<String, dynamic> choice) {
+  void handleChoice(choiceKey) {
     // 1. Apply stat changes to the player character
-    if (choice.containsKey("result") &&
-        choice["result"] is Map<String, dynamic>) {
-      homeController.applyStatChanges(choice["result"]);
+    String? effectString =
+        rndChoiceEvent[choiceKey == 'A' ? 'choiceAEffect' : 'choiceBEffect'];
+
+    if (effectString != null) {
+      final effects = parseEffects(effectString);
+      homeController.applyStatChanges(effects);
     }
 
     // 2. Add a new LifeStory entry based on the choice flavor
@@ -47,9 +48,10 @@ class EventPopupController extends GetxController {
       LifeStory(
         description: "You're now $age years old!",
         age: age,
-        flavor: choice["flavor"],
+        // flavor: choice["flavor"],
       ),
     );
+
     // 3. After handling the choice, dismiss the dialog
     Get.back();
   }
@@ -63,16 +65,16 @@ void showEventPopupGetX(int age) {
   if (number <= 40) // 40% of chances
   {
     Get.dialog(
-      EventChoicePopupNew(),
+      EventChoicePopup(),
       barrierDismissible: false,
       barrierColor: Colors.black54.withValues(alpha: 0.90),
     ).then((value) {
-      Get.delete<EventPopupController>(); // Clean up the controller
+      Get.delete<EventPopupController>();
     });
   } else if (number > 40 && number <= 80) // 40% of chances
   {
     Get.dialog(
-      EventPopupNew(),
+      EventPopup(),
       barrierDismissible: true,
       barrierColor: Colors.black54.withValues(alpha: 0.90),
     ).then((value) {
@@ -80,7 +82,12 @@ void showEventPopupGetX(int age) {
       final EventPopupController eventController =
           Get.find<EventPopupController>();
 
-      homeController.applyStatChanges(eventController.rndPopupEvent["result"]);
+      String? effectString = eventController.rndPopupEvent["popupEffectString"];
+
+      if (effectString != null) {
+        final effects = parseEffects(effectString);
+        homeController.applyStatChanges(effects);
+      }
 
       homeController.addLifeStoryEntry(
         LifeStory(
@@ -89,7 +96,7 @@ void showEventPopupGetX(int age) {
           flavor: eventController.rndPopupEvent["flavor"],
         ),
       );
-      Get.delete<EventPopupController>(); // Clean up the controller
+      Get.delete<EventPopupController>();
     });
   }
 }
