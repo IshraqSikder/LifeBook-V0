@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/screens/activities/activity_model.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/controllers/home_controller.dart';
+import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/services/user_service.dart';
 import 'package:life_book/theme.dart';
 
 class ActivityPopup extends StatelessWidget {
-  final User player;
-  final ActivityItem item;
+  final Map<String, dynamic> item;
+  final Map<String, int> effects;
 
-  const ActivityPopup({super.key, required this.player, required this.item});
+  const ActivityPopup({super.key, required this.item, required this.effects});
 
   @override
   Widget build(BuildContext context) {
+    final UserService userService = Get.find<UserService>();
+
+    String effectStatKey = effects.entries.first.key;
+
+    int effectStatValue =
+        userService.activeUser!.gameStats.allStats[effectStatKey]!.value;
+
+    double currentStatPercentage = (effectStatValue) / 100;
+
     return Dialog(
       child: Container(
         width: 305.w,
-        height: 275.h,
+        height: 285.h,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -33,7 +44,7 @@ class ActivityPopup extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
               // Activity Title
               child: Text(
-                item.title,
+                item["title"],
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   color: Color(0xFF176FD1),
@@ -42,12 +53,10 @@ class ActivityPopup extends StatelessWidget {
                 ),
               ),
             ),
-            // SizedBox(height: 16.h),
             Container(
-              width: 240.w,
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               child: Text(
-                item.description,
+                item["description"],
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   color: Colors.black,
@@ -56,7 +65,7 @@ class ActivityPopup extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 15.h),
             Container(
               width: double.infinity,
               height: 24.h,
@@ -75,7 +84,7 @@ class ActivityPopup extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    item.price.toString(),
+                    '\$${item["price"]}',
                     style: GoogleFonts.inter(
                       color: AppColors.brownColor,
                       fontSize: 12.sp,
@@ -88,14 +97,13 @@ class ActivityPopup extends StatelessWidget {
             SizedBox(height: 16.h),
             SizedBox(
               width: double.infinity,
-              height: 40.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Smarts',
+                    effectStatKey,
                     textAlign: TextAlign.right,
                     style: GoogleFonts.inter(
                       color: AppColors.blueColor,
@@ -112,15 +120,15 @@ class ActivityPopup extends StatelessWidget {
                         decoration: BoxDecoration(color: Colors.grey.shade300),
                       ),
                       Container(
-                        width: (170 * 0.40).w,
+                        width: (170 * currentStatPercentage).w,
                         height: 20.h,
-                        decoration: 0.40 >= 0.20
+                        decoration: currentStatPercentage >= 0.20
                             ? BoxDecoration(color: AppColors.greenColor)
                             : BoxDecoration(color: AppColors.orangeColor),
                         alignment: Alignment.centerRight,
                         padding: EdgeInsets.only(right: 5.w),
                         child: Text(
-                          '${(0.40 * 100).toInt()}%',
+                          '${(currentStatPercentage * 100).toInt()}%',
                           style: GoogleFonts.inter(
                             color: Colors.white,
                             fontSize: 10.sp,
@@ -143,15 +151,23 @@ class ActivityPopup extends StatelessWidget {
 // Function to show the activity popup
 Future<dynamic> showActivityPopup(
   BuildContext context,
-  User character,
-  ActivityItem item,
+  Map<String, dynamic> item,
 ) {
+  final HomeController homeController = Get.find<HomeController>();
+
+  // Apply Stats Changes
+  String? effectString = item["effect"];
+  Map<String, int> parsedEffects = {}; // Initialize an empty map
+  if (effectString != null) {
+    parsedEffects = parseEffects(effectString);
+    homeController.applyStatChanges(parsedEffects);
+  }
   return showDialog(
     context: context,
     barrierDismissible: true,
     barrierColor: Colors.black54.withValues(alpha: 0.95),
     builder: (BuildContext context) {
-      return ActivityPopup(player: character, item: item);
+      return ActivityPopup(item: item, effects: parsedEffects);
     },
   );
 }

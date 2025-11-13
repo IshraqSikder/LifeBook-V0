@@ -28,3 +28,11 @@ Future<List<List<dynamic>>> loadPositiveEventCSV() async {
   ).convert(rawData);
   return listData;
 }
+
+Future<List<List<dynamic>>> loadActivityCSV() async {
+  final rawData = await rootBundle.loadString("assets/csv_list/activity_list.csv");
+  final List<List<dynamic>> listData = const CsvToListConverter(
+    eol: '\n',
+  ).convert(rawData);
+  return listData;
+}

@@ -26,6 +26,7 @@ class HomeController extends GetxController {
     await loadAgePopup();
     await loadPositiveEvent();
     await loadChoiceEvent();
+    await loadActivity();
   }
 
   // Method to toggle the menu state

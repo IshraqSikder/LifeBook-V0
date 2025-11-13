@@ -28,7 +28,9 @@ void main() async {
   // Initialize and put your UserService
   // The onInit method of UserService will be called automatically here,
   // handling the box initialization.
-  // Get.put(UserService(), permanent: true);S
+  // Get.put(UserService(), permanent: true);
+
+  // await Hive.deleteBoxFromDisk('usersBox');
 
   // Use Get.putAsync for UserService because its onInit method is asynchronous
   await Get.putAsync<UserService>(() async {

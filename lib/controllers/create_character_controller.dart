@@ -50,6 +50,7 @@ class CreateCharacterController extends GetxController {
         gender: selectedGender.value,
         school: {}, // Initialize with empty maps/lists
         // job: {},
+        job: null,
         assets: [],
         relationships: [],
         activities: [],

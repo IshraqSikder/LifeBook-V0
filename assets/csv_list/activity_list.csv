@@ -1,0 +1,5 @@
+Id,ImageUrl,Title,Subtitle,Description,Price,Effect
+1,book,Read A Book,"Find a good book and read it ($250)","You read about simple strategies for building wealth and investing wisely. You feel more knowledgeable about managing your money.",250,Smarts:+2
+2,movie,Watch A Movie,"Go see a movie ($550)","You spent the entire movie laughing out loud at the ridiculous jokes and hilarious situations. Your mood has significantly improved.",550,Happiness:+2
+3,gym,Go To The Gym,"Work out at the gym ($350)","You focused on lifting heavy weights, pushing your muscles to their absolute limit. You can already feel the gains!",350,Health:+2
+4,skincare,Do Skin Care,"Take time for yourself ($150)","You did the essentials: cleanser, toner, and moisturizer. Your skin feels clean, fresh, and hydrated.",150,Looks:+2

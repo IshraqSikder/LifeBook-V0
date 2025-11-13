@@ -4,6 +4,7 @@ import 'package:life_book/services/load_CSV.dart';
 RxList<Map<String, dynamic>> agePopupList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> choiceEventList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> positiveEventList = <Map<String, dynamic>>[].obs;
+RxList<Map<String, dynamic>> activityList = <Map<String, dynamic>>[].obs;
 
 Future<void> loadAgePopup() async {
   final data = await loadAgePopupCSV();
@@ -62,4 +63,22 @@ Map<String, int> parseEffects(String effectString) {
     }
   }
   return effects;
+}
+
+Future<void> loadActivity() async {
+  final data = await loadActivityCSV();
+  // final headers = data.first;
+  final rows = data.skip(1);
+
+  activityList.value = rows.map((row) {
+    return {
+      'id': row[0],
+      'imageUrl': row[1],
+      'title': row[2],
+      'subtitle': row[3],
+      'description': row[4],
+      'price': row[5],
+      'effect': row[6],
+    };
+  }).toList();
 }

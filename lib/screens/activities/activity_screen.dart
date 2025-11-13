@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/screens/activities/activity_model.dart';
+import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/screens/activities/activity_popup.dart';
+import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
@@ -15,6 +17,8 @@ class ActivityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.find<HomeController>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.profileHeaderColor,
@@ -72,13 +76,19 @@ class ActivityScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: activityItems.length,
+              itemCount: activityList.length,
               itemBuilder: (BuildContext context, int index) {
-                final item = activityItems[index];
+                final item = activityList[index];
                 return GestureDetector(
                   onTap: () {
                     // Handle icon tap
-                    showActivityPopup(context, player, item);
+                    showActivityPopup(context, item);
+                    // // Apply Stats Changes
+                    // String? effectString = item["effect"];
+                    // if (effectString != null) {
+                    //   final effects = parseEffects(effectString);
+                    //   homeController.applyStatChanges(effects);
+                    // }
                   },
                   child: Container(
                     width: double.infinity,
@@ -112,7 +122,7 @@ class ActivityScreen extends StatelessWidget {
                                     width: 35.w,
                                     height: 35.h,
                                     child: Image.asset(
-                                      item.imageUrl,
+                                      "assets/images/activities/${item["imageUrl"]}.png",
                                       fit: BoxFit.contain,
                                     ),
                                   ),
@@ -130,7 +140,7 @@ class ActivityScreen extends StatelessWidget {
                                       children: [
                                         // title
                                         Text(
-                                          item.title,
+                                          item["title"],
                                           style: GoogleFonts.inter(
                                             color: AppColors.blueColor,
                                             fontSize: 17.sp,
@@ -139,7 +149,7 @@ class ActivityScreen extends StatelessWidget {
                                         ),
                                         // subtitle
                                         Text(
-                                          item.subtitle,
+                                          item["subtitle"],
                                           style: GoogleFonts.inter(
                                             color: AppColors.blueColor,
                                             fontSize: 12.sp,

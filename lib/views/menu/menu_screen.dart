@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/controllers/death_controller.dart';
 import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
@@ -12,104 +14,20 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DeathScreenController controller = Get.put(
+      DeathScreenController(player),
+    );
+
     return Scaffold(
       body: Column(
         children: [
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: menuItems.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = menuItems[index];
-              return Container(
-                width: double.infinity,
-                height: 70.h,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1.w,
-                      color: Colors.black,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
-                  borderRadius: BorderRadius.zero,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15.w,
-                        vertical: 10.h,
-                      ),
-                      child: Row(
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            spacing: 5.w,
-                            children: [
-                              // image
-                              SizedBox(
-                                width: 35.w,
-                                height: 35.h,
-                                child: Image.asset(
-                                  item.imageUrl,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 4.w),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 4.h,
-                                  children: [
-                                    // title
-                                    Text(
-                                      item.title,
-                                      style: GoogleFonts.inter(
-                                        color: AppColors.blueColor,
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    // subtitle
-                                    Text(
-                                      item.subtitle,
-                                      style: GoogleFonts.inter(
-                                        color: AppColors.blueColor,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.36.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          // icon
-                          SizedBox(
-                            width: 35.w,
-                            height: 35.h,
-                            child: SvgPicture.asset(
-                              item.iconUrl,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
+          GestureDetector(
+            onTap: () {
+              controller.endGame();
             },
-          ),
+            child: _buildMenuItem(menuItems[0]),
+          ), // Start New Life
+          _buildMenuItem(menuItems[1]), // Sound Effects
           Container(
             width: double.infinity,
             height: 68.h,
@@ -125,12 +43,13 @@ class MenuScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 10.w,
+              // Use a fixed width for spacing instead of `spacing` property for Row
               children: [
                 Image.asset(
                   "assets/images/menu/group.png",
                   fit: BoxFit.contain,
                 ),
+                SizedBox(width: 10.w), // Manual spacing
                 Text(
                   'About Us!',
                   textAlign: TextAlign.center,
@@ -147,6 +66,90 @@ class MenuScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildMenuItem(MenuItem item) {
+  return Container(
+    width: double.infinity,
+    height: 70.h,
+    decoration: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          width: 1.w,
+          color: Colors.black,
+          style: BorderStyle.solid,
+        ),
+      ),
+      borderRadius: BorderRadius.zero,
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+          child: Row(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // Use a fixed width for spacing instead of `spacing` property for Row
+                children: [
+                  // image
+                  SizedBox(
+                    width: 35.w,
+                    height: 35.h,
+                    child: Image.asset(item.imageUrl, fit: BoxFit.contain),
+                  ),
+                  SizedBox(width: 5.w), // Manual spacing
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // Use a fixed height for spacing instead of `spacing` property for Column
+                      children: [
+                        // title
+                        Text(
+                          item.title,
+                          style: GoogleFonts.inter(
+                            color: AppColors.blueColor,
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 4.h), // Manual spacing
+                        // subtitle
+                        Text(
+                          item.subtitle,
+                          style: GoogleFonts.inter(
+                            color: AppColors.blueColor,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0.36.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              // icon
+              SizedBox(
+                width: 35.w,
+                height: 35.h,
+                child: SvgPicture.asset(item.iconUrl, fit: BoxFit.contain),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 class MenuItem {
