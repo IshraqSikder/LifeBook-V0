@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/views/jobs/job_model.dart';
 
 class JobPopup extends StatelessWidget {
-  // final Character player;
   final User player;
   final JobItem item;
 
@@ -30,7 +29,6 @@ class JobPopup extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              // width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
               // Job Title
               child: Text(

@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/controllers/home_controller.dart';
-import 'package:life_book/screens/activities/activity_popup.dart';
+import 'package:life_book/views/activities/activity_popup.dart';
 import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/views/home/profile_header.dart';
-import 'package:life_book/services/user.dart';
 import 'package:life_book/theme.dart';
 
 class ActivityScreen extends StatelessWidget {
-  final User player;
-
-  const ActivityScreen({super.key, required this.player});
+  const ActivityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.find<HomeController>();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.profileHeaderColor,
@@ -83,12 +76,6 @@ class ActivityScreen extends StatelessWidget {
                   onTap: () {
                     // Handle icon tap
                     showActivityPopup(context, item);
-                    // // Apply Stats Changes
-                    // String? effectString = item["effect"];
-                    // if (effectString != null) {
-                    //   final effects = parseEffects(effectString);
-                    //   homeController.applyStatChanges(effects);
-                    // }
                   },
                   child: Container(
                     width: double.infinity,

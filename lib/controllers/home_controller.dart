@@ -2,10 +2,10 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
 import 'package:life_book/services/CSV_services.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/death/death_screen.dart';
-import 'package:life_book/screens/home/life_story.dart';
+import 'package:life_book/views/home/life_story.dart';
 
 class HomeController extends GetxController {
   final User player;
@@ -27,6 +27,7 @@ class HomeController extends GetxController {
     await loadPositiveEvent();
     await loadChoiceEvent();
     await loadActivity();
+    await loadAsset();
   }
 
   // Method to toggle the menu state

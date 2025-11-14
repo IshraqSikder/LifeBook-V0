@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/asset_model.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/home/home.dart';
 import 'package:life_book/views/jobs/job_model.dart';
@@ -24,6 +25,7 @@ void main() async {
   Hive.registerAdapter(GameStatsAdapter());
   Hive.registerAdapter(LevelAdapter());
   Hive.registerAdapter(JobItemAdapter());
+  Hive.registerAdapter(AssetModelAdapter());
 
   // Initialize and put your UserService
   // The onInit method of UserService will be called automatically here,

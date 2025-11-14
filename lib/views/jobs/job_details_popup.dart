@@ -115,7 +115,6 @@ class JobDetailsPopup extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // controller.resignJob(item);
                             controller.resignJob();
                           },
                           style: ElevatedButton.styleFrom(

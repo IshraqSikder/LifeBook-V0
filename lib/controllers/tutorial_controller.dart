@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/views/home/home.dart';
 
 class TutorialScreenController extends GetxController {

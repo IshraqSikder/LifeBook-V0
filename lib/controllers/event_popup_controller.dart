@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/views/event/choice_event_popup.dart';
 import 'package:life_book/controllers/home_controller.dart';
-import 'package:life_book/screens/home/life_story.dart';
+import 'package:life_book/views/home/life_story.dart';
 import 'package:life_book/views/event/positive_event_popup.dart';
 
 class EventPopupController extends GetxController {

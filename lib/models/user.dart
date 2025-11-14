@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/views/jobs/job_model.dart';
 
 part 'user.g.dart';
@@ -8,18 +9,25 @@ part 'user.g.dart';
 class UserInfo extends HiveObject {
   @HiveField(0)
   int id;
+
   @HiveField(1)
   String name;
+
   @HiveField(2)
   String gender;
+
   @HiveField(3)
   Map<String, dynamic> school;
+
   @HiveField(4)
   JobItem? job;
+
   @HiveField(5)
-  List<dynamic> assets;
+  AssetModel? assets;
+
   @HiveField(6)
   List<Relationship> relationships;
+
   @HiveField(7)
   List<Relationship> activities;
 
@@ -29,7 +37,7 @@ class UserInfo extends HiveObject {
     required this.gender,
     required this.school,
     this.job,
-    required this.assets,
+    this.assets,
     required this.relationships,
     required this.activities,
   });
@@ -39,8 +47,10 @@ class UserInfo extends HiveObject {
 class Relationship extends HiveObject {
   @HiveField(0)
   String type;
+
   @HiveField(1)
   String relation;
+
   @HiveField(2)
   String name;
 
@@ -55,14 +65,19 @@ class Relationship extends HiveObject {
 class GameStats extends HiveObject {
   @HiveField(0)
   List<Level> levels;
+
   @HiveField(1)
   int balance;
+
   @HiveField(2)
   int happiness;
+
   @HiveField(3)
   int health;
+
   @HiveField(4)
   int smarts;
+
   @HiveField(5)
   int looks;
 
@@ -111,6 +126,7 @@ class GameStats extends HiveObject {
 class Level extends HiveObject {
   @HiveField(0)
   int age;
+
   @HiveField(1)
   List<String> experience;
 
@@ -132,6 +148,7 @@ class Level extends HiveObject {
 class User extends HiveObject {
   @HiveField(0)
   UserInfo userInfo;
+
   @HiveField(1)
   GameStats gameStats;
 

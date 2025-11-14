@@ -3,10 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/screens/activities/activity_screen.dart';
+import 'package:life_book/views/activities/activity_screen.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/views/jobs/job_screen.dart';
+import 'package:life_book/views/real_estates/asset_screen.dart';
 
 class BottomNavBarNew extends StatelessWidget {
   const BottomNavBarNew({super.key});
@@ -30,7 +31,6 @@ class BottomNavBarNew extends StatelessWidget {
                 Row(
                   children: [
                     Obx(
-                      // () => controller.player.age < 24
                       () =>
                           controller.player.gameStats.levels.first.age.obs < 24
                           ? _buildNavBarItem(
@@ -49,6 +49,7 @@ class BottomNavBarNew extends StatelessWidget {
                     ),
                     _buildNavBarItem('Assets', 'assets/icons/assets.svg', () {
                       // Handle Assets button tap
+                      Get.to(() => AssetScreen(player: controller.player));
                     }),
                   ],
                 ),
@@ -66,9 +67,7 @@ class BottomNavBarNew extends StatelessWidget {
                       'Activities',
                       'assets/icons/activities.svg',
                       () {
-                        Get.to(
-                          () => ActivityScreen(player: controller.player),
-                        ); // Use Get.to
+                        Get.to(() => ActivityScreen());
                       },
                     ),
                   ],
@@ -80,9 +79,7 @@ class BottomNavBarNew extends StatelessWidget {
             top: -15.h,
             left: 40.w,
             right: 40.w,
-            child: Center(
-              child: _buildFAB(controller),
-            ), // Pass controller to FAB
+            child: Center(child: _buildFAB(controller)),
           ),
         ],
       ),
@@ -155,11 +152,10 @@ class BottomNavBarNew extends StatelessWidget {
     );
   }
 
-  // Pass HomeController to _buildFAB
   Widget _buildFAB(HomeController controller) {
     return GestureDetector(
       onTap: () {
-        controller.incrementAge(); // Call the controller's method
+        controller.incrementAge(); // increment age
       },
       child: Container(
         width: 90.w,

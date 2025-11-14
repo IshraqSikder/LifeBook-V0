@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/death_controller.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 
 class DeathScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class DeathScreen extends StatelessWidget {
     final DeathScreenController controller = Get.put(
       DeathScreenController(player),
     );
-    
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 70.h),
       child: Column(

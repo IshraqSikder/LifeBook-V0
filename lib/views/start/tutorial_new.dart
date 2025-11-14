@@ -173,7 +173,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/tutorial_controller.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 
 class TutorialScreenNew extends StatelessWidget {

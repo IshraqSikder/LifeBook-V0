@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/appbar/custom_appbar.dart';
 import 'package:life_book/views/home/bottom_navbar.dart';
 import 'package:life_book/controllers/home_controller.dart';
-import 'package:life_book/screens/home/life_story.dart';
+import 'package:life_book/views/home/life_story.dart';
 import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/views/home/stats_section.dart';
 import 'package:life_book/views/menu/menu_screen.dart';

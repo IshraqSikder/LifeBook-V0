@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:life_book/services/user.dart';
+import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/start/tutorial_new.dart';
 
@@ -49,9 +49,8 @@ class CreateCharacterController extends GetxController {
         name: nameController.text.trim(),
         gender: selectedGender.value,
         school: {}, // Initialize with empty maps/lists
-        // job: {},
         job: null,
-        assets: [],
+        assets: null,
         relationships: [],
         activities: [],
       );

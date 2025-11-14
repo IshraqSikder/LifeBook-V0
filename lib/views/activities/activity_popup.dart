@@ -115,12 +115,12 @@ class ActivityPopup extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        width: 170.w,
+                        width: 160.w,
                         height: 20.h,
                         decoration: BoxDecoration(color: Colors.grey.shade300),
                       ),
                       Container(
-                        width: (170 * currentStatPercentage).w,
+                        width: (160 * currentStatPercentage).w,
                         height: 20.h,
                         decoration: currentStatPercentage >= 0.20
                             ? BoxDecoration(color: AppColors.greenColor)
@@ -157,7 +157,7 @@ Future<dynamic> showActivityPopup(
 
   // Apply Stats Changes
   String? effectString = item["effect"];
-  Map<String, int> parsedEffects = {}; // Initialize an empty map
+  Map<String, int> parsedEffects = {};
   if (effectString != null) {
     parsedEffects = parseEffects(effectString);
     homeController.applyStatChanges(parsedEffects);
