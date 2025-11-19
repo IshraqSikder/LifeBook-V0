@@ -151,7 +151,7 @@ class AssetDetailsPopup extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            isCurrent ? 'Resign' : 'Buy',
+                            isCurrent ? 'Sell' : 'Buy',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               color: Colors.white,
