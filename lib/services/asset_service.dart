@@ -1,93 +1,94 @@
-// import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:get/get.dart';
-// import 'package:life_book/models/asset_model.dart';
-// import 'package:life_book/services/CSV_services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:get/get.dart';
+import 'package:life_book/models/asset_model.dart';
+import 'package:life_book/services/CSV_services.dart';
 
-// class AssetService extends GetxService {
-//   static const String _assetBoxName = 'assetItemsBox';
-//   static const String _currentAssetBoxName = 'currentAssetItemBox';
+class AssetService extends GetxService {
+  static const String _assetBoxName = 'assetItemsBox';
+  static const String _currentAssetBoxName = 'currentAssetItemBox';
 
-//   late Box<AssetModel> _assetBox;
-//   late Box<AssetModel> _currentAssetBox;
+  late Box<AssetModel> _assetBox;
+  late Box<AssetModel> _currentAssetBox;
 
-//   final RxList<AssetModel> _availableAssets = <AssetModel>[].obs;
-//   RxList<AssetModel> get availableAssets => _availableAssets;
+  final RxList<AssetModel> _availableAssets = <AssetModel>[].obs;
+  RxList<AssetModel> get availableAssets => _availableAssets;
 
-//   final Rx<AssetModel?> _currentAsset = Rx<AssetModel?>(null);
-//   Rx<AssetModel?> get currentAsset => _currentAsset;
+  final RxList<AssetModel?> _currentAsset = RxList<AssetModel?>([]);
+  RxList<AssetModel?> get currentAsset => _currentAsset;
 
-//   @override
-//   Future<void> onInit() async {
-//     super.onInit();
-//     _assetBox = await Hive.openBox<AssetModel>(_assetBoxName);
-//     _currentAssetBox = await Hive.openBox<AssetModel>(_currentAssetBoxName);
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    _assetBox = await Hive.openBox<AssetModel>(_assetBoxName);
+    _currentAssetBox = await Hive.openBox<AssetModel>(_currentAssetBoxName);
 
-//     if (_assetBox.isEmpty) {
-//       for (var item in assetList) {
-//         await _assetBox.add(item);
-//       }
-//     }
-//     _availableAssets.assignAll(_assetBox.values.toList());
+    // Load asset data from CSV
+    if (_assetBox.isEmpty) {
+      for (var item in assetList) {
+        await _assetBox.add(item);
+      }
+    }
+    _availableAssets.assignAll(_assetBox.values.toList());
+    if (_currentAssetBox.isNotEmpty) {
+      _currentAsset.assignAll(_currentAssetBox.values.toList());
+    }
+  }
 
-//     if (_currentAssetBox.isNotEmpty) {
-//       _currentAsset.value = _currentAssetBox.values.first;
-//     }
-//   }
+  Future<void> applyForNewAsset(AssetModel assetItem) async {
+    await removeAssetFromAvailable(assetItem); // remove from assetBox and list
+    await _currentAssetBox.add(assetItem);
+    _currentAsset.add(assetItem);
+  }
 
-//   Future<void> applyForNewAsset(AssetModel assetItem) async {
-//     if (_currentAsset.value != null) {
-//       return;
-//     }
+  Future<void> resignCurrentAsset(AssetModel assetItem) async {
+    dynamic keyToRemove;
 
-//     await removeAssetFromAvailable(assetItem); // remove from assetBox and list
-//     await _currentAssetBox.clear();
-//     await _currentAssetBox.add(assetItem);
-//     _currentAsset.value = assetItem;
-//   }
+    for (var key in _currentAssetBox.keys) {
+      final item = _currentAssetBox.get(key);
+      if (item?.title == assetItem.title) {
+        keyToRemove = key;
+        break;
+      }
+    }
 
-//   Future<void> resignCurrentAsset() async {
-//     final AssetModel? assetToResign = _currentAsset.value;
+    if (keyToRemove != null) {
+      await _currentAssetBox.delete(keyToRemove);
+    }
 
-//     if (assetToResign == null) {
-//       return;
-//     }
+    _currentAsset.remove(assetItem);
+    await addAssetToAvailable(assetItem);
+  }
 
-//     await _currentAssetBox.clear();
-//     _currentAsset.value = null;
+  Future<void> addAssetToAvailable(AssetModel assetItem) async {
+    await _assetBox.add(assetItem);
+    _availableAssets.add(assetItem);
+  }
 
-//     await addAssetToAvailable(assetToResign); // add to assetBox and list
-//   }
+  Future<void> removeAssetFromAvailable(AssetModel assetItem) async {
+    dynamic assetKey;
+    for (var key in _assetBox.keys) {
+      final item = _assetBox.get(key);
+      if (item?.title == assetItem.title) {
+        assetKey = key;
+        break;
+      }
+    }
+    if (assetKey != null) {
+      await _assetBox.delete(assetKey);
+    }
+    _availableAssets.remove(assetItem);
+  }
 
-//   Future<void> addAssetToAvailable(AssetModel assetItem) async {
-//     await _assetBox.add(assetItem);
-//     _availableAssets.add(assetItem);
-//   }
+  Future<void> clearAllAssetData() async {
+    await _assetBox.clear();
+    await _currentAssetBox.clear();
 
-//   Future<void> removeAssetFromAvailable(AssetModel assetItem) async {
-//     dynamic assetKey;
-//     for (var key in _assetBox.keys) {
-//       final item = _assetBox.get(key);
-//       if (item?.title == assetItem.title) {
-//         assetKey = key;
-//         break;
-//       }
-//     }
-//     if (assetKey != null) {
-//       await _assetBox.delete(assetKey);
-//     }
-//     _availableAssets.remove(assetItem);
-//   }
-
-//   Future<void> clearAllAssetData() async {
-//     await _assetBox.clear();
-//     await _currentAssetBox.clear();
-
-//     if (_assetBox.isEmpty) {
-//       for (var item in assetList) {
-//         await _assetBox.add(item);
-//       }
-//     }
-//     _availableAssets.assignAll(_assetBox.values.toList());
-//     _currentAsset.value = null;
-//   }
-// }
+    if (_assetBox.isEmpty) {
+      for (var item in assetList) {
+        await _assetBox.add(item);
+      }
+    }
+    _availableAssets.assignAll(_assetBox.values.toList());
+    _currentAsset.clear();
+  }
+}

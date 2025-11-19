@@ -1,80 +1,66 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:life_book/models/asset_model.dart';
-// import 'package:life_book/models/user.dart';
-// import 'package:life_book/services/asset_service.dart';
-// import 'package:life_book/services/user_service.dart';
-// import 'package:life_book/views/jobs/job_details_popup.dart';
-// import 'package:life_book/views/jobs/job_model.dart';
-// import 'package:life_book/views/jobs/job_popup.dart';
-// import 'package:life_book/views/jobs/job_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:life_book/models/asset_model.dart';
+import 'package:life_book/models/user.dart';
+import 'package:life_book/services/asset_service.dart';
+import 'package:life_book/services/user_service.dart';
+import 'package:life_book/views/real_estates/asset_details_popup.dart';
 
-// class AssetController extends GetxController {
-//   final User player;
+class AssetController extends GetxController {
+  final User player;
 
-//   AssetController({required this.player});
+  AssetController({required this.player});
 
-//   late final Rx<AssetModel?> currentAsset;
-//   late final RxList<AssetModel> availableAssetItems;
+  late final RxList<AssetModel?> currentAsset;
+  late final RxList<AssetModel> availableAssetItems;
 
-//   final UserService userService = Get.find<UserService>();
-//   final AssetService assetService = Get.find<AssetService>();
+  final UserService userService = Get.find<UserService>();
 
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     currentAsset = assetService.currentAsset;
-//     availableAssetItems = assetService.availableAssets;
-//   }
+  final AssetService assetService = Get.put(AssetService());
 
-//   void applyForAsset(AssetModel assetItem) async {
-//     if (currentAsset.value == null) {
-//       await assetService.applyForNewAsset(assetItem);
-//       player.gameStats.balance += assetItem.price;
+  @override
+  void onInit() {
+    super.onInit();
+    currentAsset = assetService.currentAsset;
+    availableAssetItems = assetService.availableAssets;
+  }
 
-//       // Get.dialog(
-//       //   barrierDismissible: true,
-//       //   barrierColor: Colors.black54.withValues(alpha: 0.95),
-//       //   AssetPopup(player: player, item: assetItem),
-//       // );
-//     } else {
-//       Get.dialog(
-//         barrierDismissible: true,
-//         barrierColor: Colors.black54.withValues(alpha: 0.95),
-//         alreadyApplyJob(),
-//       );
-//     }
+  void applyForAsset(AssetModel assetItem) async {
+    await assetService.applyForNewAsset(assetItem);
+    player.gameStats.balance -= assetItem.price;
 
-//     player.userInfo.assets = assetItem;
-//     userService.saveUser(player);
-//   }
+    player.userInfo.assets = assetItem;
+    userService.saveUser(player);
+    Get.back();
+  }
 
-//   void resignAsset() async {
-//     final AssetModel? assetToResign = currentAsset.value;
-//     if (assetToResign != null) {
-//       await assetService.resignCurrentAsset();
-//     }
+  void resignAsset(AssetModel item) async {
+    final AssetModel? assetToResign = currentAsset.isNotEmpty ? item : null;
+    if (assetToResign != null) {
+      await assetService.resignCurrentAsset(assetToResign);
+    }
 
-//     player.userInfo.assets = null;
-//     userService.saveUser(player);
-//     Get.back();
-//   }
+    player.userInfo.assets = null;
+    userService.saveUser(player);
+    Get.back();
+  }
 
-//   // Method to handle showing a job detail popup or similar
-//   void handleJobTap(BuildContext context, AssetModel item) {
-//     if (currentAsset.value == item) {
-//       // showJobDetailsPopup(context, item);
-//     } else if (availableAssetItems.contains(item)) {
-//       applyForAsset(item);
-//     }
-//   }
+  // Method to handle showing a job detail popup or similar
+  void handleAssetTap(BuildContext context, AssetModel item) {
+    bool isCurrent = currentAsset.contains(item);
+    showAssetDetailsPopup(context, item, isCurrent);
+  }
 
-//   // Function to show the job details popup
-//   // void showJobDetailsPopup(BuildContext context, AssetModel item) {
-//   //   Get.dialog(
-//   //     AssetDetailsPopup(item: item),
-//   //     barrierDismissible: true,
-//   //     barrierColor: Colors.black54.withValues(alpha: 0.90),
-//   //   );
-//   // }
-// }
+  // Function to show the asset details popup
+  void showAssetDetailsPopup(
+    BuildContext context,
+    AssetModel item,
+    bool isCurrent,
+  ) {
+    Get.dialog(
+      AssetDetailsPopup(item: item, isCurrent: isCurrent),
+      barrierDismissible: true,
+      barrierColor: Colors.black54.withValues(alpha: 0.90),
+    );
+  }
+}

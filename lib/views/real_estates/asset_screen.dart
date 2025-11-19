@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/asset_controller.dart';
 import 'package:life_book/models/asset_model.dart';
-import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/services/asset_service.dart';
 import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
@@ -16,10 +17,12 @@ class AssetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final AssetController controller = Get.put(
-    //   AssetController(player: player),
-    //   permanent: true,
-    // );
+    final AssetController controller = Get.put(
+      AssetController(player: player),
+      permanent: true,
+    );
+
+    final AssetService assetService = Get.find<AssetService>();
 
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +71,7 @@ class AssetScreen extends StatelessWidget {
             height: 21.h,
             decoration: BoxDecoration(color: AppColors.textColor),
             child: Text(
-              'Current Job',
+              'Current Asset',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 color: Colors.white,
@@ -78,27 +81,32 @@ class AssetScreen extends StatelessWidget {
             ),
           ),
           // Use Obx to react to changes in currentassets list
-          // Obx(
-          //   () => assetservice.currentJob.value == null
-          //       ? Container(
-          //           width: double.infinity,
-          //           height: 70.h,
-          //           alignment: Alignment.center,
-          //           child: Text(
-          //             "You don’t have any Job",
-          //             style: GoogleFonts.inter(
-          //               color: AppColors.blueColor,
-          //               fontSize: 16.sp,
-          //               fontWeight: FontWeight.w700,
-          //             ),
-          //           ),
-          //         )
-          //       : _buildJobItem(
-          //           context,
-          //           controller,
-          //           assetservice.currentJob.value,
-          //         ),
-          // ),
+          Obx(
+            () => assetService.currentAsset.isEmpty
+                ? Container(
+                    width: double.infinity,
+                    height: 70.h,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "You don’t have any asset",
+                      style: GoogleFonts.inter(
+                        color: AppColors.blueColor,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    height: 180.h,
+                    child: ListView.builder(
+                      itemCount: assetService.currentAsset.length,
+                      itemBuilder: (context, index) {
+                        final item = assetService.currentAsset[index];
+                        return _buildAssetItem(context, controller, item!);
+                      },
+                    ),
+                  ),
+          ),
           // Available assets Section
           Container(
             width: double.infinity,
@@ -117,7 +125,7 @@ class AssetScreen extends StatelessWidget {
           // Use Obx to react to changes in availableassets list
           Obx(
             () => Expanded(
-              child: assetList.isEmpty
+              child: assetService.availableAssets.isEmpty
                   ? Center(
                       child: Text(
                         'No available assets.',
@@ -125,10 +133,10 @@ class AssetScreen extends StatelessWidget {
                       ),
                     )
                   : ListView.builder(
-                      itemCount: assetList.length,
+                      itemCount: assetService.availableAssets.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final item = assetList[index];
-                        return _buildAssetItem(context, item);
+                        final item = assetService.availableAssets[index];
+                        return _buildAssetItem(context, controller, item);
                       },
                     ),
             ),
@@ -138,12 +146,14 @@ class AssetScreen extends StatelessWidget {
     );
   }
 
-  // Extracted asset item widget for reusability and cleaner code
-  // Widget _buildAssetItem(BuildContext context, AssetModel item) {
-  Widget _buildAssetItem(BuildContext context, Map<String, dynamic> item) {
+  Widget _buildAssetItem(
+    BuildContext context,
+    AssetController controller,
+    AssetModel item,
+  ) {
     return GestureDetector(
       onTap: () {
-        // controller.handleJobTap(context, item); // Use controller method
+        controller.handleAssetTap(context, item);
       },
       child: Container(
         width: double.infinity,
@@ -172,8 +182,7 @@ class AssetScreen extends StatelessWidget {
                         width: 33.w,
                         height: 33.h,
                         child: Image.asset(
-                          // "assets/images/real_estates/${item['imageUrl']}.png",
-                          "assets/images/real_estates/${item['imageUrl']}.png",
+                          "assets/images/real_estates/${item.imageUrl}.png",
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -190,8 +199,7 @@ class AssetScreen extends StatelessWidget {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    // text: item.title,
-                                    text: item['title'],
+                                    text: item.title,
                                     style: GoogleFonts.inter(
                                       color: AppColors.blueColor,
                                       fontSize: 16.sp,
@@ -199,8 +207,7 @@ class AssetScreen extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    // text: ' (${item.subtitle})',
-                                    text: ' (${item['subtitle']})',
+                                    text: ' (${item.subtitle})',
                                     style: GoogleFonts.inter(
                                       color: AppColors.blueColor,
                                       fontSize: 16.sp,
@@ -213,8 +220,7 @@ class AssetScreen extends StatelessWidget {
                             SizedBox(height: 4.h),
                             // price
                             Text(
-                              // '\$${item.price}',
-                              '\$${item['price']}',
+                              '\$${item.price}',
                               style: GoogleFonts.inter(
                                 color: AppColors.blueColor,
                                 fontSize: 12.sp,

@@ -41,9 +41,7 @@ class JobPopup extends StatelessWidget {
                 ),
               ),
             ),
-            // SizedBox(height: 16.h),
             Container(
-              // width: 250.w,
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               child: Text(
                 "Welcome to ${item.subtitle}",

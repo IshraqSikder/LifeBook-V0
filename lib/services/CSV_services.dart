@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
+import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/services/load_CSV.dart';
 
 RxList<Map<String, dynamic>> agePopupList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> choiceEventList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> positiveEventList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> activityList = <Map<String, dynamic>>[].obs;
-RxList<Map<String, dynamic>> assetList = <Map<String, dynamic>>[].obs;
+RxList<AssetModel> assetList = <AssetModel>[].obs;
 
 Future<void> loadAgePopup() async {
   final data = await loadAgePopupCSV();
@@ -90,14 +91,14 @@ Future<void> loadAsset() async {
   final rows = data.skip(1);
 
   assetList.value = rows.map((row) {
-    return {
-      'id': row[0],
-      'imageUrl': row[1],
-      'title': row[2],
-      'subtitle': row[3],
-      'description': row[4],
-      'price': row[5],
-    };
+    return AssetModel(
+      id: row[0],
+      imageUrl: row[1],
+      title: row[2],
+      subtitle: row[3],
+      description: row[4],
+      price: row[5],
+    );
   }).toList();
 }
 
