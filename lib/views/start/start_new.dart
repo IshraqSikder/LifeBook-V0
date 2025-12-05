@@ -83,7 +83,8 @@ class StartScreenNew extends StatelessWidget {
               ),
               Text(
                 'New Life',
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: Colors.white,
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w800,

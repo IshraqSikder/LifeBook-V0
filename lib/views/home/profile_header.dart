@@ -119,14 +119,14 @@ class ProfileHeader extends StatelessWidget {
                 ],
               ),
               const Spacer(),
+              // Bank Balance
               Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    // No need for extra Obx here, the outer Obx rebuilds
-                    '\$${player.gameStats.balance}',
+                    '\$${player.gameStats.balanceRx}',
                     style: TextStyle(
                       fontFamily: 'Inter',
                       color: AppColors.blueColor,

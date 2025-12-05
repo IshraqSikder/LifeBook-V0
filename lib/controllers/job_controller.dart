@@ -28,7 +28,7 @@ class JobController extends GetxController {
   void applyForJob(JobItem jobItem) async {
     if (currentJob.value == null) {
       await jobService.applyForNewJob(jobItem);
-      player.gameStats.balance += jobItem.salary;
+      player.gameStats.balanceRx += jobItem.salary;
 
       Get.dialog(
         barrierDismissible: true,

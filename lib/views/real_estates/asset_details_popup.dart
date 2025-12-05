@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/asset_controller.dart';
 import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/theme.dart';
@@ -136,8 +135,8 @@ class AssetDetailsPopup extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             isCurrent
-                                ? controller.resignAsset(item)
-                                : controller.applyForAsset(item);
+                                ? controller.sellAsset(item)
+                                : controller.buyAsset(item);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isCurrent

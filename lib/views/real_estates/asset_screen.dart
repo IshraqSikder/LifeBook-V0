@@ -82,7 +82,7 @@ class AssetScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Use Obx to react to changes in currentassets list
+          // Use Obx to react to changes in current assets list
           Obx(
             () => assetService.currentAsset.isEmpty
                 ? Container(

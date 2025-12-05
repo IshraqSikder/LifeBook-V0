@@ -53,16 +53,21 @@ class HomeController extends GetxController {
 
     // Find matching age entry from the list using newAge
     var ageEntry = agePopupList.firstWhere(
-          (item) => item['age'] == newAge,
+      (item) => item['age'] == newAge,
       orElse: () => {},
     );
 
     if (ageEntry.isNotEmpty && ageEntry['ageMessage'] != null) {
-      diaryEntry =
-      "You're now $newAge years old!\n${ageEntry['ageMessage']}";
+      diaryEntry = "You're now $newAge years old!\n${ageEntry['ageMessage']}";
     } else {
       diaryEntry = "You're now $newAge years old!";
     }
+
+    // Calculate salary (default to 0 if no job)
+    int currentSalary = player.userInfo.job?.salary ?? 0;
+
+    // Update the RxInt value explicitly
+    player.gameStats.balanceRx.value += currentSalary;
 
     // Save the age and add the diary entry
     await savePlayerLevel(newAge, diaryEntry);
@@ -70,18 +75,13 @@ class HomeController extends GetxController {
     // Check for events
     bool isEvent = _eventOccurs();
     if (!isEvent) {
-      addLifeStoryEntry(
-        LifeStory(age: newAge, description: diaryEntry),
-      );
+      addLifeStoryEntry(LifeStory(age: newAge, description: diaryEntry));
     }
 
     // Check for death
     if (newAge == 30) {
       Get.to(() => DeathScreen(player: player));
     }
-
-    // Update Salary
-    player.gameStats.balance += player.userInfo.job?.salary ?? 0;
 
     // Force UI update if necessary (since we didn't use the Rx variable inside the list item)
     player.gameStats.levelsRx.refresh();

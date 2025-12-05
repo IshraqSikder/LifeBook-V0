@@ -25,19 +25,20 @@ class AssetController extends GetxController {
     availableAssetItems = assetService.availableAssets;
   }
 
-  void applyForAsset(AssetModel assetItem) async {
+  void buyAsset(AssetModel assetItem) async {
     await assetService.applyForNewAsset(assetItem);
-    player.gameStats.balance -= assetItem.price;
+    player.gameStats.balanceRx -= assetItem.price;
 
     player.userInfo.assets = assetItem;
     userService.saveUser(player);
     Get.back();
   }
 
-  void resignAsset(AssetModel item) async {
+  void sellAsset(AssetModel item) async {
     final AssetModel? assetToResign = currentAsset.isNotEmpty ? item : null;
     if (assetToResign != null) {
       await assetService.resignCurrentAsset(assetToResign);
+      player.gameStats.balanceRx += assetToResign.price;
     }
 
     player.userInfo.assets = null;
