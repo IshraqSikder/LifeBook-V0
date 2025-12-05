@@ -163,7 +163,7 @@ class User extends HiveObject {
 //       "id": 1,
 //       "name": "random",
 //       "gender": "male",
-//       "realationships": [
+//       "relationships": [
 //         {"type": "parents", "relation": "father", "name": "random"},
 //         {"type": "parents", "relation": "mother", "name": "random"},
 //         {"type": "siblings", "relation": "sister", "name": "random"},

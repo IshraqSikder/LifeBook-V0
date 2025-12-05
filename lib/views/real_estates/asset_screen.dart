@@ -56,7 +56,8 @@ class AssetScreen extends StatelessWidget {
                 Text(
                   'ASSETS',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: Colors.white,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w900,
@@ -73,7 +74,8 @@ class AssetScreen extends StatelessWidget {
             child: Text(
               'Current Asset',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
@@ -89,7 +91,8 @@ class AssetScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       "You don’t have any asset",
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         color: AppColors.blueColor,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
@@ -115,7 +118,8 @@ class AssetScreen extends StatelessWidget {
             child: Text(
               'Available assets',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
@@ -129,7 +133,10 @@ class AssetScreen extends StatelessWidget {
                   ? Center(
                       child: Text(
                         'No available assets.',
-                        style: GoogleFonts.inter(color: Colors.black),
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          color: Colors.black,
+                        ),
                       ),
                     )
                   : ListView.builder(
@@ -200,7 +207,8 @@ class AssetScreen extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     text: item.title,
-                                    style: GoogleFonts.inter(
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
                                       color: AppColors.blueColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w700,
@@ -208,7 +216,8 @@ class AssetScreen extends StatelessWidget {
                                   ),
                                   TextSpan(
                                     text: ' (${item.subtitle})',
-                                    style: GoogleFonts.inter(
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
                                       color: AppColors.blueColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w300,
@@ -221,7 +230,8 @@ class AssetScreen extends StatelessWidget {
                             // price
                             Text(
                               '\$${item.price}',
-                              style: GoogleFonts.inter(
+                              style: TextStyle(
+                                fontFamily: 'Inter',
                                 color: AppColors.blueColor,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,

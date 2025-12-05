@@ -130,7 +130,8 @@ class StatsSection extends StatelessWidget {
             padding: EdgeInsets.only(right: 5.w),
             child: Text(
               '$progress%',
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w400,

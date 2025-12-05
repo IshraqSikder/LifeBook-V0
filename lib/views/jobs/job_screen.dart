@@ -56,7 +56,8 @@ class JobScreen extends StatelessWidget {
                 Text(
                   'JOBS',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: Colors.white,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w900,
@@ -73,7 +74,8 @@ class JobScreen extends StatelessWidget {
             child: Text(
               'Current Job',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
@@ -89,7 +91,8 @@ class JobScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       "You don’t have any Job",
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         color: AppColors.blueColor,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
@@ -110,7 +113,8 @@ class JobScreen extends StatelessWidget {
             child: Text(
               'Available Jobs',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
@@ -124,7 +128,10 @@ class JobScreen extends StatelessWidget {
                   ? Center(
                       child: Text(
                         'No available jobs.',
-                        style: GoogleFonts.inter(color: Colors.black),
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          color: Colors.black,
+                        ),
                       ),
                     )
                   : ListView.builder(
@@ -193,7 +200,8 @@ class JobScreen extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     text: item.title,
-                                    style: GoogleFonts.inter(
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
                                       color: AppColors.blueColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w700,
@@ -201,7 +209,8 @@ class JobScreen extends StatelessWidget {
                                   ),
                                   TextSpan(
                                     text: ' (${item.subtitle})',
-                                    style: GoogleFonts.inter(
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
                                       color: AppColors.blueColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w300,
@@ -214,7 +223,8 @@ class JobScreen extends StatelessWidget {
                             // price
                             Text(
                               '\$${item.salary}',
-                              style: GoogleFonts.inter(
+                              style: TextStyle(
+                                fontFamily: 'Inter',
                                 color: AppColors.blueColor,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,

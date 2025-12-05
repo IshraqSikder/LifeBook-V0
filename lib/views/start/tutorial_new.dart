@@ -46,7 +46,8 @@
 //                     SizedBox(width: 5.w),
 //                     Text(
 //                       'Press',
-//                       style: GoogleFonts.inter(
+//                       style: TextStyle(
+//                                   fontFamily: 'Inter',)(
 //                         color: AppColors.yellowColor,
 //                         fontSize: 14.sp,
 //                         fontWeight: FontWeight.w500,
@@ -54,7 +55,8 @@
 //                     ),
 //                     Text(
 //                       ' Age ',
-//                       style: GoogleFonts.inter(
+//                       style: TextStyle(
+//                                   fontFamily: 'Inter',)(
 //                         color: Colors.white,
 //                         fontSize: 14.sp,
 //                         fontWeight: FontWeight.w500,
@@ -62,7 +64,8 @@
 //                     ),
 //                     Text(
 //                       'to grow older one year',
-//                       style: GoogleFonts.inter(
+//                       style: TextStyle(
+//                                   fontFamily: 'Inter',)(
 //                         color: AppColors.yellowColor,
 //                         fontSize: 14.sp,
 //                         fontWeight: FontWeight.w500,
@@ -70,7 +73,8 @@
 //                     ),
 //                     Text(
 //                       'at a time.',
-//                       style: GoogleFonts.inter(
+//                       style: TextStyle(
+//                                   fontFamily: 'Inter',)(
 //                         color: AppColors.yellowColor,
 //                         fontSize: 14.sp,
 //                         fontWeight: FontWeight.w500,
@@ -81,7 +85,8 @@
 //                 SizedBox(height: 8.h),
 //                 Text(
 //                   'Make choices as you go.',
-//                   style: GoogleFonts.inter(
+//                   style: TextStyle(
+//                               fontFamily: 'Inter',)(
 //                     color: AppColors.yellowColor,
 //                     fontSize: 14.sp,
 //                     fontWeight: FontWeight.w500,
@@ -90,7 +95,8 @@
 //                 SizedBox(height: 8.h),
 //                 Text(
 //                   'Live your best(or worst) life.',
-//                   style: GoogleFonts.inter(
+//                   style: TextStyle(
+//                               fontFamily: 'Inter',)(
 //                     color: AppColors.yellowColor,
 //                     fontSize: 14.sp,
 //                     fontWeight: FontWeight.w500,
@@ -216,7 +222,8 @@ class TutorialScreenNew extends StatelessWidget {
                     SizedBox(width: 5.w),
                     Text(
                       'Press',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         color: AppColors.yellowColor,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -224,7 +231,8 @@ class TutorialScreenNew extends StatelessWidget {
                     ),
                     Text(
                       ' Age ',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         color: Colors.white,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -232,7 +240,8 @@ class TutorialScreenNew extends StatelessWidget {
                     ),
                     Text(
                       'to grow older one year',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         color: AppColors.yellowColor,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -240,7 +249,8 @@ class TutorialScreenNew extends StatelessWidget {
                     ),
                     Text(
                       'at a time.',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         color: AppColors.yellowColor,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -251,7 +261,8 @@ class TutorialScreenNew extends StatelessWidget {
                 SizedBox(height: 8.h),
                 Text(
                   'Make choices as you go.',
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: AppColors.yellowColor,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -260,7 +271,8 @@ class TutorialScreenNew extends StatelessWidget {
                 SizedBox(height: 8.h),
                 Text(
                   'Live your best(or worst) life.',
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: AppColors.yellowColor,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,

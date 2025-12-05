@@ -44,7 +44,8 @@ class ActivityScreen extends StatelessWidget {
                 Text(
                   'Activites',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
@@ -60,7 +61,8 @@ class ActivityScreen extends StatelessWidget {
             child: Text(
               'All activities that are available',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -128,7 +130,8 @@ class ActivityScreen extends StatelessWidget {
                                         // title
                                         Text(
                                           item["title"],
-                                          style: GoogleFonts.inter(
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
                                             color: AppColors.blueColor,
                                             fontSize: 17.sp,
                                             fontWeight: FontWeight.w700,
@@ -137,7 +140,8 @@ class ActivityScreen extends StatelessWidget {
                                         // subtitle
                                         Text(
                                           item["subtitle"],
-                                          style: GoogleFonts.inter(
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
                                             color: AppColors.blueColor,
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w400,

@@ -10,9 +10,9 @@ class StyledTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.inter(
-        textStyle: Theme.of(context).textTheme.titleMedium,
-      ),
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+      fontFamily: 'Inter',
+    ),
     );
   }
 }

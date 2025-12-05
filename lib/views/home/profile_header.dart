@@ -69,7 +69,8 @@ class ProfileHeader extends StatelessWidget {
                       SizedBox(width: 5.w),
                       Text(
                         player.userInfo.name,
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: AppColors.blueColor,
                           fontSize: 17.sp,
                           fontWeight: FontWeight.w700,
@@ -103,8 +104,9 @@ class ProfileHeader extends StatelessWidget {
                       SizedBox(width: 5.w),
                       Obx(
                         () => Text(
-                          'Age: ${player.gameStats.levels.first.age.obs}',
-                          style: GoogleFonts.inter(
+                          'Age: ${player.gameStats.levelsRx.last.ageRx.value}',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
                             color: AppColors.blueColor,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w400,
@@ -125,7 +127,8 @@ class ProfileHeader extends StatelessWidget {
                   Text(
                     // No need for extra Obx here, the outer Obx rebuilds
                     '\$${player.gameStats.balance}',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       color: AppColors.blueColor,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
@@ -135,7 +138,8 @@ class ProfileHeader extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Text(
                     'Bank Balance',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       color: AppColors.blueColor,
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,

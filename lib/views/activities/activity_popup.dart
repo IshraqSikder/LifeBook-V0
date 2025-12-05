@@ -46,7 +46,8 @@ class ActivityPopup extends StatelessWidget {
               child: Text(
                 item["title"],
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: Color(0xFF176FD1),
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
@@ -58,7 +59,8 @@ class ActivityPopup extends StatelessWidget {
               child: Text(
                 item["description"],
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: Colors.black,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
@@ -77,7 +79,8 @@ class ActivityPopup extends StatelessWidget {
                 children: [
                   Text(
                     'Cost: ',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       color: AppColors.brownColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
@@ -85,7 +88,8 @@ class ActivityPopup extends StatelessWidget {
                   ),
                   Text(
                     '\$${item["price"]}',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       color: AppColors.brownColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
@@ -105,7 +109,8 @@ class ActivityPopup extends StatelessWidget {
                   Text(
                     effectStatKey,
                     textAlign: TextAlign.right,
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       color: AppColors.blueColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
@@ -129,7 +134,8 @@ class ActivityPopup extends StatelessWidget {
                         padding: EdgeInsets.only(right: 5.w),
                         child: Text(
                           '${(currentStatPercentage * 100).toInt()}%',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
+                            fontFamily: 'Inter',
                             color: Colors.white,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w400,

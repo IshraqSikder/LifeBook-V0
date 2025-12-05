@@ -6,13 +6,11 @@ import 'package:life_book/theme.dart';
 class LifeStory extends StatelessWidget {
   final int age;
   final String description;
-  final String? flavor;
 
   const LifeStory({
     super.key,
     required this.age,
     required this.description,
-    this.flavor,
   });
 
   @override
@@ -22,30 +20,23 @@ class LifeStory extends StatelessWidget {
       children: [
         Text(
           'Age: $age years',
-          style: GoogleFonts.inter(
+          style: TextStyle(
             color: AppColors.blueColor,
             fontSize: 12.sp,
+            fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
           ),
         ),
         SizedBox(height: 10.h),
         Text(
           description,
-          style: GoogleFonts.inter(
+          style: TextStyle(
             color: AppColors.textColor,
             fontSize: 10.sp,
+            fontFamily: 'Inter',
             fontWeight: FontWeight.w300,
           ),
         ),
-        if (flavor != null)
-          Text(
-            flavor!,
-            style: GoogleFonts.inter(
-              color: AppColors.textColor,
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
       ],
     );
   }

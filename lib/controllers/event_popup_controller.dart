@@ -44,15 +44,12 @@ class EventPopupController extends GetxController {
     }
 
     // 2. Add a new LifeStory entry based on the choice flavor
-    homeController.addLifeStoryEntry(
-      LifeStory(
-        description: "You're now $age years old!",
-        age: age,
-        // flavor: choice["flavor"],
-      ),
-    );
+    String choiceText = rndChoiceEvent[choiceKey == 'A' ? 'choiceAText' : 'choiceBText'] ?? "";
 
-    // 3. After handling the choice, dismiss the dialog
+    // 3. Save it to the persistent user level
+    homeController.addEventToCurrentAge(choiceText);
+
+    // 4. After handling the choice, dismiss the dialog
     Get.back();
   }
 }
@@ -82,6 +79,7 @@ void showEventPopupGetX(int age) {
       final EventPopupController eventController =
           Get.find<EventPopupController>();
 
+      // 1. Apply stat changes to the player character
       String? effectString = eventController.rndPopupEvent["popupEffectString"];
 
       if (effectString != null) {
@@ -89,13 +87,20 @@ void showEventPopupGetX(int age) {
         homeController.applyStatChanges(effects);
       }
 
+      // 2. Get the Popup Text
+      String popupText = eventController.rndPopupEvent["description"] ?? "An event occurred.";
+
+      // 3. Save to Diary
+      homeController.addEventToCurrentAge(popupText);
+
       homeController.addLifeStoryEntry(
         LifeStory(
           description: "You're now $age years old!",
           age: age,
-          flavor: eventController.rndPopupEvent["flavor"],
         ),
       );
+
+      // 4. After handling the choice, dismiss the dialog
       Get.delete<EventPopupController>();
     });
   }

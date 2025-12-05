@@ -32,7 +32,8 @@ class EventPopup extends StatelessWidget {
               () => Text(
                 controller.rndPopupEvent["title"],
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   fontSize: 18.sp,
                   color: AppColors.blueColor,
                   fontWeight: FontWeight.w700,
@@ -44,7 +45,8 @@ class EventPopup extends StatelessWidget {
               () => Text(
                 controller.rndPopupEvent["description"],
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: const Color(0xFF0A386C),
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,

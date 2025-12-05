@@ -56,7 +56,8 @@ class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
               Text(
                 'MAIN MENU',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: Colors.white,
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w900,
@@ -77,9 +78,10 @@ class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
                   SizedBox(width: 8.w),
                   Text(
                     'LifeBook',
-                    style: GoogleFonts.jaro(
+                    style: TextStyle(
                       color: AppColors.yellowColor,
                       fontSize: 28.sp,
+                      fontFamily: 'Jaro',
                       fontWeight: FontWeight.w400,
                     ),
                   ),

@@ -46,7 +46,8 @@ class EventChoicePopup extends StatelessWidget {
                 child: Text(
                   'Events',
                   textAlign: TextAlign.end,
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: Colors.white,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w800,
@@ -72,7 +73,8 @@ class EventChoicePopup extends StatelessWidget {
                     SizedBox(width: 10.w),
                     Text(
                       controller.rndChoiceEvent["title"],
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         fontSize: 18.sp,
                         color: AppColors.brownColor,
                         fontWeight: FontWeight.w700,
@@ -90,7 +92,8 @@ class EventChoicePopup extends StatelessWidget {
                 () => Text(
                   controller.rndChoiceEvent["description"],
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: const Color(0xFF3D010B),
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
@@ -149,7 +152,8 @@ class EventChoicePopup extends StatelessWidget {
         child: Text(
           choice,
           textAlign: TextAlign.center,
-          style: GoogleFonts.inter(
+          style: TextStyle(
+            fontFamily: 'Inter',
             color: Colors.white,
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,

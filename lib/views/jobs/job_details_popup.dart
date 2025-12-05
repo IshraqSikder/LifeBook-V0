@@ -48,7 +48,8 @@ class JobDetailsPopup extends StatelessWidget {
                     children: [
                       Text(
                         'Job Info',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: Colors.white,
                           letterSpacing: 0.5.sp,
                           fontSize: 16.sp,
@@ -74,7 +75,8 @@ class JobDetailsPopup extends StatelessWidget {
                     SizedBox(width: 10.w),
                     Text(
                       item.title,
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.deepBlueColor,
@@ -132,7 +134,8 @@ class JobDetailsPopup extends StatelessWidget {
                           child: Text(
                             'Resign',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
+                              fontFamily: 'Inter',
                               color: Colors.white,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
@@ -192,7 +195,8 @@ class JobDetailsPopup extends StatelessWidget {
           children: [
             TextSpan(
               text: label,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.deepBlueColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w800,
@@ -200,7 +204,8 @@ class JobDetailsPopup extends StatelessWidget {
             ),
             TextSpan(
               text: ' $value',
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.deepBlueColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,

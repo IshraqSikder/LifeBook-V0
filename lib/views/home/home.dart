@@ -48,7 +48,7 @@ class HomeScreenNew extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // List of life story entries
-                              ...userService.activeUser!.gameStats.levels.map((
+                              ...userService.activeUser!.gameStats.levelsRx.value.map((
                                 entry,
                               ) {
                                 return Column(

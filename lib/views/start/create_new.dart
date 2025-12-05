@@ -84,14 +84,16 @@ class CreateCharacterScreenNew extends StatelessWidget {
                   ),
                   child: TextField(
                     controller: controller.nameController,
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       color: Colors.black,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w800,
                     ),
                     decoration: InputDecoration(
                       hintText: 'Enter your name',
-                      hintStyle: GoogleFonts.inter(
+                      hintStyle: TextStyle(
+                        fontFamily: 'Inter',
                         color: const Color(0xFF716D7C),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,

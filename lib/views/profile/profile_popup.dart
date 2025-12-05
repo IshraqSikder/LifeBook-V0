@@ -62,7 +62,8 @@ class ProfilePopup extends StatelessWidget {
                           Text(
                             // player.name,
                             player.userInfo.name,
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
+                              fontFamily: 'Inter',
                               color: AppColors.brownColor,
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w700,
@@ -72,7 +73,8 @@ class ProfilePopup extends StatelessWidget {
                       ),
                       Text(
                         'You',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: Colors.white,
                           letterSpacing: 0.5.sp,
                           fontSize: 16.sp,
@@ -98,7 +100,8 @@ class ProfilePopup extends StatelessWidget {
                     ),
                     Text(
                       'Profile',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Inter',
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -127,7 +130,7 @@ class ProfilePopup extends StatelessWidget {
                           SizedBox(height: 8),
                           _buildProfileDetail(
                             'Age:',
-                            player.gameStats.levels.first.age.toString(),
+                            player.gameStats.levelsRx.last.age.toString(),
                           ),
                           SizedBox(height: 8),
                           _buildProfileDetail(
@@ -237,7 +240,8 @@ class ProfilePopup extends StatelessWidget {
           children: [
             TextSpan(
               text: label,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.brownColor,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w800,
@@ -245,7 +249,8 @@ class ProfilePopup extends StatelessWidget {
             ),
             TextSpan(
               text: ' $value',
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.brownColor,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
@@ -265,7 +270,8 @@ Widget _buildStatLabel(String label) {
     child: Text(
       label,
       textAlign: TextAlign.right,
-      style: GoogleFonts.inter(
+      style: TextStyle(
+        fontFamily: 'Inter',
         fontSize: 12.sp,
         fontWeight: FontWeight.w800,
         color: AppColors.brownColor,
@@ -298,7 +304,8 @@ Widget _buildStatProgressBar(int progress) {
           padding: EdgeInsets.only(right: 5.w),
           child: Text(
             '$progress%',
-            style: GoogleFonts.inter(
+            style: TextStyle(
+              fontFamily: 'Inter',
               color: Colors.white,
               fontSize: 10.sp,
               fontWeight: FontWeight.w400,

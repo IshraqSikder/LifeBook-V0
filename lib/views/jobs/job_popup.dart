@@ -34,7 +34,8 @@ class JobPopup extends StatelessWidget {
               child: Text(
                 "Welcome Abroad",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: Color(0xFF176FD1),
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
@@ -46,7 +47,8 @@ class JobPopup extends StatelessWidget {
               child: Text(
                 "Welcome to ${item.subtitle}",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: const Color(0xFF0A386C),
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
@@ -67,7 +69,8 @@ class JobPopup extends StatelessWidget {
                     children: [
                       Text(
                         '     Title: ',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w800,
@@ -75,7 +78,8 @@ class JobPopup extends StatelessWidget {
                       ),
                       Text(
                         item.title,
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -95,7 +99,8 @@ class JobPopup extends StatelessWidget {
                     children: [
                       Text(
                         '     Career: ',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w800,
@@ -103,7 +108,8 @@ class JobPopup extends StatelessWidget {
                       ),
                       Text(
                         item.title,
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -123,7 +129,8 @@ class JobPopup extends StatelessWidget {
                     children: [
                       Text(
                         '     Employer: ',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w800,
@@ -131,7 +138,8 @@ class JobPopup extends StatelessWidget {
                       ),
                       Text(
                         item.subtitle,
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -151,7 +159,8 @@ class JobPopup extends StatelessWidget {
                     children: [
                       Text(
                         '     Salary: ',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w800,
@@ -159,7 +168,8 @@ class JobPopup extends StatelessWidget {
                       ),
                       Text(
                         "\$${item.salary.toString()}",
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: const Color(0xFF0A386C),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -199,7 +209,8 @@ Widget alreadyApplyJob() {
             child: Text(
               "Rejected",
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.redColor,
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
@@ -213,7 +224,8 @@ Widget alreadyApplyJob() {
             child: Text(
               "You already have a job",
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.brownColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,

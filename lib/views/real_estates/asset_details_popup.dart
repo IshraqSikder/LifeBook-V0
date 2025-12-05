@@ -53,7 +53,8 @@ class AssetDetailsPopup extends StatelessWidget {
                     children: [
                       Text(
                         'Asset Info',
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           color: Colors.white,
                           letterSpacing: 0.5.sp,
                           fontSize: 16.sp,
@@ -81,7 +82,8 @@ class AssetDetailsPopup extends StatelessWidget {
                       SizedBox(width: 10.w),
                       Text(
                         item.title,
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.deepBlueColor,
@@ -89,7 +91,8 @@ class AssetDetailsPopup extends StatelessWidget {
                       ),
                       Text(
                         " (${item.subtitle})",
-                        style: GoogleFonts.inter(
+                        style: TextStyle(
+                          fontFamily: 'Inter',
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w300,
                           color: AppColors.deepBlueColor,
@@ -153,7 +156,8 @@ class AssetDetailsPopup extends StatelessWidget {
                           child: Text(
                             isCurrent ? 'Sell' : 'Buy',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
+                              fontFamily: 'Inter',
                               color: Colors.white,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
@@ -213,7 +217,8 @@ class AssetDetailsPopup extends StatelessWidget {
           children: [
             TextSpan(
               text: label,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.deepBlueColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w800,
@@ -221,7 +226,8 @@ class AssetDetailsPopup extends StatelessWidget {
             ),
             TextSpan(
               text: ' $value',
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'Inter',
                 color: AppColors.deepBlueColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,

@@ -53,7 +53,8 @@ class MenuScreen extends StatelessWidget {
                 Text(
                   'About Us!',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     color: Colors.white,
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
@@ -115,7 +116,8 @@ Widget _buildMenuItem(MenuItem item) {
                         // title
                         Text(
                           item.title,
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
+                            fontFamily: 'Inter',
                             color: AppColors.blueColor,
                             fontSize: 17.sp,
                             fontWeight: FontWeight.w700,
@@ -125,7 +127,8 @@ Widget _buildMenuItem(MenuItem item) {
                         // subtitle
                         Text(
                           item.subtitle,
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
+                            fontFamily: 'Inter',
                             color: AppColors.blueColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,

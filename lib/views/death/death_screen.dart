@@ -8,14 +8,12 @@ import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 
 class DeathScreen extends StatelessWidget {
-  // final Character player;
   final User player;
 
   const DeathScreen({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the controller with the player character
     final DeathScreenController controller = Get.put(
       DeathScreenController(player),
     );
@@ -54,29 +52,34 @@ class DeathScreen extends StatelessWidget {
                     // player.name,
                     player.userInfo.name,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.jaro(
+                    style: TextStyle(
                       color: const Color(0xFFDADBD3),
                       fontSize: 28.sp,
+                      fontFamily: 'Jaro',
                       fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.none,
                     ),
                   ),
-                  // Text(
-                  //   'AGED ${player.age} YEARS',
-                  //   textAlign: TextAlign.center,
-                  //   style: GoogleFonts.jaro(
-                  //     color: const Color(0xFFDADBD3),
-                  //     fontSize: 24.sp,
-                  //     fontWeight: FontWeight.w400,
-                  //   ),
-                  // ),
+                  Text(
+                    'AGED ${player.gameStats.levelsRx.last.age} YEARS',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: const Color(0xFFDADBD3),
+                      fontSize: 24.sp,
+                      fontFamily: 'Jaro',
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
                   SizedBox(height: 10.h),
                   Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
                           text: 'Net Worth: ',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
@@ -84,16 +87,18 @@ class DeathScreen extends StatelessWidget {
                         TextSpan(
                           text:
                               '\$252,538\n', // This should probably come from player.netWorth
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         TextSpan(
                           text: 'Residence: ',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
@@ -101,55 +106,66 @@ class DeathScreen extends StatelessWidget {
                         TextSpan(
                           text:
                               'Salt Lake City, United States\n', // From player.residence
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         TextSpan(
                           text: 'Career: ',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextSpan(
                           text: 'Animator\n', // From player.career
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         TextSpan(
                           text: 'Education: ',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextSpan(
                           text: 'University', // From player.education
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFDBDBD3),
+                            fontFamily: 'Inter',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                       ],
+                      style: TextStyle(
+                        decoration: TextDecoration.none,
+                        fontFamily: 'Inter',
+                      ),
                     ),
                   ),
                   SizedBox(height: 10.h),
                   Text(
                     'My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds.', // From player.deathNarrative or similar
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
                       color: const Color(0xFFB1B3A6),
+                      fontFamily: 'Inter',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.none,
                     ),
                   ),
                   SizedBox(height: 20.h),
@@ -163,10 +179,12 @@ class DeathScreen extends StatelessWidget {
                         Text(
                           'Agreement',
                           textAlign: TextAlign.right,
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
                             color: const Color(0xFFB1B3A6),
+                            fontFamily: 'Inter',
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w800,
+                            decoration: TextDecoration.none,
                           ),
                         ),
                         SizedBox(width: 10.w),
@@ -201,8 +219,9 @@ class DeathScreen extends StatelessWidget {
                                 padding: EdgeInsets.only(right: 5.w),
                                 child: Text(
                                   '${(0.6 * 100).toInt()}%', // Display player.agreementPercentage
-                                  style: GoogleFonts.inter(
+                                  style: TextStyle(
                                     color: Colors.white,
+                                    fontFamily: 'Inter',
                                     fontSize: 10.sp,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -237,8 +256,9 @@ class DeathScreen extends StatelessWidget {
               child: Text(
                 'Continue',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
+                style: TextStyle(
                   color: Colors.white,
+                  fontFamily: 'Inter',
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w800,
                 ),
@@ -249,14 +269,4 @@ class DeathScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-// Function to show the profile popup using Get.dialog
-// void showDeathScreeenPopup(BuildContext context, Character character) {
-void showDeathScreeenPopup(BuildContext context, User character) {
-  Get.dialog(
-    DeathScreen(player: character),
-    barrierDismissible: true,
-    barrierColor: Colors.black54.withValues(alpha: 0.90),
-  );
 }

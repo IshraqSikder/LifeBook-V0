@@ -45,43 +45,59 @@ class HomeController extends GetxController {
   }
 
   void incrementAge() async {
-    Level currentLevel = player.gameStats.levels.first;
-    currentLevel.incrementAge();
+    Level lastLevel = player.gameStats.levelsRx.last;
+
+    int newAge = lastLevel.age + 1;
+
     String diaryEntry;
 
-    // Find matching age entry from the list
+    // Find matching age entry from the list using newAge
     var ageEntry = agePopupList.firstWhere(
-      (item) => item['age'] == currentLevel.age,
+          (item) => item['age'] == newAge,
       orElse: () => {},
     );
 
-    // Check if ageMessage is not null & empty
     if (ageEntry.isNotEmpty && ageEntry['ageMessage'] != null) {
       diaryEntry =
-          "You're now ${currentLevel.age} years old!\n${ageEntry['ageMessage']}";
+      "You're now $newAge years old!\n${ageEntry['ageMessage']}";
     } else {
-      diaryEntry = "You're now ${currentLevel.age} years old!";
+      diaryEntry = "You're now $newAge years old!";
     }
 
     // Save the age and add the diary entry
-    await savePlayerLevel(currentLevel.age, diaryEntry);
+    await savePlayerLevel(newAge, diaryEntry);
 
     // Check for events
     bool isEvent = _eventOccurs();
     if (!isEvent) {
-      // If no event, add a generic age story
       addLifeStoryEntry(
-        LifeStory(age: currentLevel.age, description: diaryEntry),
+        LifeStory(age: newAge, description: diaryEntry),
       );
     }
 
     // Check for death
-    if (currentLevel.age == 30) {
+    if (newAge == 30) {
       Get.to(() => DeathScreen(player: player));
     }
 
-    // add salary after every age up
+    // Update Salary
     player.gameStats.balance += player.userInfo.job?.salary ?? 0;
+
+    // Force UI update if necessary (since we didn't use the Rx variable inside the list item)
+    player.gameStats.levelsRx.refresh();
+  }
+
+  // Append choice event details to the current age's persistent data
+  Future<void> addEventToCurrentAge(String eventText) async {
+    if (player.gameStats.levelsRx.isNotEmpty) {
+      Level currentLevel = player.gameStats.levelsRx.last;
+
+      currentLevel.experience.add(eventText);
+
+      player.gameStats.levelsRx.refresh();
+
+      await userService.saveUser(player);
+    }
   }
 
   bool _eventOccurs() {
@@ -89,7 +105,8 @@ class HomeController extends GetxController {
     int number = random.nextInt(100) + 1; // 1 to 100
     if (number <= 40) // 40% of chances
     {
-      showEventPopupGetX(player.gameStats.levels.first.age);
+      // showEventPopupGetX(player.gameStats.levels.first.age);
+      showEventPopupGetX(player.gameStats.levelsRx.last.age);
       return true;
     }
     return false;
@@ -117,7 +134,7 @@ class HomeController extends GetxController {
   // Method to save player level and diary entry
   Future<void> savePlayerLevel(int currentAge, String diaryEntry) async {
     final newLevel = Level(age: currentAge, experience: [diaryEntry]);
-    player.gameStats.levels.add(newLevel);
+    player.gameStats.levelsRx.value.add(newLevel);
     await userService.saveUser(player);
   }
 }

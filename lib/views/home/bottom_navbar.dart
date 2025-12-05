@@ -32,7 +32,7 @@ class BottomNavBarNew extends StatelessWidget {
                   children: [
                     Obx(
                       () =>
-                          controller.player.gameStats.levels.first.age.obs < 24
+                          controller.player.gameStats.levelsRx.last.age < 24
                           ? _buildNavBarItem(
                               'School',
                               'assets/icons/school.svg',
@@ -140,9 +140,10 @@ class BottomNavBarNew extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 10.sp,
+                fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -194,7 +195,8 @@ class BottomNavBarNew extends StatelessWidget {
               Icon(Icons.add, color: Colors.white, size: 40.r),
               Text(
                 'Age',
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   color: Colors.white,
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w800,
