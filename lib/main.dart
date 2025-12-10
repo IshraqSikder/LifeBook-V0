@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/models/user.dart';
+import 'package:life_book/services/asset_service.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/home/home.dart';
 import 'package:life_book/views/jobs/job_model.dart';
@@ -27,14 +28,8 @@ void main() async {
   Hive.registerAdapter(JobItemAdapter());
   Hive.registerAdapter(AssetModelAdapter());
 
-  // Initialize and put your UserService
-  // The onInit method of UserService will be called automatically here,
-  // handling the box initialization.
-  // Get.put(UserService(), permanent: true);
-
   // await Hive.deleteBoxFromDisk('usersBox');
 
-  // Use Get.putAsync for UserService because its onInit method is asynchronous
   await Get.putAsync<UserService>(() async {
     final userService = UserService();
     await userService.onInit(); // Explicitly await onInit here
@@ -45,6 +40,12 @@ void main() async {
     final jobService = JobService();
     await jobService.onInit(); // Explicitly await onInit here
     return jobService;
+  }, permanent: true);
+
+  await Get.putAsync<AssetService>(() async {
+    final assetService = AssetService();
+    await assetService.onInit(); // Explicitly await onInit here
+    return assetService;
   }, permanent: true);
 
   runApp(const LifeBook());

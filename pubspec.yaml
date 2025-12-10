@@ -77,6 +77,7 @@ flutter:
     - assets/images/menu/
     - assets/images/activities/
     - assets/images/jobs/
+    - assets/images/schools/
     - assets/images/real_estates/
     - assets/events/
     - assets/csv_list/

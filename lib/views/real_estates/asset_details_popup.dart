@@ -69,8 +69,8 @@ class AssetDetailsPopup extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 25.w),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.asset(
                         "assets/images/real_estates/${item.imageUrl}.png",
@@ -88,21 +88,23 @@ class AssetDetailsPopup extends StatelessWidget {
                           color: AppColors.deepBlueColor,
                         ),
                       ),
-                      Text(
-                        " (${item.subtitle})",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w300,
-                          color: AppColors.deepBlueColor,
+                      Expanded(
+                        child: Text(
+                          " (${item.subtitle})",
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w300,
+                            color: AppColors.deepBlueColor,
+                          ),
+                          softWrap: true,
                         ),
-                        softWrap: true,
                       ),
                     ],
                   ),
                 ),
 
-                SizedBox(height: 35.h),
+                SizedBox(height: 25.h),
 
                 // Asset Details content
                 Container(

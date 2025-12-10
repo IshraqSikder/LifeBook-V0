@@ -25,6 +25,34 @@ class AssetController extends GetxController {
     availableAssetItems = assetService.availableAssets;
   }
 
+  List<AssetModel> get sortedCurrentAssets {
+    List<AssetModel> sortedList = List.from(currentAsset);
+
+    sortedList.sort((a, b) {
+      return a.price.compareTo(b.price);
+    });
+
+    return sortedList;
+  }
+
+  List<AssetModel> get sortedAvailableAssets {
+    List<AssetModel> sortedList = List.from(availableAssetItems);
+
+    int currentBalance = player.gameStats.balanceRx.value;
+
+    sortedList.sort((a, b) {
+      bool isA_Active = currentBalance >= a.price;
+      bool isB_Active = currentBalance >= b.price;
+
+      if (isA_Active && !isB_Active) return -1;
+      if (!isA_Active && isB_Active) return 1;
+
+      return a.price.compareTo(b.price);
+    });
+
+    return sortedList;
+  }
+
   void buyAsset(AssetModel assetItem) async {
     await assetService.applyForNewAsset(assetItem);
     player.gameStats.balanceRx -= assetItem.price;

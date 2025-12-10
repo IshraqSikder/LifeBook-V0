@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
 import 'package:life_book/services/CSV_services.dart';
@@ -6,6 +7,7 @@ import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/death/death_screen.dart';
 import 'package:life_book/views/home/life_story.dart';
+import 'package:life_book/views/school/school_popup.dart';
 
 class HomeController extends GetxController {
   final User player;
@@ -78,8 +80,17 @@ class HomeController extends GetxController {
       addLifeStoryEntry(LifeStory(age: newAge, description: diaryEntry));
     }
 
+    // Check for School Popup
+    if (newAge == 5) {
+      Get.dialog(
+        SchoolPopup(player: player),
+        barrierDismissible: false,
+        barrierColor: Colors.black54.withValues(alpha : 0.90),
+      );
+    }
+
     // Check for death
-    if (newAge == 30) {
+    if (newAge == 35) {
       Get.to(() => DeathScreen(player: player));
     }
 

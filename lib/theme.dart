@@ -11,6 +11,8 @@ class AppColors {
   static Color brownColor = const Color(0xFF3D010B);
   static Color profileHeaderColor = const Color(0xFFE6EBEF);
   static Color textColor = const Color(0xFF7E7E7E);
+  static Color cardFirstColor = const Color(0xFFEDECE8);
+  static Color cardSecondColor = const Color(0xFFF5F4F0);
 }
 
 ThemeData primaryTheme = ThemeData(
