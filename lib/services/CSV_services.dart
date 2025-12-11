@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:life_book/models/asset_model.dart';
+import 'package:life_book/models/job_model.dart';
 import 'package:life_book/services/load_CSV.dart';
 
 RxList<Map<String, dynamic>> agePopupList = <Map<String, dynamic>>[].obs;
@@ -7,6 +8,7 @@ RxList<Map<String, dynamic>> choiceEventList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> positiveEventList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> activityList = <Map<String, dynamic>>[].obs;
 RxList<AssetModel> assetList = <AssetModel>[].obs;
+RxList<JobModel> jobList = <JobModel>[].obs;
 
 Future<void> loadAgePopup() async {
   final data = await loadAgePopupCSV();
@@ -99,6 +101,26 @@ Future<void> loadAsset() async {
       description: row[4],
       // price: row[5],
       price: int.tryParse(row[5].toString()) ?? 0,
+    );
+  }).toList();
+}
+
+Future<void> loadJob() async {
+  final data = await loadJobCSV();
+  // final headers = data.first;
+  final rows = data.skip(1);
+
+  jobList.value = rows.map((row) {
+    String imageName = row[1].toString();
+    String fullImagePath = "assets/images/jobs/$imageName.png";
+
+    return JobModel(
+      id: row[0],
+      imageUrl: fullImagePath,
+      title: row[2].toString(),
+      subtitle: row[3].toString(),
+      description: row[4].toString(),
+      salary: int.tryParse(row[5].toString()) ?? 0,
     );
   }).toList();
 }

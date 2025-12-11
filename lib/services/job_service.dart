@@ -1,29 +1,33 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
-import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/models/job_model.dart';
+
+import 'CSV_services.dart';
 
 class JobService extends GetxService {
   static const String _jobBoxName = 'jobItemsBox';
-  static const String _currentJobBoxName = 'currentJobItemBox';
+  static const String _currentJobBoxName = 'currentJobModelBox';
 
-  late Box<JobItem> _jobBox;
-  late Box<JobItem> _currentJobBox;
+  late Box<JobModel> _jobBox;
+  late Box<JobModel> _currentJobBox;
 
-  final RxList<JobItem> _availableJobs = <JobItem>[].obs;
-  RxList<JobItem> get availableJobs => _availableJobs;
+  final RxList<JobModel> _availableJobs = <JobModel>[].obs;
+  RxList<JobModel> get availableJobs => _availableJobs;
 
-  final Rx<JobItem?> _currentJob = Rx<JobItem?>(null);
-  Rx<JobItem?> get currentJob => _currentJob;
+  final Rx<JobModel?> _currentJob = Rx<JobModel?>(null);
+  Rx<JobModel?> get currentJob => _currentJob;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    _jobBox = await Hive.openBox<JobItem>(_jobBoxName);
-    _currentJobBox = await Hive.openBox<JobItem>(_currentJobBoxName);
+    _jobBox = await Hive.openBox<JobModel>(_jobBoxName);
+    _currentJobBox = await Hive.openBox<JobModel>(_currentJobBoxName);
 
     if (_jobBox.isEmpty) {
-      for (var item in initialAvailableJobItems) {
-        await _jobBox.add(item);
+      if (jobList.isNotEmpty) {
+        for (var item in jobList) {
+          await _jobBox.add(item);
+        }
       }
     }
     _availableJobs.assignAll(_jobBox.values.toList());
@@ -33,7 +37,7 @@ class JobService extends GetxService {
     }
   }
 
-  Future<void> applyForNewJob(JobItem jobItem) async {
+  Future<void> applyForNewJob(JobModel jobItem) async {
     if (_currentJob.value != null) {
       return;
     }
@@ -45,7 +49,7 @@ class JobService extends GetxService {
   }
 
   Future<void> resignCurrentJob() async {
-    final JobItem? jobToResign = _currentJob.value;
+    final JobModel? jobToResign = _currentJob.value;
 
     if (jobToResign == null) {
       return;
@@ -57,12 +61,12 @@ class JobService extends GetxService {
     await addJobToAvailable(jobToResign); // add to jobBox and list
   }
 
-  Future<void> addJobToAvailable(JobItem jobItem) async {
+  Future<void> addJobToAvailable(JobModel jobItem) async {
     await _jobBox.add(jobItem);
     _availableJobs.add(jobItem);
   }
 
-  Future<void> removeJobFromAvailable(JobItem jobItem) async {
+  Future<void> removeJobFromAvailable(JobModel jobItem) async {
     dynamic jobKey;
     for (var key in _jobBox.keys) {
       final item = _jobBox.get(key);
@@ -81,8 +85,8 @@ class JobService extends GetxService {
     await _jobBox.clear();
     await _currentJobBox.clear();
 
-    if (_jobBox.isEmpty) {
-      for (var item in initialAvailableJobItems) {
+    if (_jobBox.isEmpty && jobList.isNotEmpty) {
+      for (var item in jobList) {
         await _jobBox.add(item);
       }
     }

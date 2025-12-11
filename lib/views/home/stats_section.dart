@@ -8,9 +8,7 @@ import 'package:life_book/services/user_service.dart';
 import 'package:life_book/theme.dart';
 
 class StatsSection extends StatelessWidget {
-  // final Character player;
-  final User player;
-  const StatsSection({super.key, required this.player});
+  const StatsSection({super.key});
 
   @override
   Widget build(BuildContext context) {

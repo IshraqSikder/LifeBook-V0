@@ -5,10 +5,10 @@ import 'package:life_book/controllers/tutorial_controller.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 
-class TutorialScreenNew extends StatelessWidget {
+class TutorialScreen extends StatelessWidget {
   final User player;
 
-  const TutorialScreenNew({super.key, required this.player});
+  const TutorialScreen({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {

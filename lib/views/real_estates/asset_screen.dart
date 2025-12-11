@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/asset_controller.dart';
 import 'package:life_book/models/asset_model.dart';
-import 'package:life_book/services/asset_service.dart';
 import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
@@ -21,8 +19,6 @@ class AssetScreen extends StatelessWidget {
       AssetController(player: player),
       permanent: true,
     );
-
-    // final AssetService assetService = Get.find<AssetService>();
 
     return Scaffold(
       // backgroundColor: AppColors.profileHeaderColor,
@@ -133,7 +129,7 @@ class AssetScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Use Obx to react to changes in available assets list
+
           Expanded(
             child: Obx(() {
               final sortedAvailableItemList = controller.sortedAvailableAssets;

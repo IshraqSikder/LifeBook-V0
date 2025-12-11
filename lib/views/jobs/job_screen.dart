@@ -7,8 +7,8 @@ import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/controllers/job_controller.dart';
-import 'package:life_book/views/jobs/job_model.dart';
-import 'package:life_book/views/jobs/job_service.dart';
+import 'package:life_book/models/job_model.dart';
+import 'package:life_book/services/job_service.dart';
 
 class JobScreen extends StatelessWidget {
   const JobScreen({super.key, required this.player});
@@ -152,7 +152,7 @@ class JobScreen extends StatelessWidget {
   Widget _buildJobItem(
     BuildContext context,
     JobController controller,
-    JobItem? item,
+    JobModel? item,
   ) {
     return GestureDetector(
       onTap: () {

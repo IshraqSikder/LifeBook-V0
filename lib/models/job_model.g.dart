@@ -6,38 +6,41 @@ part of 'job_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class JobItemAdapter extends TypeAdapter<JobItem> {
+class JobModelAdapter extends TypeAdapter<JobModel> {
   @override
   final int typeId = 5;
 
   @override
-  JobItem read(BinaryReader reader) {
+  JobModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return JobItem(
-      imageUrl: fields[0] as String,
-      title: fields[1] as String,
-      subtitle: fields[2] as String,
-      description: fields[3] as String,
-      salary: fields[4] as int,
+    return JobModel(
+      id: fields[0] as int,
+      imageUrl: fields[1] as String,
+      title: fields[2] as String,
+      subtitle: fields[3] as String,
+      description: fields[4] as String,
+      salary: fields[5] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, JobItem obj) {
+  void write(BinaryWriter writer, JobModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.imageUrl)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.imageUrl)
       ..writeByte(2)
-      ..write(obj.subtitle)
+      ..write(obj.title)
       ..writeByte(3)
-      ..write(obj.description)
+      ..write(obj.subtitle)
       ..writeByte(4)
+      ..write(obj.description)
+      ..writeByte(5)
       ..write(obj.salary);
   }
 
@@ -47,7 +50,7 @@ class JobItemAdapter extends TypeAdapter<JobItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is JobItemAdapter &&
+      other is JobModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

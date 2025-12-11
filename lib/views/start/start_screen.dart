@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/theme.dart';
 
-class StartScreenNew extends StatelessWidget {
-  const StartScreenNew({super.key});
+class StartScreen extends StatelessWidget {
+  const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,15 +8,11 @@ import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 
 class MenuScreen extends StatelessWidget {
-  final User player;
-
-  const MenuScreen({super.key, required this.player});
+  const MenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final DeathScreenController controller = Get.put(
-      DeathScreenController(player),
-    );
+    final DeathScreenController controller = Get.put(DeathScreenController());
 
     return Scaffold(
       body: Column(

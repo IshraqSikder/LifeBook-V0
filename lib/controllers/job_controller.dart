@@ -3,17 +3,17 @@ import 'package:get/get.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/jobs/job_details_popup.dart';
-import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/models/job_model.dart';
 import 'package:life_book/views/jobs/job_popup.dart';
-import 'package:life_book/views/jobs/job_service.dart';
+import 'package:life_book/services/job_service.dart';
 
 class JobController extends GetxController {
   final User player;
 
   JobController({required this.player});
 
-  late final Rx<JobItem?> currentJob;
-  late final RxList<JobItem> availableJobItems;
+  late final Rx<JobModel?> currentJob;
+  late final RxList<JobModel> availableJobItems;
 
   final UserService userService = Get.find<UserService>();
   final JobService jobService = Get.find<JobService>();
@@ -25,7 +25,7 @@ class JobController extends GetxController {
     availableJobItems = jobService.availableJobs;
   }
 
-  void applyForJob(JobItem jobItem) async {
+  void applyForJob(JobModel jobItem) async {
     if (currentJob.value == null) {
       await jobService.applyForNewJob(jobItem);
       player.gameStats.balanceRx += jobItem.salary;
@@ -33,7 +33,7 @@ class JobController extends GetxController {
       Get.dialog(
         barrierDismissible: true,
         barrierColor: Colors.black54.withValues(alpha: 0.95),
-        JobPopup(player: player, item: jobItem),
+        JobPopup(item: jobItem),
       );
     } else {
       Get.dialog(
@@ -48,7 +48,7 @@ class JobController extends GetxController {
   }
 
   void resignJob() async {
-    final JobItem? jobToResign = currentJob.value;
+    final JobModel? jobToResign = currentJob.value;
     if (jobToResign != null) {
       await jobService.resignCurrentJob();
     }
@@ -59,7 +59,7 @@ class JobController extends GetxController {
   }
 
   // Method to handle showing a job detail popup or similar
-  void handleJobTap(BuildContext context, JobItem item) {
+  void handleJobTap(BuildContext context, JobModel item) {
     if (currentJob.value == item) {
       showJobDetailsPopup(context, item);
     } else if (availableJobItems.contains(item)) {
@@ -68,7 +68,7 @@ class JobController extends GetxController {
   }
 
   // Function to show the job details popup
-  void showJobDetailsPopup(BuildContext context, JobItem item) {
+  void showJobDetailsPopup(BuildContext context, JobModel item) {
     Get.dialog(
       JobDetailsPopup(item: item),
       barrierDismissible: true,

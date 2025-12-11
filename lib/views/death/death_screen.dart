@@ -15,7 +15,7 @@ class DeathScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DeathScreenController controller = Get.put(
-      DeathScreenController(player),
+      DeathScreenController(),
     );
 
     return Container(

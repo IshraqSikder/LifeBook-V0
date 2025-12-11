@@ -8,10 +8,10 @@ import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/services/asset_service.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/home/home.dart';
-import 'package:life_book/views/jobs/job_model.dart';
-import 'package:life_book/views/jobs/job_service.dart';
-import 'package:life_book/views/start/create_new.dart';
-import 'package:life_book/views/start/start_new.dart';
+import 'package:life_book/models/job_model.dart';
+import 'package:life_book/services/job_service.dart';
+import 'package:life_book/views/start/create_screen.dart';
+import 'package:life_book/views/start/start_screen.dart';
 import 'package:life_book/theme.dart';
 
 void main() async {
@@ -27,7 +27,7 @@ void main() async {
   Hive.registerAdapter(GameStatsAdapter());
   Hive.registerAdapter(LevelAdapter());
   Hive.registerAdapter(AssetModelAdapter());
-  Hive.registerAdapter(JobItemAdapter());
+  Hive.registerAdapter(JobModelAdapter());
 
   // await Hive.deleteBoxFromDisk('usersBox');
 
@@ -37,6 +37,7 @@ void main() async {
   await loadChoiceEvent();
   await loadActivity();
   await loadAsset();
+  await loadJob();
 
   // load data from Hive
   await Get.putAsync<UserService>(() async {
@@ -82,12 +83,12 @@ class LifeBook extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             initialRoute: initialRoute,
             getPages: [
-              GetPage(name: '/start', page: () => const StartScreenNew()),
+              GetPage(name: '/start', page: () => const StartScreen()),
               GetPage(
                 name: '/create',
-                page: () => const CreateCharacterScreenNew(),
+                page: () => const CreateCharacterScreen(),
               ),
-              // GetPage(name: '/tutorial', page: () => const TutorialScreenNew(p)),
+              // GetPage(name: '/tutorial', page: () => const TutorialScreen(p)),
               GetPage(
                 name: '/home',
                 page: () => HomeScreen(player: userService.activeUser!),

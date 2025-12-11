@@ -3,13 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
-import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/models/job_model.dart';
 
 class JobPopup extends StatelessWidget {
-  final User player;
-  final JobItem item;
+  final JobModel item;
 
-  const JobPopup({super.key, required this.player, required this.item});
+  const JobPopup({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
-import 'package:life_book/views/start/tutorial_new.dart';
+import 'package:life_book/views/start/tutorial_screen.dart';
 
 class CreateCharacterController extends GetxController {
   final TextEditingController nameController = TextEditingController();
@@ -73,7 +73,7 @@ class CreateCharacterController extends GetxController {
       // Save the new player to Hive and set it as the active user
       await _userService.saveUser(newPlayer);
 
-      Get.offAll(() => TutorialScreenNew(player: newPlayer));
+      Get.offAll(() => TutorialScreen(player: newPlayer));
     }
   }
 }

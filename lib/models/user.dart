@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:life_book/models/asset_model.dart';
-import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/models/job_model.dart';
 
 part 'user.g.dart';
 
@@ -20,7 +20,7 @@ class UserInfo extends HiveObject {
   Map<String, dynamic> school;
 
   @HiveField(4)
-  JobItem? job;
+  JobModel? job;
 
   @HiveField(5)
   AssetModel? assets;

@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppBarNew(player: controller.player),
       body: Obx(
         () => controller.isMenuToggled.value
-            ? MenuScreen(player: controller.player)
+            ? MenuScreen()
             : Column(
                 children: [
                   ProfileHeader(),
@@ -48,21 +48,24 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // List of life story entries
-                              ...userService.activeUser!.gameStats.levelsRx.value.map((
-                                entry,
-                              ) {
-                                return Column(
-                                  children: [
-                                    LifeStory(
-                                      age: entry.age,
-                                      description: controller
-                                          .getCombinedDescription(entry),
-                                      // flavor: entry.flavor,
-                                    ),
-                                    SizedBox(height: 10.h),
-                                  ],
-                                );
-                              }), // Convert to list
+                              ...userService
+                                  .activeUser!
+                                  .gameStats
+                                  .levelsRx
+                                  .value
+                                  .map((entry) {
+                                    return Column(
+                                      children: [
+                                        LifeStory(
+                                          age: entry.age,
+                                          description: controller
+                                              .getCombinedDescription(entry),
+                                          // flavor: entry.flavor,
+                                        ),
+                                        SizedBox(height: 10.h),
+                                      ],
+                                    );
+                                  }), // Convert to list
                             ],
                           ),
                         ),
@@ -70,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   BottomNavBarNew(),
-                  StatsSection(player: controller.player),
+                  StatsSection(),
                 ],
               ),
       ),

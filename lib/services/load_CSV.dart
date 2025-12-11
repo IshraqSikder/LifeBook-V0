@@ -46,3 +46,11 @@ Future<List<List<dynamic>>> loadAssetCSV() async {
   ).convert(rawData);
   return listData;
 }
+
+Future<List<List<dynamic>>> loadJobCSV() async {
+  final rawData = await rootBundle.loadString("assets/csv_list/job_list.csv");
+  final List<List<dynamic>> listData = const CsvToListConverter(
+    eol: '\n',
+  ).convert(rawData);
+  return listData;
+}

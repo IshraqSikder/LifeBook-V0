@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/job_controller.dart';
 import 'package:life_book/theme.dart';
-import 'package:life_book/views/jobs/job_model.dart';
+import 'package:life_book/models/job_model.dart';
 
 class JobDetailsPopup extends StatelessWidget {
   const JobDetailsPopup({super.key, required this.item});
 
-  final JobItem item;
+  final JobModel item;
 
   @override
   Widget build(BuildContext context) {
