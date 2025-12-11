@@ -16,7 +16,9 @@ class AssetController extends GetxController {
 
   final UserService userService = Get.find<UserService>();
 
-  final AssetService assetService = Get.put(AssetService());
+  // final AssetService assetService = Get.put(AssetService());
+  final AssetService assetService = Get.find<AssetService>();
+
 
   @override
   void onInit() {

@@ -11,10 +11,10 @@ import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/views/home/stats_section.dart';
 import 'package:life_book/views/menu/menu_screen.dart';
 
-class HomeScreenNew extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   final User player;
   final dynamic choice;
-  const HomeScreenNew({super.key, required this.player, this.choice});
+  const HomeScreen({super.key, required this.player, this.choice});
 
   @override
   Widget build(BuildContext context) {

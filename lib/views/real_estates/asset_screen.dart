@@ -45,7 +45,7 @@ class AssetScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => Get.back(), // Use Get.back() to navigate back
+                  onTap: () => Get.back(),
                   child: SvgPicture.asset(
                     'assets/icons/cancel.svg',
                     width: 24.w,
@@ -111,7 +111,7 @@ class AssetScreen extends StatelessWidget {
                       return _buildAssetItem(
                         context,
                         controller,
-                        item!,
+                        item,
                         isOwned: true,
                       );
                     },
@@ -175,7 +175,6 @@ class AssetScreen extends StatelessWidget {
     AssetModel item, {
     required bool isOwned,
   }) {
-    // Wrap in Obx to listen to player balance changes in real-time
     return Obx(() {
       final int currentBalance = controller.player.gameStats.balanceRx.value;
 
@@ -188,19 +187,15 @@ class AssetScreen extends StatelessWidget {
         opacity: isActive ? 1.0 : 0.5,
         child: GestureDetector(
           onTap: isActive
-              ? () {
-                  controller.handleAssetTap(context, item);
-                }
-              : null, // Disable tap if inactive
+              ? () => controller.handleAssetTap(context, item)
+              : null,
           child: Container(
             width: double.infinity,
             height: 70.h,
             decoration: BoxDecoration(
               color: isActive
                   ? Colors.transparent
-                  : Colors.grey.withOpacity(
-                      0.1,
-                    ), // Optional: slight background tint
+                  : Colors.grey.withValues(alpha: 0.1),
               border: Border(
                 bottom: BorderSide(width: 0.50.w, color: Colors.black),
               ),
@@ -244,7 +239,6 @@ class AssetScreen extends StatelessWidget {
                                     text: item.title,
                                     style: TextStyle(
                                       fontFamily: 'Inter',
-                                      // color: AppColors.blueColor,
                                       color: isActive
                                           ? AppColors.blueColor
                                           : Colors.grey[800],
@@ -256,7 +250,6 @@ class AssetScreen extends StatelessWidget {
                                     text: ' (${item.subtitle})',
                                     style: TextStyle(
                                       fontFamily: 'Inter',
-                                      // color: AppColors.blueColor,
                                       color: isActive
                                           ? AppColors.blueColor
                                           : Colors.grey[800],
@@ -273,7 +266,6 @@ class AssetScreen extends StatelessWidget {
                               '\$${item.price}',
                               style: TextStyle(
                                 fontFamily: 'Inter',
-                                // Change price color to grey if too expensive
                                 color: isActive
                                     ? AppColors.blueColor
                                     : Colors.grey[800],

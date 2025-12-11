@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/models/user.dart';
+import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/services/asset_service.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/home/home.dart';
@@ -25,27 +26,35 @@ void main() async {
   Hive.registerAdapter(RelationshipAdapter());
   Hive.registerAdapter(GameStatsAdapter());
   Hive.registerAdapter(LevelAdapter());
-  Hive.registerAdapter(JobItemAdapter());
   Hive.registerAdapter(AssetModelAdapter());
+  Hive.registerAdapter(JobItemAdapter());
 
   // await Hive.deleteBoxFromDisk('usersBox');
 
+  // load data from CSV Services
+  await loadAgePopup();
+  await loadPositiveEvent();
+  await loadChoiceEvent();
+  await loadActivity();
+  await loadAsset();
+
+  // load data from Hive
   await Get.putAsync<UserService>(() async {
     final userService = UserService();
     await userService.onInit(); // Explicitly await onInit here
     return userService;
   }, permanent: true);
 
-  await Get.putAsync<JobService>(() async {
-    final jobService = JobService();
-    await jobService.onInit(); // Explicitly await onInit here
-    return jobService;
-  }, permanent: true);
-
   await Get.putAsync<AssetService>(() async {
     final assetService = AssetService();
     await assetService.onInit(); // Explicitly await onInit here
     return assetService;
+  }, permanent: true);
+
+  await Get.putAsync<JobService>(() async {
+    final jobService = JobService();
+    await jobService.onInit(); // Explicitly await onInit here
+    return jobService;
   }, permanent: true);
 
   runApp(const LifeBook());
@@ -81,7 +90,7 @@ class LifeBook extends StatelessWidget {
               // GetPage(name: '/tutorial', page: () => const TutorialScreenNew(p)),
               GetPage(
                 name: '/home',
-                page: () => HomeScreenNew(player: userService.activeUser!),
+                page: () => HomeScreen(player: userService.activeUser!),
               ),
             ],
           );

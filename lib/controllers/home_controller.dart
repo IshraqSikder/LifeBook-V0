@@ -22,15 +22,15 @@ class HomeController extends GetxController {
 
   final UserService userService = Get.find<UserService>();
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await loadAgePopup();
-    await loadPositiveEvent();
-    await loadChoiceEvent();
-    await loadActivity();
-    await loadAsset();
-  }
+  // @override
+  // void onInit() async {
+  //   super.onInit();
+  //   await loadAgePopup();
+  //   await loadPositiveEvent();
+  //   await loadChoiceEvent();
+  //   await loadActivity();
+  //   await loadAsset();
+  // }
 
   // Method to toggle the menu state
   void toggleMenu() {

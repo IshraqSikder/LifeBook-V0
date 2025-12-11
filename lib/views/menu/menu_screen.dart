@@ -43,13 +43,12 @@ class MenuScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              // Use a fixed width for spacing instead of `spacing` property for Row
               children: [
                 Image.asset(
                   "assets/images/menu/group.png",
                   fit: BoxFit.contain,
                 ),
-                SizedBox(width: 10.w), // Manual spacing
+                SizedBox(width: 10.w),
                 Text(
                   'About Us!',
                   textAlign: TextAlign.center,
@@ -96,7 +95,6 @@ Widget _buildMenuItem(MenuItem item) {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                // Use a fixed width for spacing instead of `spacing` property for Row
                 children: [
                   // image
                   SizedBox(
@@ -104,14 +102,13 @@ Widget _buildMenuItem(MenuItem item) {
                     height: 35.h,
                     child: Image.asset(item.imageUrl, fit: BoxFit.contain),
                   ),
-                  SizedBox(width: 5.w), // Manual spacing
+                  SizedBox(width: 5.w),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 4.w),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // Use a fixed height for spacing instead of `spacing` property for Column
                       children: [
                         // title
                         Text(
@@ -123,7 +120,7 @@ Widget _buildMenuItem(MenuItem item) {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(height: 4.h), // Manual spacing
+                        SizedBox(height: 4.h),
                         // subtitle
                         Text(
                           item.subtitle,

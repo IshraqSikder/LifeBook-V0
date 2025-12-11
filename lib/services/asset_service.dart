@@ -28,14 +28,16 @@ class AssetService extends GetxService {
         await _assetBox.add(item);
       }
     }
+
     _availableAssets.assignAll(_assetBox.values.toList());
+
     if (_currentAssetBox.isNotEmpty) {
       _currentAsset.assignAll(_currentAssetBox.values.toList());
     }
   }
 
   Future<void> applyForNewAsset(AssetModel assetItem) async {
-    await removeAssetFromAvailable(assetItem); // remove from assetBox and list
+    await removeAssetFromAvailable(assetItem);
     await _currentAssetBox.add(assetItem);
     _currentAsset.add(assetItem);
   }
