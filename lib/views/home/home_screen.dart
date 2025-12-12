@@ -34,6 +34,9 @@ class HomeScreen extends StatelessWidget {
                   ProfileHeader(),
                   Expanded(
                     child: SingleChildScrollView(
+                      controller: controller
+                          .scrollController, // call the Scroll Controller
+
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(
@@ -42,29 +45,26 @@ class HomeScreen extends StatelessWidget {
                         ),
                         child: Obx(
                           () => Column(
-                            // Use Obx here to react to list changes
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // List of life story entries
-                              ...userService
-                                  .activeUser!
-                                  .gameStats
-                                  .levelsRx
-                                  .map((entry) {
-                                    return Column(
-                                      children: [
-                                        LifeStory(
-                                          age: entry.age,
-                                          description: controller
-                                              .getCombinedDescription(entry),
-                                          // flavor: entry.flavor,
-                                        ),
-                                        SizedBox(height: 10.h),
-                                      ],
-                                    );
-                                  }), // Convert to list
+                              ...userService.activeUser!.gameStats.levelsRx.map(
+                                (entry) {
+                                  return Column(
+                                    children: [
+                                      LifeStory(
+                                        age: entry.age,
+                                        description: controller
+                                            .getCombinedDescription(entry),
+                                        // flavor: entry.flavor,
+                                      ),
+                                      SizedBox(height: 10.h),
+                                    ],
+                                  );
+                                },
+                              ), // Convert to list
                             ],
                           ),
                         ),

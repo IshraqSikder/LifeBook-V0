@@ -22,15 +22,39 @@ class HomeController extends GetxController {
 
   final UserService userService = Get.find<UserService>();
 
-  // @override
-  // void onInit() async {
-  //   super.onInit();
-  //   await loadAgePopup();
-  //   await loadPositiveEvent();
-  //   await loadChoiceEvent();
-  //   await loadActivity();
-  //   await loadAsset();
-  // }
+  final ScrollController scrollController =
+      ScrollController(); // Define Scroll Controller here
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    // "ever" runs every time levelsRx changes
+    ever(userService.activeUser!.gameStats.levelsRx, (_) {
+      scrollToBottom();
+    });
+  }
+
+  // 2. Dispose Scroll Controller (Good practice to prevent memory leaks)
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
+
+  void scrollToBottom() {
+    // We need to wait for the UI to build the new item first
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Check if the controller is attached to a view to avoid errors
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
 
   // Method to toggle the menu state
   void toggleMenu() {
@@ -85,7 +109,7 @@ class HomeController extends GetxController {
       Get.dialog(
         SchoolPopup(player: player),
         barrierDismissible: false,
-        barrierColor: Colors.black54.withValues(alpha : 0.90),
+        barrierColor: Colors.black54.withValues(alpha: 0.90),
       );
     }
 
