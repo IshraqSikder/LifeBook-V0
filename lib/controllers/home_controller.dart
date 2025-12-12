@@ -116,7 +116,6 @@ class HomeController extends GetxController {
     int number = random.nextInt(100) + 1; // 1 to 100
     if (number <= 40) // 40% of chances
     {
-      // showEventPopupGetX(player.gameStats.levels.first.age);
       showEventPopupGetX(player.gameStats.levelsRx.last.age);
       return true;
     }

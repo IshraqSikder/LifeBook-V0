@@ -86,7 +86,7 @@ class DeathScreen extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '\$252,538\n', // This should probably come from player.netWorth
+                              '\$${player.gameStats.balanceRx.value}\n',
                           style: TextStyle(
                             color: const Color(0xFFDBDBD3),
                             fontFamily: 'Inter',
@@ -223,7 +223,8 @@ class DeathScreen extends StatelessWidget {
                                     color: Colors.white,
                                     fontFamily: 'Inter',
                                     fontSize: 10.sp,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.none,
                                   ),
                                 ),
                               ),

@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
     final UserService userService = Get.find<UserService>();
 
     return Scaffold(
-      appBar: CustomAppBarNew(player: controller.player),
+      appBar: CustomAppBarNew(),
       body: Obx(
         () => controller.isMenuToggled.value
             ? MenuScreen()
@@ -52,7 +52,6 @@ class HomeScreen extends StatelessWidget {
                                   .activeUser!
                                   .gameStats
                                   .levelsRx
-                                  .value
                                   .map((entry) {
                                     return Column(
                                       children: [

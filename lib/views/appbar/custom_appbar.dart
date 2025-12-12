@@ -2,37 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/home_controller.dart';
-import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 
 class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
-  // final Character player;
-  final User player;
-
-  const CustomAppBarNew({super.key, required this.player});
+  const CustomAppBarNew({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Find the already initialized HomeController
     final HomeController controller = Get.find<HomeController>();
 
-    return AppBar(
-      backgroundColor: AppColors.redColor,
-      toolbarHeight: 75.h,
-      leading: GestureDetector(
-        onTap: controller.toggleMenu, // Call the controller's toggle method
-        child: Container(
-          width: 30.w,
-          height: 30.h,
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-          margin: EdgeInsets.only(top: 7.h, bottom: 7.h),
-          child: Obx(
-            () =>
-                controller
-                    .isMenuToggled
-                    .value // Observe the controller's state
+    return Obx(
+      () => AppBar(
+        backgroundColor: AppColors.redColor,
+        toolbarHeight: 75.h,
+        centerTitle: controller.isMenuToggled.value,
+        titleSpacing: 0,
+
+        // Icon
+        leading: GestureDetector(
+          onTap: controller.toggleMenu,
+          child: Container(
+            width: 30.w,
+            height: 30.h,
+            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 7.h),
+            margin: EdgeInsets.only(top: 10.h, bottom: 7.h, left: 7.w),
+            child: controller.isMenuToggled.value
                 ? SvgPicture.asset(
                     "assets/icons/cancel.svg",
                     fit: BoxFit.contain,
@@ -40,20 +35,10 @@ class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
                 : Image.asset("assets/images/menu.png", fit: BoxFit.contain),
           ),
         ),
-      ),
-      centerTitle: controller.isMenuToggled.value
-          ? true
-          : false, // Also observe here
-      titleSpacing: 0,
-      title: Obx(
-        () => Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // If menu is open, show "MAIN MENU"
-            if (controller.isMenuToggled.value)
-              Text(
+
+        // Title
+        title: controller.isMenuToggled.value
+            ? Text(
                 'MAIN MENU',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -63,8 +48,7 @@ class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
                   fontWeight: FontWeight.w900,
                 ),
               )
-            else // If menu is closed, show "LifeBook" logo and title
-              Row(
+            : Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -87,8 +71,6 @@ class CustomAppBarNew extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ],
               ),
-          ],
-        ),
       ),
     );
   }

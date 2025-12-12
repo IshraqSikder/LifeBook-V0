@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:life_book/models/user.dart';
-import 'package:life_book/views/home/home.dart';
+import 'package:life_book/views/home/home_screen.dart';
 
 class TutorialScreenController extends GetxController {
   final User player;
