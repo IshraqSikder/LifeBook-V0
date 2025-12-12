@@ -16,24 +16,47 @@ class AssetService extends GetxService {
   final RxList<AssetModel?> _currentAsset = RxList<AssetModel?>([]);
   RxList<AssetModel?> get currentAsset => _currentAsset;
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
+  // @override
+  // Future<void> onInit() async {
+  //   super.onInit();
+  //   _assetBox = await Hive.openBox<AssetModel>(_assetBoxName);
+  //   _currentAssetBox = await Hive.openBox<AssetModel>(_currentAssetBoxName);
+  //
+  //   // Load asset data from CSV
+  //   if (_assetBox.isEmpty) {
+  //     for (var item in assetList) {
+  //       await _assetBox.add(item);
+  //     }
+  //   }
+  //
+  //   _availableAssets.assignAll(_assetBox.values.toList());
+  //
+  //   if (_currentAssetBox.isNotEmpty) {
+  //     _currentAsset.assignAll(_currentAssetBox.values.toList());
+  //   }
+  // }
+
+  // 1. Convert to init pattern
+  Future<AssetService> init() async {
     _assetBox = await Hive.openBox<AssetModel>(_assetBoxName);
     _currentAssetBox = await Hive.openBox<AssetModel>(_currentAssetBoxName);
 
-    // Load asset data from CSV
-    if (_assetBox.isEmpty) {
-      for (var item in assetList) {
-        await _assetBox.add(item);
-      }
+    // PERFORMANCE FIX: Use addAll instead of a loop with await
+    if (_assetBox.isEmpty && assetList.isNotEmpty) {
+      // faster batch write
+      await _assetBox.addAll(assetList);
     }
 
-    _availableAssets.assignAll(_assetBox.values.toList());
+    // Assign data
+    if (_assetBox.isNotEmpty) {
+      _availableAssets.assignAll(_assetBox.values.toList());
+    }
 
     if (_currentAssetBox.isNotEmpty) {
       _currentAsset.assignAll(_currentAssetBox.values.toList());
     }
+
+    return this;
   }
 
   Future<void> applyForNewAsset(AssetModel assetItem) async {

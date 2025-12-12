@@ -52,19 +52,19 @@ void main() async {
   // load data from Hive
   await Get.putAsync<UserService>(() async {
     final userService = UserService();
-    await userService.onInit(); // Explicitly await onInit here
+    await userService.init(); // Explicitly await init here
     return userService;
   }, permanent: true);
 
   await Get.putAsync<AssetService>(() async {
     final assetService = AssetService();
-    await assetService.onInit(); // Explicitly await onInit here
+    await assetService.init(); // Explicitly await init here
     return assetService;
   }, permanent: true);
 
   await Get.putAsync<JobService>(() async {
     final jobService = JobService();
-    await jobService.onInit(); // Explicitly await onInit here
+    await jobService.init(); // Explicitly await init here
     return jobService;
   }, permanent: true);
 

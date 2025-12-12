@@ -27,54 +27,37 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBarNew(),
       body: Obx(
-        () => controller.isMenuToggled.value
+            () => controller.isMenuToggled.value
             ? MenuScreen()
             : Column(
-                children: [
-                  ProfileHeader(),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      controller: controller
-                          .scrollController, // call the Scroll Controller
+          children: [
+            ProfileHeader(),
+            Expanded(
+              child: Obx(() {
+                final levels = userService.activeUser!.gameStats.levelsRx;
 
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 10.h,
-                        ),
-                        child: Obx(
-                          () => Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // List of life story entries
-                              ...userService.activeUser!.gameStats.levelsRx.map(
-                                (entry) {
-                                  return Column(
-                                    children: [
-                                      LifeStory(
-                                        age: entry.age,
-                                        description: controller
-                                            .getCombinedDescription(entry),
-                                        // flavor: entry.flavor,
-                                      ),
-                                      SizedBox(height: 10.h),
-                                    ],
-                                  );
-                                },
-                              ), // Convert to list
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                return ListView.separated(
+                  controller: controller.scrollController,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 10.h,
                   ),
-                  BottomNavBarNew(),
-                  StatsSection(),
-                ],
-              ),
+                  itemCount: levels.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 10.h),
+                  itemBuilder: (context, index) {
+                    final entry = levels[index];
+                    return LifeStory(
+                      age: entry.age,
+                      description: controller.getCombinedDescription(entry),
+                    );
+                  },
+                );
+              }),
+            ),
+            BottomNavBarNew(),
+            StatsSection(),
+          ],
+        ),
       ),
     );
   }

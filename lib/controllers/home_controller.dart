@@ -29,13 +29,17 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // "ever" runs every time levelsRx changes
+    // Listen to changes in levels and scroll down
     ever(userService.activeUser!.gameStats.levelsRx, (_) {
+      scrollToBottom();
+    });
+
+    // Initial scroll to bottom when entering the screen
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollToBottom();
     });
   }
 
-  // 2. Dispose Scroll Controller (Good practice to prevent memory leaks)
   @override
   void onClose() {
     scrollController.dispose();
@@ -43,9 +47,8 @@ class HomeController extends GetxController {
   }
 
   void scrollToBottom() {
-    // We need to wait for the UI to build the new item first
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Check if the controller is attached to a view to avoid errors
+    // Adding a tiny delay ensures the ListView has finished rendering the new item before we try to scroll to it.
+    Future.delayed(const Duration(milliseconds: 100), () {
       if (scrollController.hasClients) {
         scrollController.animateTo(
           scrollController.position.maxScrollExtent,
@@ -168,7 +171,7 @@ class HomeController extends GetxController {
   // Method to save player level and diary entry
   Future<void> savePlayerLevel(int currentAge, String diaryEntry) async {
     final newLevel = Level(age: currentAge, experience: [diaryEntry]);
-    player.gameStats.levelsRx.value.add(newLevel);
+    player.gameStats.levelsRx.add(newLevel);
     await userService.saveUser(player);
   }
 }

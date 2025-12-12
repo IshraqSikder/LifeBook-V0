@@ -8,6 +8,6 @@ class TutorialScreenController extends GetxController {
   TutorialScreenController(this.player);
 
   void goToHomeScreen() {
-    Get.offAll(HomeScreen(player: player));
+    Get.offAll(() => HomeScreen(player: player));
   }
 }

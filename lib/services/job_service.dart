@@ -17,24 +17,49 @@ class JobService extends GetxService {
   final Rx<JobModel?> _currentJob = Rx<JobModel?>(null);
   Rx<JobModel?> get currentJob => _currentJob;
 
+  // @override
+  // Future<void> onInit() async {
+  //   super.onInit();
+  //   _jobBox = await Hive.openBox<JobModel>(_jobBoxName);
+  //   _currentJobBox = await Hive.openBox<JobModel>(_currentJobBoxName);
+  //
+  //   if (_jobBox.isEmpty) {
+  //     if (jobList.isNotEmpty) {
+  //       for (var item in jobList) {
+  //         await _jobBox.add(item);
+  //       }
+  //     }
+  //   }
+  //   _availableJobs.assignAll(_jobBox.values.toList());
+  //
+  //   if (_currentJobBox.isNotEmpty) {
+  //     _currentJob.value = _currentJobBox.values.first;
+  //   }
+  // }
+
   @override
-  Future<void> onInit() async {
+  void onInit() {
     super.onInit();
+    // Logic moved to init() to prevent UI freezing
+  }
+
+  // Use this pattern for Get.putAsync
+  Future<JobService> init() async {
     _jobBox = await Hive.openBox<JobModel>(_jobBoxName);
     _currentJobBox = await Hive.openBox<JobModel>(_currentJobBoxName);
 
-    if (_jobBox.isEmpty) {
-      if (jobList.isNotEmpty) {
-        for (var item in jobList) {
-          await _jobBox.add(item);
-        }
-      }
+    // OPTIMIZATION: Use addAll for batch writing instead of a loop
+    if (_jobBox.isEmpty && jobList.isNotEmpty) {
+      await _jobBox.addAll(jobList);
     }
+
     _availableJobs.assignAll(_jobBox.values.toList());
 
     if (_currentJobBox.isNotEmpty) {
       _currentJob.value = _currentJobBox.values.first;
     }
+
+    return this;
   }
 
   Future<void> applyForNewJob(JobModel jobItem) async {
