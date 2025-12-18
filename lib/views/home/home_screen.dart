@@ -8,7 +8,6 @@ import 'package:life_book/views/home/bottom_navbar.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/views/home/life_story.dart';
 import 'package:life_book/views/home/profile_header.dart';
-import 'package:life_book/views/home/stats_section.dart';
 import 'package:life_book/views/menu/menu_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -54,8 +53,7 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
             ),
-            BottomNavBarNew(),
-            StatsSection(),
+            BottomNavBar(),
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:life_book/controllers/asset_controller.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/controllers/job_controller.dart';

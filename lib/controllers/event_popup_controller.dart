@@ -70,7 +70,7 @@ void showEventPopupGetX(int age) {
         return const EventChoicePopup();
       },
       transitionBuilder: slideFromTopBuilder,
-      transitionDuration: const Duration(milliseconds: 750),
+      transitionDuration: const Duration(milliseconds: 600),
     ).then((value) {
       Get.delete<EventPopupController>();
     });
@@ -84,7 +84,7 @@ void showEventPopupGetX(int age) {
         return EventPopup();
       },
       transitionBuilder: slideFromTopBuilder,
-      transitionDuration: const Duration(milliseconds: 750),
+      transitionDuration: const Duration(milliseconds: 600),
     ).then((value) {
       final HomeController homeController = Get.find<HomeController>();
       final EventPopupController eventController =

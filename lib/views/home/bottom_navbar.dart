@@ -2,87 +2,123 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:life_book/views/activities/activity_screen.dart';
+import 'package:life_book/controllers/custom_animation_controller.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
+import 'package:life_book/views/activities/activity_screen.dart';
+import 'package:life_book/views/home/stats_section.dart';
 import 'package:life_book/views/jobs/job_screen.dart';
 import 'package:life_book/views/real_estates/asset_screen.dart';
 
-class BottomNavBarNew extends StatelessWidget {
-  const BottomNavBarNew({super.key});
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.find<HomeController>();
 
-    return SizedBox(
-      height: 105.h,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 78.h,
-            color: AppColors.blueColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Obx(
-                      () =>
-                          controller.player.gameStats.levelsRx.last.age < 24
-                          ? _buildNavBarItem(
-                              'School',
-                              'assets/icons/school.svg',
+    final CustomAnimationController animationController = Get.put(CustomAnimationController());
+
+    return Obx(
+      () => AnimatedSlide(
+        // If visible, offset is 0. If not, offset is 1 (completely shifted down)
+        offset: animationController.isNavBarVisible.value
+            ? Offset.zero
+            : const Offset(0, 1),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 105.h,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 78.h,
+                    color: AppColors.blueColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          children: [
+                            Obx(
+                              () =>
+                                  controller
+                                          .player
+                                          .gameStats
+                                          .levelsRx
+                                          .last
+                                          .age <
+                                      24
+                                  ? _buildNavBarItem(
+                                      'School',
+                                      'assets/icons/school.svg',
+                                      () {
+                                        // Handle School
+                                      },
+                                    )
+                                  : _buildNavBarItem(
+                                      'Job',
+                                      'assets/icons/job.svg',
+                                      () {
+                                        // USE THE NEW NAVIGATION METHOD
+                                        animationController.navigateToTabWithAnimation(
+                                          JobScreen(player: controller.player),
+                                        );
+                                      },
+                                    ),
+                            ),
+                            _buildNavBarItem(
+                              'Assets',
+                              'assets/icons/assets.svg',
                               () {
-                                // Handle School button tap
+                                // USE THE NEW NAVIGATION METHOD
+                                animationController.navigateToTabWithAnimation(
+                                  AssetScreen(player: controller.player),
+                                );
                               },
-                            )
-                          : _buildNavBarItem('Job', 'assets/icons/job.svg', () {
-                              // Handle Job button tap
-                              Get.to(
-                                () => JobScreen(player: controller.player),
-                              );
-                            }),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 95.w, height: 105.h),
+                        Row(
+                          children: [
+                            _buildNavBarItem(
+                              'Relationships',
+                              'assets/icons/relationships.svg',
+                              () {
+                                // Logic
+                              },
+                            ),
+                            _buildNavBarItem(
+                              'Activities',
+                              'assets/icons/activities.svg',
+                              () {
+                                // USE THE NEW NAVIGATION METHOD
+                                animationController.navigateToTabWithAnimation(
+                                  ActivityScreen(),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    _buildNavBarItem('Assets', 'assets/icons/assets.svg', () {
-                      // Handle Assets button tap
-                      Get.to(() => AssetScreen(player: controller.player),
-                      );
-                    }),
-                  ],
-                ),
-                SizedBox(width: 95.w, height: 105.h),
-                Row(
-                  children: [
-                    _buildNavBarItem(
-                      'Relationships',
-                      'assets/icons/relationships.svg',
-                      () {
-                        // Handle Relationships button tap
-                      },
-                    ),
-                    _buildNavBarItem(
-                      'Activities',
-                      'assets/icons/activities.svg',
-                      () {
-                        Get.to(() => ActivityScreen());
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  Positioned(
+                    top: -15.h,
+                    left: 40.w,
+                    right: 40.w,
+                    child: Center(child: _buildFAB(controller)),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            top: -15.h,
-            left: 40.w,
-            right: 40.w,
-            child: Center(child: _buildFAB(controller)),
-          ),
-        ],
+            StatsSection(),
+          ],
+        ),
       ),
     );
   }
@@ -100,29 +136,16 @@ class BottomNavBarNew extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 1.w),
         decoration: BoxDecoration(
           border: Border(
-            left: BorderSide(
-              color: Colors.black,
-              width: 0.20.w,
-              style: BorderStyle.solid,
-              strokeAlign: BorderSide.strokeAlignInside,
-            ),
-            right: BorderSide(
-              color: Colors.black,
-              width: 0.20.w,
-              style: BorderStyle.solid,
-              strokeAlign: BorderSide.strokeAlignInside,
-            ),
+            left: BorderSide(color: Colors.black, width: 0.20.w),
+            right: BorderSide(color: Colors.black, width: 0.20.w),
           ),
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: 32.w,
               height: 32.h,
-              clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 color: label == 'School' || label == 'Job'
                     ? AppColors.orangeColor
@@ -141,12 +164,7 @@ class BottomNavBarNew extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 10.sp,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 10.sp),
             ),
           ],
         ),
@@ -156,53 +174,25 @@ class BottomNavBarNew extends StatelessWidget {
 
   Widget _buildFAB(HomeController controller) {
     return GestureDetector(
-      onTap: () {
-        controller.incrementAge(); // increment age
-      },
+      onTap: () => controller.incrementAge(),
       child: Container(
-        width: 90.w,
-        height: 110.h,
-        padding: EdgeInsets.all(5.r),
+        width: 90.w, height: 110.h,
         decoration: BoxDecoration(
           color: AppColors.greenColor,
           shape: BoxShape.circle,
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x3F000000),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-              spreadRadius: 0,
-            ),
-          ],
+          boxShadow: const [BoxShadow(color: Color(0x3F000000), blurRadius: 4, offset: Offset(0, 4))],
         ),
         child: Container(
-          width: 95.w,
-          height: 110.h,
-          padding: EdgeInsets.all(10.r),
           decoration: BoxDecoration(
             color: AppColors.greenColor,
             shape: BoxShape.circle,
-            border: Border.all(
-              width: 2.5.w,
-              strokeAlign: BorderSide.strokeAlignOutside,
-              color: Colors.white,
-            ),
+            border: Border.all(width: 2.5.w, color: Colors.white),
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.add, color: Colors.white, size: 40.r),
-              Text(
-                'Age',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  color: Colors.white,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
+              Text('Age', style: TextStyle(color: Colors.white, fontSize: 15.sp, fontWeight: FontWeight.w800)),
             ],
           ),
         ),
