@@ -49,7 +49,8 @@ class BottomNavBarNew extends StatelessWidget {
                     ),
                     _buildNavBarItem('Assets', 'assets/icons/assets.svg', () {
                       // Handle Assets button tap
-                      Get.to(() => AssetScreen(player: controller.player));
+                      Get.to(() => AssetScreen(player: controller.player),
+                      );
                     }),
                   ],
                 ),

@@ -44,7 +44,8 @@ class EventPopupController extends GetxController {
     }
 
     // 2. Add a new LifeStory entry based on the choice flavor
-    String choiceText = rndChoiceEvent[choiceKey == 'A' ? 'choiceAText' : 'choiceBText'] ?? "";
+    String choiceText =
+        rndChoiceEvent[choiceKey == 'A' ? 'choiceAText' : 'choiceBText'] ?? "";
 
     // 3. Save it to the persistent user level
     homeController.addEventToCurrentAge(choiceText);
@@ -61,19 +62,29 @@ void showEventPopupGetX(int age) {
   Get.put(EventPopupController(age: age));
   if (number <= 40) // 40% of chances
   {
-    Get.dialog(
-      EventChoicePopup(),
+    Get.generalDialog(
       barrierDismissible: false,
       barrierColor: Colors.black54.withValues(alpha: 0.90),
+      barrierLabel: 'Choice Event',
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return const EventChoicePopup();
+      },
+      transitionBuilder: slideFromTopBuilder,
+      transitionDuration: const Duration(milliseconds: 750),
     ).then((value) {
       Get.delete<EventPopupController>();
     });
   } else if (number > 40 && number <= 80) // 40% of chances
   {
-    Get.dialog(
-      EventPopup(),
+    Get.generalDialog(
       barrierDismissible: true,
       barrierColor: Colors.black54.withValues(alpha: 0.90),
+      barrierLabel: 'Event', // Required for generalDialog
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return EventPopup();
+      },
+      transitionBuilder: slideFromTopBuilder,
+      transitionDuration: const Duration(milliseconds: 750),
     ).then((value) {
       final HomeController homeController = Get.find<HomeController>();
       final EventPopupController eventController =
@@ -88,20 +99,40 @@ void showEventPopupGetX(int age) {
       }
 
       // 2. Get the Popup Text
-      String popupText = eventController.rndPopupEvent["description"] ?? "An event occurred.";
+      String popupText =
+          eventController.rndPopupEvent["description"] ?? "An event occurred.";
 
       // 3. Save to Diary
       homeController.addEventToCurrentAge(popupText);
 
       homeController.addLifeStoryEntry(
-        LifeStory(
-          description: "You're now $age years old!",
-          age: age,
-        ),
+        LifeStory(description: "You're now $age years old!", age: age),
       );
 
       // 4. After handling the choice, dismiss the dialog
       Get.delete<EventPopupController>();
     });
   }
+}
+
+// Reusable Transition Builder for "Slide from Top"
+Widget slideFromTopBuilder(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) {
+  return SlideTransition(
+    position:
+        Tween<Offset>(
+          begin: const Offset(0, -1), // Starts above the screen (Top)
+          end: Offset.zero, // Ends at center
+        ).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutBack, // Adds a nice bouncy effect
+          ),
+        ),
+    child: child,
+  );
 }
