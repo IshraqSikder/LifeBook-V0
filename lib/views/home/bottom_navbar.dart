@@ -9,6 +9,7 @@ import 'package:life_book/views/activities/activity_screen.dart';
 import 'package:life_book/views/home/stats_section.dart';
 import 'package:life_book/views/jobs/job_screen.dart';
 import 'package:life_book/views/real_estates/asset_screen.dart';
+import 'package:life_book/views/relationships/relationship_screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -25,7 +26,7 @@ class BottomNavBar extends StatelessWidget {
         offset: animationController.isNavBarVisible.value
             ? Offset.zero
             : const Offset(0, 1),
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
         child: Column(
           children: [
@@ -89,7 +90,10 @@ class BottomNavBar extends StatelessWidget {
                               'Relationships',
                               'assets/icons/relationships.svg',
                               () {
-                                // Logic
+                                // USE THE NEW NAVIGATION METHOD
+                                animationController.navigateToTabWithAnimation(
+                                  RelationshipScreen(),
+                                );
                               },
                             ),
                             _buildNavBarItem(

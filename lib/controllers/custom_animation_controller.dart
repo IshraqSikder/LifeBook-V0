@@ -12,11 +12,9 @@ class CustomAnimationController extends GetxController {
     // Slide Bottom Bar Down
     isNavBarVisible.value = false;
 
-    // Wait for the slide-down animation to finish (approx 300ms)
-    await Future.delayed(const Duration(milliseconds: 300));
+    // Wait for the slide-down animation to finish (approx 200ms) depending on bottom navbar transition duration
+    await Future.delayed(const Duration(milliseconds: 200));
 
-    // Navigate to the new page with SlideUp transition
-    // opaque: false is CRITICAL to let the Home Header show through
     await Get.to(
       () => page,
       transition: Transition.downToUp,
