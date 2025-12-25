@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/models/job_model.dart';
@@ -9,6 +11,15 @@ RxList<Map<String, dynamic>> positiveEventList = <Map<String, dynamic>>[].obs;
 RxList<Map<String, dynamic>> activityList = <Map<String, dynamic>>[].obs;
 RxList<AssetModel> assetList = <AssetModel>[].obs;
 RxList<JobModel> jobList = <JobModel>[].obs;
+
+RxList<Map<String, dynamic>> fatherList = <Map<String, dynamic>>[].obs;
+RxList<Map<String, dynamic>> motherList = <Map<String, dynamic>>[].obs;
+RxList<Map<String, dynamic>> elderSiblingsList = <Map<String, dynamic>>[].obs;
+
+// List of Data table variables
+RxList<String> firstNamesList = <String>[].obs;
+RxList<String> lastNamesList = <String>[].obs;
+RxList<String> occupationsList = <String>[].obs;
 
 Future<void> loadAgePopup() async {
   final data = await loadAgePopupCSV();
@@ -99,7 +110,6 @@ Future<void> loadAsset() async {
       title: row[2],
       subtitle: row[3],
       description: row[4],
-      // price: row[5],
       price: int.tryParse(row[5].toString()) ?? 0,
     );
   }).toList();
@@ -123,4 +133,96 @@ Future<void> loadJob() async {
       salary: int.tryParse(row[5].toString()) ?? 0,
     );
   }).toList();
+}
+
+Future<void> loadFather() async {
+  final data = await loadFatherCSV();
+  // final headers = data.first;
+  final rows = data.skip(1);
+
+  fatherList.value = rows.map((row) {
+    return {
+      'id': row[0],
+      'name': row[1],
+      'age': row[2],
+      'gender': row[3],
+      'occupation': row[4],
+      'imageUrl': row[5],
+      'agreement': row[6],
+    };
+  }).toList();
+}
+
+Future<void> loadMother() async {
+  final data = await loadMotherCSV();
+  // final headers = data.first;
+  final rows = data.skip(1);
+
+  motherList.value = rows.map((row) {
+    return {
+      'id': row[0],
+      'name': row[1],
+      'age': row[2],
+      'gender': row[3],
+      'occupation': row[4],
+      'imageUrl': row[5],
+      'agreement': row[6],
+    };
+  }).toList();
+}
+
+Future<void> loadElderSiblings() async {
+  final data = await loadElderSiblingsCSV();
+  // final headers = data.first;
+  final rows = data.skip(1);
+
+  elderSiblingsList.value = rows.map((row) {
+    return {
+      'id': row[0],
+      'name': row[1],
+      'age': row[2],
+      'gender': row[3],
+      'occupation': row[4],
+      'imageUrl': row[5],
+      'agreement': row[6],
+    };
+  }).toList();
+}
+
+Future<void> loadDataTable() async {
+  final data = await loadDataTableCSV();
+  // final headers = data.first;
+  final rows = data.skip(1);
+
+  firstNamesList.clear();
+  lastNamesList.clear();
+  occupationsList.clear();
+
+  for (var row in rows) {
+    if (row.length > 1 && row[1].toString().trim().isNotEmpty) {
+      firstNamesList.add(row[1].toString());
+    }
+    if (row.length > 2 && row[2].toString().trim().isNotEmpty) {
+      lastNamesList.add(row[2].toString());
+    }
+    if (row.length > 4 && row[4].toString().trim().isNotEmpty) {
+      occupationsList.add(row[4].toString());
+    }
+  }
+
+  print(getRandomProfile());
+}
+
+Map<String, String> getRandomProfile() {
+  final random = Random();
+
+  String randomFirstName = firstNamesList[random.nextInt(firstNamesList.length)];
+  String randomLastName = lastNamesList[random.nextInt(lastNamesList.length)];
+  String randomOccupation = occupationsList[random.nextInt(occupationsList.length)];
+
+  return {
+    'firstName': randomFirstName,
+    'lastName': randomLastName,
+    'occupation': randomOccupation,
+  };
 }

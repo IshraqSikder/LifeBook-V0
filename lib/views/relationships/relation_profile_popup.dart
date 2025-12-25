@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
-import 'package:life_book/views/relationships/relationship_model.dart';
+
+import '../../models/user.dart';
 
 class RelationProfilePopup extends StatelessWidget {
-  final RelationshipModel relationship;
+  final Relationship relationship;
 
   const RelationProfilePopup({super.key, required this.relationship});
 
@@ -53,7 +53,7 @@ class RelationProfilePopup extends StatelessWidget {
                             width: 40.w,
                             height: 40.h,
                             child: Image.asset(
-                              relationship.imageUrl,
+                              'assets/images/relationships/${relationship.imageUrl}.png',
                               fit: BoxFit.fitHeight,
                             ),
                           ),
@@ -71,7 +71,7 @@ class RelationProfilePopup extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        relationship.type,
+                        relationship.relation,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           color: Colors.white,
@@ -124,7 +124,7 @@ class RelationProfilePopup extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildProfileDetail('Relationship:', relationship.type, true),
+                          _buildProfileDetail('Relationship:', relationship.relation, true),
                           _buildProfileDetail('Age:', relationship.age.toString(), false),
                           _buildProfileDetail('Gender:', relationship.gender, true),
                           _buildProfileDetail(

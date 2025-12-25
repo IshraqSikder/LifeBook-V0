@@ -48,6 +48,10 @@ void main() async {
   await loadActivity();
   await loadAsset();
   await loadJob();
+  await loadFather();
+  await loadMother();
+  await loadElderSiblings();
+  await loadDataTable();
 
   // load data from Hive
   await Get.putAsync<UserService>(() async {

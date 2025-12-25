@@ -54,10 +54,30 @@ class Relationship extends HiveObject {
   @HiveField(2)
   String name;
 
+  @HiveField(3)
+  int age;
+
+  @HiveField(4)
+  String gender;
+
+  @HiveField(5)
+  String occupation;
+
+  @HiveField(6)
+  String imageUrl;
+
+  @HiveField(7)
+  double agreement;
+
   Relationship({
     required this.type,
     required this.relation,
     required this.name,
+    required this.age,
+    required this.gender,
+    required this.occupation,
+    required this.imageUrl,
+    required this.agreement,
   });
 }
 

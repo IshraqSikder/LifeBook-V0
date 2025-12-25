@@ -75,19 +75,34 @@ class RelationshipAdapter extends TypeAdapter<Relationship> {
       type: fields[0] as String,
       relation: fields[1] as String,
       name: fields[2] as String,
+      age: fields[3] as int,
+      gender: fields[4] as String,
+      occupation: fields[5] as String,
+      imageUrl: fields[6] as String,
+      agreement: fields[7] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Relationship obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.type)
       ..writeByte(1)
       ..write(obj.relation)
       ..writeByte(2)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(3)
+      ..write(obj.age)
+      ..writeByte(4)
+      ..write(obj.gender)
+      ..writeByte(5)
+      ..write(obj.occupation)
+      ..writeByte(6)
+      ..write(obj.imageUrl)
+      ..writeByte(7)
+      ..write(obj.agreement);
   }
 
   @override

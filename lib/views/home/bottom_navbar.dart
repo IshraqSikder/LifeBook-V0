@@ -11,8 +11,11 @@ import 'package:life_book/views/jobs/job_screen.dart';
 import 'package:life_book/views/real_estates/asset_screen.dart';
 import 'package:life_book/views/relationships/relationship_screen.dart';
 
+import '../../models/user.dart';
+
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+  final User player;
+  const BottomNavBar({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +95,7 @@ class BottomNavBar extends StatelessWidget {
                               () {
                                 // USE THE NEW NAVIGATION METHOD
                                 animationController.navigateToTabWithAnimation(
-                                  RelationshipScreen(),
+                                  RelationshipScreen(user: player),
                                 );
                               },
                             ),

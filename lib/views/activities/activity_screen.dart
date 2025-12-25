@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/shared/cost_stat_message_popup.dart';
 import 'package:life_book/views/activities/activity_popup.dart';
 import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/views/home/profile_header.dart';
@@ -42,7 +44,7 @@ class ActivityScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 105.w),
                 Text(
-                  'Activites',
+                  'ACTIVITIES',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Inter',
@@ -159,7 +161,7 @@ class ActivityScreen extends StatelessWidget {
                                 width: 35.w,
                                 height: 35.h,
                                 child: SvgPicture.asset(
-                                  "assets/images/menu/threedot.svg",
+                                  "assets/images/menu/three-dot.svg",
                                   fit: BoxFit.contain,
                                 ),
                               ),

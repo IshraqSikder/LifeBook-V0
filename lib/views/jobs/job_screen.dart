@@ -242,7 +242,7 @@ class JobScreen extends StatelessWidget {
                     width: 32.w,
                     height: 32.h,
                     child: SvgPicture.asset(
-                      "assets/images/menu/threedot.svg",
+                      "assets/images/menu/three-dot.svg",
                       fit: BoxFit.contain,
                     ),
                   ),

@@ -1,8 +1,13 @@
+import 'dart:math';
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/start/tutorial_screen.dart';
+
+import '../services/CSV_services.dart';
 
 class CreateCharacterController extends GetxController {
   final TextEditingController nameController = TextEditingController();
@@ -43,6 +48,26 @@ class CreateCharacterController extends GetxController {
       // Generate a unique ID
       final int newId = _userService.generateUniqueId();
 
+      var randomFather = fatherList[Random().nextInt(fatherList.length)];
+      var randomMother = motherList[Random().nextInt(motherList.length)];
+      // var randomElderSiblings = elderSiblingsList[Random().nextInt(elderSiblingsList.length)];
+      List<Map<String, dynamic>> selectedSiblings = [];
+
+      // random number generator
+      final random = math.Random();
+      int number = random.nextInt(100) + 1; // 1 to 100
+
+      if (number > 60 && number <= 90) {
+        // Get 2 unique random siblings
+        selectedSiblings = (List<Map<String, dynamic>>.from(
+          elderSiblingsList,
+        )..shuffle()).take(2).toList();
+      } else if (number > 90 && number < 100) {
+        // Get 1 random sibling
+        selectedSiblings = (List<Map<String, dynamic>>.from(
+          elderSiblingsList,
+        )..shuffle()).take(1).toList();
+      }
       // Create the UserInfo
       final UserInfo userInfo = UserInfo(
         id: newId,
@@ -51,7 +76,43 @@ class CreateCharacterController extends GetxController {
         school: {}, // Initialize with empty maps/lists
         job: null,
         assets: null,
-        relationships: [],
+        relationships: [
+          Relationship(
+            type: "Parents",
+            relation: "Father",
+            name: randomFather['name'],
+            age: int.parse(randomFather['age'].toString()),
+            gender: 'Male',
+            occupation: randomFather['occupation'],
+            imageUrl: randomFather['imageUrl'],
+            agreement: randomFather['agreement'],
+          ),
+          Relationship(
+            type: "Parents",
+            relation: "Mother",
+            name: randomMother['name'],
+            age: int.parse(randomMother['age'].toString()),
+            gender: 'Female',
+            occupation: randomMother['occupation'],
+            imageUrl: randomMother['imageUrl'],
+            agreement: randomMother['agreement'],
+          ),
+          if (selectedSiblings.isNotEmpty)
+            ...selectedSiblings.map((randomElderSiblings) {
+              return Relationship(
+                type: "Siblings",
+                relation: randomElderSiblings['gender'] == 'Male'
+                    ? "Brother"
+                    : "Sister",
+                name: randomElderSiblings['name'],
+                age: int.parse(randomElderSiblings['age'].toString()),
+                gender: randomElderSiblings['gender'],
+                occupation: randomElderSiblings['occupation'],
+                imageUrl: randomElderSiblings['imageUrl'],
+                agreement: randomElderSiblings['agreement'],
+              );
+            }),
+        ],
         activities: [],
       );
 

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/custom_animation_controller.dart';
 import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/views/event/choice_event_popup.dart';
 import 'package:life_book/controllers/home_controller.dart';
@@ -62,30 +63,12 @@ void showEventPopupGetX(int age) {
   Get.put(EventPopupController(age: age));
   if (number <= 40) // 40% of chances
   {
-    Get.generalDialog(
-      barrierDismissible: false,
-      barrierColor: Colors.black54.withValues(alpha: 0.90),
-      barrierLabel: 'Choice Event',
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return const EventChoicePopup();
-      },
-      transitionBuilder: slideFromTopBuilder,
-      transitionDuration: const Duration(milliseconds: 600),
-    ).then((value) {
+    topToCenterAnimationPopup(const EventChoicePopup()).then((value) {
       Get.delete<EventPopupController>();
     });
   } else if (number > 40 && number <= 80) // 40% of chances
   {
-    Get.generalDialog(
-      barrierDismissible: true,
-      barrierColor: Colors.black54.withValues(alpha: 0.90),
-      barrierLabel: 'Event', // Required for generalDialog
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return EventPopup();
-      },
-      transitionBuilder: slideFromTopBuilder,
-      transitionDuration: const Duration(milliseconds: 600),
-    ).then((value) {
+    topToCenterAnimationPopup(const EventPopup()).then((value) {
       final HomeController homeController = Get.find<HomeController>();
       final EventPopupController eventController =
           Get.find<EventPopupController>();
@@ -113,26 +96,4 @@ void showEventPopupGetX(int age) {
       Get.delete<EventPopupController>();
     });
   }
-}
-
-// Reusable Transition Builder for "Slide from Top"
-Widget slideFromTopBuilder(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
-  return SlideTransition(
-    position:
-        Tween<Offset>(
-          begin: const Offset(0, -1), // Starts above the screen (Top)
-          end: Offset.zero, // Ends at center
-        ).animate(
-          CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOutBack, // Adds a nice bouncy effect
-          ),
-        ),
-    child: child,
-  );
 }

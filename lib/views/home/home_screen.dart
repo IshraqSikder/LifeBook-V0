@@ -26,36 +26,39 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBarNew(),
       body: Obx(
-            () => controller.isMenuToggled.value
+        () => controller.isMenuToggled.value
             ? MenuScreen()
             : Column(
-          children: [
-            ProfileHeader(),
-            Expanded(
-              child: Obx(() {
-                final levels = userService.activeUser!.gameStats.levelsRx;
+                children: [
+                  ProfileHeader(),
+                  Expanded(
+                    child: Obx(() {
+                      final levels = userService.activeUser!.gameStats.levelsRx;
 
-                return ListView.separated(
-                  controller: controller.scrollController,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 10.h,
+                      return ListView.separated(
+                        controller: controller.scrollController,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 10.h,
+                        ),
+                        itemCount: levels.length,
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 10.h),
+                        itemBuilder: (context, index) {
+                          final entry = levels[index];
+                          return LifeStory(
+                            age: entry.age,
+                            description: controller.getCombinedDescription(
+                              entry,
+                            ),
+                          );
+                        },
+                      );
+                    }),
                   ),
-                  itemCount: levels.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 10.h),
-                  itemBuilder: (context, index) {
-                    final entry = levels[index];
-                    return LifeStory(
-                      age: entry.age,
-                      description: controller.getCombinedDescription(entry),
-                    );
-                  },
-                );
-              }),
-            ),
-            BottomNavBar(),
-          ],
-        ),
+                  BottomNavBar(player: player),
+                ],
+              ),
       ),
     );
   }

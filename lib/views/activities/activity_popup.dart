@@ -7,6 +7,8 @@ import 'package:life_book/services/CSV_services.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/theme.dart';
 
+import '../../shared/cost_stat_message_popup.dart';
+
 class ActivityPopup extends StatelessWidget {
   final Map<String, dynamic> item;
   final Map<String, int> effects;

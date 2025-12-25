@@ -27,3 +27,24 @@ class CustomAnimationController extends GetxController {
     isNavBarVisible.value = true;
   }
 }
+
+Future topToCenterAnimationPopup(Widget child) {
+  return Get.generalDialog(
+    barrierDismissible: true,
+    barrierLabel: "Top to Center Animation Popup",
+    barrierColor: Colors.black.withValues(alpha: 0.95),
+    transitionDuration: const Duration(milliseconds: 400),
+    pageBuilder: (context, animation, secondaryAnimation) {
+      return child;
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return SlideTransition(
+        position: Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
+            .animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+            ),
+        child: child,
+      );
+    },
+  );
+}

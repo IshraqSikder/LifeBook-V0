@@ -1,0 +1,11 @@
+ID,Name,Age,Gender,Occupation,ImageURL,Agreement
+1,John Miller,35,Male,"Mechanic, City Auto Shop",dustin,0.65
+2,David Wilson,28,Male,"Architect, Skyline Designs",dustin,0.65
+3,Robert Garcia,40,Male,"Chef, Bistro Garden House",dustin,0.45
+4,James Taylor,32,Male,"Courier, Swift Parcel Hub",dustin,0.65
+5,Christopher Davis,38,Male,"Engineer, Power Grid Corp",dustin,0.55
+6,Daniel Brown,26,Male,"Barista, Urban Brew Coffee",dustin,0.25
+7,Matthew Moore,30,Male,"Officer, West Police Station",dustin,0.75
+8,Joseph White,33,Male,"Analyst, Global Finance Inc",dustin,0.85
+9,Andrew Bennett,36,Male,"Pharmacist, Central Drug Store",dustin,0.95
+10,Thomas Rodriguez,29,Male,"Coach, Local Sports Academy",dustin,0.35

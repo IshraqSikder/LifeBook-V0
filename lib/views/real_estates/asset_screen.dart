@@ -180,7 +180,7 @@ class AssetScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       if (isActive)
-                        SizedBox(width: 32.w, height: 32.h, child: SvgPicture.asset("assets/images/menu/threedot.svg", fit: BoxFit.contain)),
+                        SizedBox(width: 32.w, height: 32.h, child: SvgPicture.asset("assets/images/menu/three-dot.svg", fit: BoxFit.contain)),
                     ],
                   ),
                 ),

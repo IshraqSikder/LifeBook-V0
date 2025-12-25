@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:life_book/theme.dart';
 
-class ConversationPopup extends StatelessWidget {
-  const ConversationPopup({super.key});
+class StatMassagePopup extends StatelessWidget {
+  final String title;
+  final String description;
+  final String statTitle;
+  final double statValue;
+
+  const StatMassagePopup({super.key, required this.title, required this.description, required this.statTitle, required this.statValue});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class ConversationPopup extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
               // Conversation Title
               child: Text(
-                "Let's talk",
+                title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Inter',
@@ -38,7 +43,7 @@ class ConversationPopup extends StatelessWidget {
             ),
             SizedBox(height: 15.h),
             Text(
-              "You and your mother had a conversation about which animal you would like to be.",
+              description,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Inter',
@@ -56,7 +61,7 @@ class ConversationPopup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Agreement",
+                    statTitle,
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontFamily: 'Inter',
@@ -75,9 +80,9 @@ class ConversationPopup extends StatelessWidget {
                           decoration: BoxDecoration(color: Colors.grey.shade300),
                         ),
                         Container(
-                          width: (160 * 0.6).w,
+                          width: (160 * statValue).w,
                           height: 18.h,
-                          decoration: 0.6 >= 0.20
+                          decoration: statValue >= 0.20
                               ? BoxDecoration(color: AppColors.greenColor)
                               : BoxDecoration(color: AppColors.orangeColor),
                           alignment: Alignment.centerRight,

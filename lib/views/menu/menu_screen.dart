@@ -167,7 +167,7 @@ List<MenuItem> menuItems = [
     imageUrl: "assets/images/menu/human.png",
     title: "New Life",
     subtitle: "Start a new one",
-    iconUrl: "assets/images/menu/threedot.svg",
+    iconUrl: "assets/images/menu/three-dot.svg",
   ),
   MenuItem(
     imageUrl: "assets/images/menu/mic.png",
