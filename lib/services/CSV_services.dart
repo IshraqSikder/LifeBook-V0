@@ -19,6 +19,10 @@ RxList<Map<String, dynamic>> elderSiblingsList = <Map<String, dynamic>>[].obs;
 // List of Data table variables
 RxList<String> firstNamesList = <String>[].obs;
 RxList<String> lastNamesList = <String>[].obs;
+RxList<String> imgUrlManList = <String>[].obs;
+RxList<String> imgUrlWomanList = <String>[].obs;
+RxList<String> imgUrlBoyList = <String>[].obs;
+RxList<String> imgUrlGirlList = <String>[].obs;
 RxList<String> occupationsList = <String>[].obs;
 
 Future<void> loadAgePopup() async {
@@ -135,42 +139,6 @@ Future<void> loadJob() async {
   }).toList();
 }
 
-Future<void> loadFather() async {
-  final data = await loadFatherCSV();
-  // final headers = data.first;
-  final rows = data.skip(1);
-
-  fatherList.value = rows.map((row) {
-    return {
-      'id': row[0],
-      'name': row[1],
-      'age': row[2],
-      'gender': row[3],
-      'occupation': row[4],
-      'imageUrl': row[5],
-      'agreement': row[6],
-    };
-  }).toList();
-}
-
-Future<void> loadMother() async {
-  final data = await loadMotherCSV();
-  // final headers = data.first;
-  final rows = data.skip(1);
-
-  motherList.value = rows.map((row) {
-    return {
-      'id': row[0],
-      'name': row[1],
-      'age': row[2],
-      'gender': row[3],
-      'occupation': row[4],
-      'imageUrl': row[5],
-      'agreement': row[6],
-    };
-  }).toList();
-}
-
 Future<void> loadElderSiblings() async {
   final data = await loadElderSiblingsCSV();
   // final headers = data.first;
@@ -196,33 +164,60 @@ Future<void> loadDataTable() async {
 
   firstNamesList.clear();
   lastNamesList.clear();
+  imgUrlManList.clear();
+  imgUrlWomanList.clear();
+  imgUrlBoyList.clear();
+  imgUrlGirlList.clear();
   occupationsList.clear();
 
   for (var row in rows) {
-    if (row.length > 1 && row[1].toString().trim().isNotEmpty) {
+    if (row[1].toString().trim().isNotEmpty) {
       firstNamesList.add(row[1].toString());
     }
-    if (row.length > 2 && row[2].toString().trim().isNotEmpty) {
+    if (row[2].toString().trim().isNotEmpty) {
       lastNamesList.add(row[2].toString());
     }
-    if (row.length > 4 && row[4].toString().trim().isNotEmpty) {
-      occupationsList.add(row[4].toString());
+    if (row[3].toString().trim().isNotEmpty) {
+      imgUrlManList.add(row[3].toString());
+    }
+    if (row[4].toString().trim().isNotEmpty) {
+      imgUrlWomanList.add(row[4].toString());
+    }
+    if (row[5].toString().trim().isNotEmpty) {
+      imgUrlBoyList.add(row[5].toString());
+    }
+    if (row[6].toString().trim().isNotEmpty) {
+      imgUrlGirlList.add(row[6].toString());
+    }
+    if (row[7].toString().trim().isNotEmpty) {
+      occupationsList.add(row[7].toString());
     }
   }
-
-  print(getRandomProfile());
 }
 
-Map<String, String> getRandomProfile() {
-  final random = Random();
+Map<String, dynamic> getRandomProfile() {
+  final int minAge = 17;
+  final int maxAge = 40;
 
-  String randomFirstName = firstNamesList[random.nextInt(firstNamesList.length)];
-  String randomLastName = lastNamesList[random.nextInt(lastNamesList.length)];
-  String randomOccupation = occupationsList[random.nextInt(occupationsList.length)];
+  String randomFirstName = firstNamesList[Random().nextInt(firstNamesList.length)];
+  String randomLastName = lastNamesList[Random().nextInt(lastNamesList.length)];
+  int randomAgeForParents = minAge + Random().nextInt(maxAge - minAge + 1);  // Generates a number between 17 and 40 (inclusive)
+  String randomImgMan = imgUrlManList[Random().nextInt(imgUrlManList.length)];
+  String randomImgWoman = imgUrlWomanList[Random().nextInt(imgUrlWomanList.length)];
+
+  String randomImgBoy = imgUrlBoyList[Random().nextInt(imgUrlBoyList.length)];
+  String randomImgGirl = imgUrlGirlList[Random().nextInt(imgUrlGirlList.length)];
+
+  String randomOccupation = occupationsList[Random().nextInt(occupationsList.length)];
 
   return {
     'firstName': randomFirstName,
     'lastName': randomLastName,
+    'ageParents' : randomAgeForParents,
+    'imgMan': randomImgMan,
+    'imgWoman': randomImgWoman,
+    'imgBoy': randomImgBoy,
+    'imgGirl': randomImgGirl,
     'occupation': randomOccupation,
   };
 }

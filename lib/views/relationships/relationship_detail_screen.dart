@@ -96,7 +96,7 @@ class RelationDetailScreen extends StatelessWidget {
                               width: 35.w,
                               height: 35.h,
                               child: Image.asset(
-                                'assets/images/relationships/${relationship.imageUrl}.png',
+                                relationship.imageUrl,
                                 fit: BoxFit.contain,
                               ),
                             ),

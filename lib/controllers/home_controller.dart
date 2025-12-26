@@ -74,11 +74,11 @@ class HomeController extends GetxController {
   }
 
   void incrementAge() async {
-    Level lastLevel = player.gameStats.levelsRx.last;
-
-    int newAge = lastLevel.age + 1;
-
-    String diaryEntry;
+    // age increment for all profiles
+    int newAge = player.gameStats.levelsRx.last.age + 1;
+    for (var rel in player.userInfo.relationships) {
+      rel.age++;
+    }
 
     // Find matching age entry from the list using newAge
     var ageEntry = agePopupList.firstWhere(
@@ -86,6 +86,7 @@ class HomeController extends GetxController {
       orElse: () => {},
     );
 
+    String diaryEntry;
     if (ageEntry.isNotEmpty && ageEntry['ageMessage'] != null) {
       diaryEntry = "You're now $newAge years old!\n${ageEntry['ageMessage']}";
     } else {

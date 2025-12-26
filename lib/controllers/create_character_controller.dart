@@ -1,6 +1,4 @@
 import 'dart:math';
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/user.dart';
@@ -48,21 +46,21 @@ class CreateCharacterController extends GetxController {
       // Generate a unique ID
       final int newId = _userService.generateUniqueId();
 
-      var randomFather = fatherList[Random().nextInt(fatherList.length)];
-      var randomMother = motherList[Random().nextInt(motherList.length)];
-      // var randomElderSiblings = elderSiblingsList[Random().nextInt(elderSiblingsList.length)];
+      // Siblings List
       List<Map<String, dynamic>> selectedSiblings = [];
 
-      // random number generator
-      final random = math.Random();
-      int number = random.nextInt(100) + 1; // 1 to 100
+      // random number generator for Siblings
+      int rndNumber = Random().nextInt(100) + 1; // 1 to 100
 
-      if (number > 60 && number <= 90) {
+      // random gender selection for Siblings
+      bool isMale = Random().nextBool();
+
+      if (rndNumber > 60 && rndNumber <= 90) {
         // Get 2 unique random siblings
         selectedSiblings = (List<Map<String, dynamic>>.from(
           elderSiblingsList,
         )..shuffle()).take(2).toList();
-      } else if (number > 90 && number < 100) {
+      } else if (rndNumber > 90 && rndNumber < 100) {
         // Get 1 random sibling
         selectedSiblings = (List<Map<String, dynamic>>.from(
           elderSiblingsList,
@@ -80,36 +78,37 @@ class CreateCharacterController extends GetxController {
           Relationship(
             type: "Parents",
             relation: "Father",
-            name: randomFather['name'],
-            age: int.parse(randomFather['age'].toString()),
+            name: "${getRandomProfile()['firstName']} ${getRandomProfile()['lastName']}",
+            age: getRandomProfile()['ageParents'],
             gender: 'Male',
-            occupation: randomFather['occupation'],
-            imageUrl: randomFather['imageUrl'],
-            agreement: randomFather['agreement'],
+            occupation: "${getRandomProfile()['occupation']}",
+            imageUrl: "assets/images/relationships/man/${getRandomProfile()['imgMan']}",
+            agreement: 0.5,
           ),
           Relationship(
             type: "Parents",
             relation: "Mother",
-            name: randomMother['name'],
-            age: int.parse(randomMother['age'].toString()),
+            name: "${getRandomProfile()['firstName']} ${getRandomProfile()['lastName']}",
+            age: getRandomProfile()['ageParents'],
             gender: 'Female',
-            occupation: randomMother['occupation'],
-            imageUrl: randomMother['imageUrl'],
-            agreement: randomMother['agreement'],
+            occupation: "${getRandomProfile()['occupation']}",
+            imageUrl: "assets/images/relationships/woman/${getRandomProfile()['imgWoman']}",
+            agreement: 0.9,
           ),
           if (selectedSiblings.isNotEmpty)
             ...selectedSiblings.map((randomElderSiblings) {
+              // random age for Siblings
+              final int minAge = 1;
+              final int maxAge = 10;
               return Relationship(
                 type: "Siblings",
-                relation: randomElderSiblings['gender'] == 'Male'
-                    ? "Brother"
-                    : "Sister",
-                name: randomElderSiblings['name'],
-                age: int.parse(randomElderSiblings['age'].toString()),
-                gender: randomElderSiblings['gender'],
-                occupation: randomElderSiblings['occupation'],
-                imageUrl: randomElderSiblings['imageUrl'],
-                agreement: randomElderSiblings['agreement'],
+                relation: isMale ? 'Brother' : 'Sister',
+                name: "${getRandomProfile()['firstName']} ${getRandomProfile()['lastName']}",
+                age: minAge + Random().nextInt(maxAge - minAge + 1),
+                gender: isMale ? 'Male' : 'Female',
+                occupation: "${getRandomProfile()['occupation']}",
+                imageUrl: isMale ? "assets/images/relationships/boy/${getRandomProfile()['imgBoy']}" : "assets/images/relationships/girl/${getRandomProfile()['imgGirl']}",
+                agreement: 0.15,
               );
             }),
         ],

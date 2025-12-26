@@ -49,14 +49,8 @@ class BottomNavBar extends StatelessWidget {
                           children: [
                             Obx(
                               () =>
-                                  controller
-                                          .player
-                                          .gameStats
-                                          .levelsRx
-                                          .last
-                                          .age <
-                                      24
-                                  ? _buildNavBarItem(
+                                  controller.player.gameStats.levelsRx.last.age <24?
+                                  _buildNavBarItem(
                                       'School',
                                       'assets/icons/school.svg',
                                       () {
@@ -181,7 +175,9 @@ class BottomNavBar extends StatelessWidget {
 
   Widget _buildFAB(HomeController controller) {
     return GestureDetector(
-      onTap: () => controller.incrementAge(),
+      onTap: () {
+        controller.incrementAge();
+      },
       child: Container(
         width: 90.w, height: 110.h,
         decoration: BoxDecoration(

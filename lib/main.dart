@@ -48,8 +48,7 @@ void main() async {
   await loadActivity();
   await loadAsset();
   await loadJob();
-  await loadFather();
-  await loadMother();
+
   await loadElderSiblings();
   await loadDataTable();
 

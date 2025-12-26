@@ -1,41 +1,41 @@
-Id,First Name,Last Name,ImageURL,Occupation
-1,Liam,Ford,,Trooper
-2,Emma,Stone,,Corporal
-3,Noah,Reed,,Sergeant
-4,Olivia,Grant,,Lieutenant
-5,James,Kent,,Captain
-6,Sophia,Lane,,Jr. Editor
-7,Lucas,Bell,,Editor
-8,Mia,Vance,,Senior Editor
-9,Ethan,Hunt,,Managing Editor
-10,Ava,Brooks,,Editor-in-Chief
-11,Mason,Grey,,Jr. Therapist
-12,Isabella,Rose,,Therapist
-13,Logan,Paul,,Senior Therapist
-14,Riley,Quinn,,Clinical Supervisor
-15,Jack,Miller,,Director of Therapy
-16,Lily,Evans,,Pilot Trainee
-17,Owen,Wilson,,First Officer
-18,Zoe,Taylor,,Captain
-19,Leo,Hayes,,Senior Captain
-20,Chloe,Ward,,Chief Pilot
-21,Ryan,Gosling,,Jr. Analyst
-22,Ella,Fitzgerald,,Analyst
-23,Luke,Skywalker,,Senior Analyst
-24,Mila,Kunis,,Lead Analyst
-25,Henry,Cavill,,Analytics Manager
-26,Ruby,Sparks,,Jr. Accountant
-27,Finn,Wolf,,Accountant
-28,Nora,Fatehi,,Senior Accountant
-29,Alex,Turner,,Accounting Manager
-30,Sara,Ali,,Controller
-31,,,,Jr. Chiropractor
-32,,,,Chiropractor
-33,,,,Senior Chiropractor
-34,,,,Lead Chiropractor
-35,,,,Clinic Director
-36,,,,Microbiologist
-37,,,,Microbiologist II
-38,,,,Senior Microbiologist
-39,,,,Lead Scientist
-40,,,,Lab Director
+Id,First Name,Last Name,ImageUrl Man,ImageUrl Woman,ImageUrl Boy,ImageUrl Girl,Occupation
+1,Liam,Ford,businessman (1).png,woman (1).png,boy (2).png,girl (1).png,Trooper
+2,Emma,Stone,businessman (2).png,woman (2).png,boy (3).png,girl (2).png,Corporal
+3,Noah,Reed,man (1).png,woman (3).png,boy (4).png,girl (3).png,Sergeant
+4,Olivia,Grant,man (2).png,woman (4).png,boy (5).png,girl (4).png,Lieutenant
+5,James,Kent,man (3).png,woman (5).png,boy (6).png,girl (5).png,Captain
+6,Sophia,Lane,man (4).png,woman (6).png,boy (7).png,girl (6).png,Jr. Editor
+7,Lucas,Bell,man (5).png,woman (7).png,boy (8).png,girl (7).png,Editor
+8,Mia,Vance,man (6).png,woman (8).png,boy (9).png,girl (8).png,Senior Editor
+9,Ethan,Hunt,man (7).png,woman (9).png,boy (10).png,girl (9).png,Managing Editor
+10,Ava,Brooks,office-worker (1).png,woman (10).png,young-man.png,girl (10).png,Editor-in-Chief
+11,Mason,Grey,office-worker (2).png,,,,Jr. Therapist
+12,Isabella,Rose,,,,,Therapist
+13,Logan,Paul,,,,,Senior Therapist
+14,Riley,Quinn,,,,,Clinical Supervisor
+15,Jack,Miller,,,,,Director of Therapy
+16,Lily,Evans,,,,,Pilot Trainee
+17,Owen,Wilson,,,,,First Officer
+18,Zoe,Taylor,,,,,Captain
+19,Leo,Hayes,,,,,Senior Captain
+20,Chloe,Ward,,,,,Chief Pilot
+21,Ryan,Gosling,,,,,Jr. Analyst
+22,Ella,Fitzgerald,,,,,Analyst
+23,Luke,Skywalker,,,,,Senior Analyst
+24,Mila,Kunis,,,,,Lead Analyst
+25,Henry,Cavill,,,,,Analytics Manager
+26,Ruby,Sparks,,,,,Jr. Accountant
+27,Finn,Wolf,,,,,Accountant
+28,Nora,Fatehi,,,,,Senior Accountant
+29,Alex,Turner,,,,,Accounting Manager
+30,Sara,Ali,,,,,Controller
+31,,,,,,,Jr. Chiropractor
+32,,,,,,,Chiropractor
+33,,,,,,,Senior Chiropractor
+34,,,,,,,Lead Chiropractor
+35,,,,,,,Clinic Director
+36,,,,,,,Microbiologist
+37,,,,,,,Microbiologist II
+38,,,,,,,Senior Microbiologist
+39,,,,,,,Lead Scientist
+40,,,,,,,Lab Director

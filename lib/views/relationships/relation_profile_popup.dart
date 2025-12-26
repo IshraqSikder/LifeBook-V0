@@ -53,7 +53,7 @@ class RelationProfilePopup extends StatelessWidget {
                             width: 40.w,
                             height: 40.h,
                             child: Image.asset(
-                              'assets/images/relationships/${relationship.imageUrl}.png',
+                              relationship.imageUrl,
                               fit: BoxFit.fitHeight,
                             ),
                           ),
