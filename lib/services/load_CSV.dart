@@ -55,14 +55,6 @@ Future<List<List<dynamic>>> loadJobCSV() async {
   return listData;
 }
 
-Future<List<List<dynamic>>> loadElderSiblingsCSV() async {
-  final rawData = await rootBundle.loadString("assets/csv_list/elder_siblings_list.csv");
-  final List<List<dynamic>> listData = const CsvToListConverter(
-    eol: '\n',
-  ).convert(rawData);
-  return listData;
-}
-
 Future<List<List<dynamic>>> loadDataTableCSV() async {
   final rawData = await rootBundle.loadString("assets/csv_list/data_tables.csv");
   final List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);

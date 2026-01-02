@@ -49,7 +49,6 @@ void main() async {
   await loadAsset();
   await loadJob();
 
-  await loadElderSiblings();
   await loadDataTable();
 
   // load data from Hive

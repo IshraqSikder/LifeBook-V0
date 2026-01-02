@@ -36,8 +36,7 @@ class EventPopupController extends GetxController {
 
   void handleChoice(choiceKey) {
     // 1. Apply stat changes to the player character
-    String? effectString =
-        rndChoiceEvent[choiceKey == 'A' ? 'choiceAEffect' : 'choiceBEffect'];
+    String? effectString = rndChoiceEvent[choiceKey == 'A' ? 'choiceAEffect' : 'choiceBEffect'];
 
     if (effectString != null) {
       final effects = parseEffects(effectString);
@@ -45,8 +44,7 @@ class EventPopupController extends GetxController {
     }
 
     // 2. Add a new LifeStory entry based on the choice flavor
-    String choiceText =
-        rndChoiceEvent[choiceKey == 'A' ? 'choiceAText' : 'choiceBText'] ?? "";
+    String choiceText = rndChoiceEvent[choiceKey == 'A' ? 'choiceAText' : 'choiceBText'] ?? "";
 
     // 3. Save it to the persistent user level
     homeController.addEventToCurrentAge(choiceText);
@@ -63,15 +61,14 @@ void showEventPopupGetX(int age) {
   Get.put(EventPopupController(age: age));
   if (number <= 40) // 40% of chances
   {
-    topToCenterAnimationPopup(const EventChoicePopup()).then((value) {
+    topToCenterAnimationPopup(const EventChoicePopup(), false).then((value) {
       Get.delete<EventPopupController>();
     });
   } else if (number > 40 && number <= 80) // 40% of chances
   {
-    topToCenterAnimationPopup(const EventPopup()).then((value) {
+    topToCenterAnimationPopup(const EventPopup(), true).then((value) {
       final HomeController homeController = Get.find<HomeController>();
-      final EventPopupController eventController =
-          Get.find<EventPopupController>();
+      final EventPopupController eventController = Get.find<EventPopupController>();
 
       // 1. Apply stat changes to the player character
       String? effectString = eventController.rndPopupEvent["popupEffectString"];
@@ -82,8 +79,7 @@ void showEventPopupGetX(int age) {
       }
 
       // 2. Get the Popup Text
-      String popupText =
-          eventController.rndPopupEvent["description"] ?? "An event occurred.";
+      String popupText = eventController.rndPopupEvent["description"] ?? "An event occurred.";
 
       // 3. Save to Diary
       homeController.addEventToCurrentAge(popupText);

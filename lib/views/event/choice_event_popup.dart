@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
 import 'package:life_book/theme.dart';
 
+import '../../shared/build_choice_button.dart';
+
 class EventChoicePopup extends StatelessWidget {
   const EventChoicePopup({super.key});
 
@@ -105,59 +107,21 @@ class EventChoicePopup extends StatelessWidget {
 
             // Choice Buttons (using Obx for choices as well)
             Obx(
-              () => _buildChoiceButton(
-                controller,
-                // controller.rndChoiceEvent["choices"][0],
-                controller.rndChoiceEvent["choiceAText"],
-                'A',
+              () => BuildChoiceButton(
+                controller: controller,
+                choice: '${controller.rndChoiceEvent["choiceAText"]}',
+                choiceKey: 'A',
               ),
             ),
             SizedBox(height: 10.h),
             Obx(
-              () => _buildChoiceButton(
-                controller,
-                // controller.rndChoiceEvent["choices"][1],
-                controller.rndChoiceEvent["choiceBText"],
-                'B',
+              () => BuildChoiceButton(
+                controller: controller,
+                choice: '${controller.rndChoiceEvent["choiceBText"]}',
+                choiceKey: 'B',
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildChoiceButton(
-    EventPopupController controller,
-    String choice,
-    String choiceKey,
-  ) {
-    return Container(
-      width: 250.w,
-      height: 40.h,
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF007ACF),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.r),
-          ),
-          elevation: 3,
-          shadowColor: const Color(0xFFBAB9B7),
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-        ),
-        onPressed: () {
-          controller.handleChoice(choiceKey); // Call controller method
-        },
-        child: Text(
-          choice,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Inter',
-            color: Colors.white,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-          ),
         ),
       ),
     );

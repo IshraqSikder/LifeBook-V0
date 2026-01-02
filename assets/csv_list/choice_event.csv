@@ -3,7 +3,7 @@ EventID,EventTitle,PopupText,ChoiceAText,ChoiceAEffect,ChoiceBText,ChoiceBEffect
 2,Injury,You tripped and twisted your ankle. It's swelling up and hurts to walk on.,Go to a doctor.,Health:+15;Happiness:-5,Rest and hope it heals.,Health:-8;Happiness:-8
 3,Vaccination,A clinic is offering the annual flu shot. It can prevent you from getting sick later.,Get the shot.,Health:+5;Happiness:-3,Skip it this year.,Health:-3
 4,Waiting Game,You're stuck in an incredibly long and slow-moving line at the post office.,Wait patiently.,Happiness:-8,Give up and leave.,Happiness:-5
-5,Playing Game with Friend,"You're in a close, competitive game with a friend. You have a clear chance to win.",Crush them and take the win.,Happiness:+8,Let them win to be nice.,Happiness:-5
+5,Gaming with Friend,"You're in a close, competitive game with a friend. You have a clear chance to win.",Crush them and take the win.,Happiness:+8,Let them win to be nice.,Happiness:-5
 6,Shopping with Mom,Your mom wants you to go clothes shopping with her for hours.,Go and try to be helpful.,Happiness:-8,Make an excuse not to go.,Happiness:-5
 7,Giving Money to Friend,Your friend is complaining about their old clothes and wants to go shopping.,Offer to help them find a new style.,Happiness:+5,Say you're too busy to help.,Happiness:-5
 8,Eye Glass,You've been squinting to read things lately and getting headaches. You might need glasses.,Get an eye exam.,Health:+8;Looks:-5;Smarts:+3,Just squint and deal with it.,Health:-5;Happiness:-5

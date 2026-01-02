@@ -63,7 +63,7 @@ class RelationDetailScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              topToCenterAnimationPopup(RelationProfilePopup(relationship: relationship));
+              topToCenterAnimationPopup(RelationProfilePopup(relationship: relationship), false);
             },
             child: Container(
               width: double.infinity,

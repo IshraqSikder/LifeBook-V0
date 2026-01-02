@@ -12,10 +12,6 @@ RxList<Map<String, dynamic>> activityList = <Map<String, dynamic>>[].obs;
 RxList<AssetModel> assetList = <AssetModel>[].obs;
 RxList<JobModel> jobList = <JobModel>[].obs;
 
-RxList<Map<String, dynamic>> fatherList = <Map<String, dynamic>>[].obs;
-RxList<Map<String, dynamic>> motherList = <Map<String, dynamic>>[].obs;
-RxList<Map<String, dynamic>> elderSiblingsList = <Map<String, dynamic>>[].obs;
-
 // List of Data table variables
 RxList<String> firstNamesList = <String>[].obs;
 RxList<String> lastNamesList = <String>[].obs;
@@ -136,24 +132,6 @@ Future<void> loadJob() async {
       description: row[4].toString(),
       salary: int.tryParse(row[5].toString()) ?? 0,
     );
-  }).toList();
-}
-
-Future<void> loadElderSiblings() async {
-  final data = await loadElderSiblingsCSV();
-  // final headers = data.first;
-  final rows = data.skip(1);
-
-  elderSiblingsList.value = rows.map((row) {
-    return {
-      'id': row[0],
-      'name': row[1],
-      'age': row[2],
-      'gender': row[3],
-      'occupation': row[4],
-      'imageUrl': row[5],
-      'agreement': row[6],
-    };
   }).toList();
 }
 

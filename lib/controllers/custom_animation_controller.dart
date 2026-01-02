@@ -28,9 +28,9 @@ class CustomAnimationController extends GetxController {
   }
 }
 
-Future topToCenterAnimationPopup(Widget child) {
+Future topToCenterAnimationPopup(Widget child, bool barrierDismissible) {
   return Get.generalDialog(
-    barrierDismissible: true,
+    barrierDismissible: barrierDismissible,
     barrierLabel: "Top to Center Animation Popup",
     barrierColor: Colors.black.withValues(alpha: 0.95),
     transitionDuration: const Duration(milliseconds: 400),
