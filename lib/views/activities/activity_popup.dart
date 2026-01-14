@@ -12,8 +12,9 @@ import '../../shared/cost_stat_message_popup.dart';
 class ActivityPopup extends StatelessWidget {
   final Map<String, dynamic> item;
   final Map<String, int> effects;
+  final int totalCost;
 
-  const ActivityPopup({super.key, required this.item, required this.effects});
+  const ActivityPopup({super.key, required this.item, required this.effects, required this.totalCost});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,7 @@ class ActivityPopup extends StatelessWidget {
 
     String effectStatKey = effects.entries.first.key;
 
-    int effectStatValue =
-        userService.activeUser!.gameStats.allStats[effectStatKey]!.value;
+    int effectStatValue = userService.activeUser!.gameStats.allStats[effectStatKey]!.value;
 
     double currentStatPercentage = (effectStatValue) / 100;
 
@@ -89,7 +89,7 @@ class ActivityPopup extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '\$${item["price"]}',
+                    '\$$totalCost',
                     style: TextStyle(
                       fontFamily: 'Inter',
                       color: AppColors.brownColor,
@@ -159,9 +159,11 @@ class ActivityPopup extends StatelessWidget {
 // Function to show the activity popup
 Future<dynamic> showActivityPopup(
   BuildContext context,
-  Map<String, dynamic> item,
-) {
+  Map<String, dynamic> item, int totalCost) {
   final HomeController homeController = Get.find<HomeController>();
+
+  // Decrease current year salary by csv percentage %
+  homeController.player.gameStats.balanceRx.value -= totalCost;
 
   // Apply Stats Changes
   String? effectString = item["effect"];
@@ -175,7 +177,7 @@ Future<dynamic> showActivityPopup(
     barrierDismissible: true,
     barrierColor: Colors.black54.withValues(alpha: 0.95),
     builder: (BuildContext context) {
-      return ActivityPopup(item: item, effects: parsedEffects);
+      return ActivityPopup(item: item, effects: parsedEffects, totalCost: totalCost);
     },
   );
 }

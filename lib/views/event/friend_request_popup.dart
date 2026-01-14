@@ -5,7 +5,6 @@ import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
 
 import '../../models/user.dart';
-import '../../shared/build_choice_button.dart';
 
 class FriendRequestPopup extends StatelessWidget {
   final Relationship profile;
@@ -213,9 +212,9 @@ class FriendRequestPopup extends StatelessWidget {
                     ],
                   ),
                 ),
-                _buildChoiceButton(context, 'Becoming friends with him', onAccept),
+                _buildChoiceButton(context, 'Becoming friends with ${profile.gender == 'Male'? 'him' : 'her'}', onAccept),
                 SizedBox(height: 10.h),
-                _buildChoiceButton(context, 'Reject him', () {}),
+                _buildChoiceButton(context, 'Reject ${profile.gender == 'Male'? 'him' : 'her'}', () {}),
                 SizedBox(height: 25.h),
               ],
             ),

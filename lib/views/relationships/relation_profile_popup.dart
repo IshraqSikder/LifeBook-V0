@@ -168,8 +168,7 @@ class RelationProfilePopup extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: controller.allStats.entries
-                                  .map(
+                              children: controller.allStats.entries.map(
                                     (stat) => Obx(
                                       () => _buildStatProgressBar(
                                         stat.value.value,

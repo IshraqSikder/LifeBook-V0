@@ -94,6 +94,7 @@ Future<void> loadActivity() async {
       'description': row[4],
       'price': row[5],
       'effect': row[6],
+      'deductBalance': row[7],
     };
   }).toList();
 }

@@ -19,6 +19,7 @@ class RelationDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMale = relationship.gender == 'Male';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.profileHeaderColor,
@@ -209,23 +210,23 @@ class RelationDetailScreen extends StatelessWidget {
           ),
           RelationshipActivityCard(
             title: 'Conversation',
-            subtitle: 'Have a conversation with him',
+            subtitle: 'Have a conversation with ${isMale? 'him' : 'her'}',
             imageUrl: 'assets/images/relationships/conversation.png',
             onTap: StatMassagePopup(
               title: "Let's talk",
               description:
-                  "You and your mother had a conversation about which animal you would like to be.",
+                  "You and your ${relationship.relation} had a conversation about which animal you would like to be.",
               statTitle: "Agreement",
-              statValue: 0.6,
+              statValue: relationship.agreement,
             ),
           ),
           RelationshipActivityCard(
             title: 'Spend Time',
-            subtitle: 'Spend time with her',
+            subtitle: 'Spend time with ${isMale? 'him' : 'her'}',
             imageUrl: 'assets/images/relationships/spend-time.png',
             onTap: MessagePopup(
               title: "Time well spent",
-              message: "You took your mother to the park",
+              message: "You took your ${relationship.relation} to the park",
             ),
           ),
           if (relationship.type == 'Spouses') ...[

@@ -20,10 +20,6 @@ class AssetScreen extends StatelessWidget {
       permanent: true,
     );
 
-    // Approximate height of your ProfileHeader.
-    // Adjust this value until the Blue Bar sits exactly under the Home Screen header.
-    // final double headerHeight = 100.h;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -136,8 +132,6 @@ class AssetScreen extends StatelessWidget {
   }
 
   Widget _buildAssetItem(BuildContext context, AssetController controller, AssetModel item, {required bool isOwned}) {
-    // Paste your existing _buildAssetItem code here
-    // No changes needed
     return Obx(() {
       final int currentBalance = controller.player.gameStats.balanceRx.value;
       final bool isAffordable = currentBalance >= item.price;

@@ -67,7 +67,7 @@ class CreateCharacterController extends GetxController {
         gender: 'Male',
         occupation: "${fatherData['occupation']}",
         imageUrl: "assets/images/relationships/man/${fatherData['imgMan']}",
-        agreement: 0.5,
+        agreement: 0.3,
       ),
     );
 
@@ -82,7 +82,7 @@ class CreateCharacterController extends GetxController {
         gender: 'Female',
         occupation: "${motherData['occupation']}",
         imageUrl: "assets/images/relationships/woman/${motherData['imgWoman']}",
-        agreement: 0.9,
+        agreement: 0.3,
       ),
     );
 
