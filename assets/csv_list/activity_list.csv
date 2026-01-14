@@ -2,4 +2,4 @@ Id,ImageUrl,Title,Subtitle,Description,Price,Effect,DeductBalance
 1,book,Read A Book,"Find a good book and read it","You read about simple strategies for building wealth and investing wisely. You feel more knowledgeable about managing your money.",250,Smarts:+5,0.10
 2,movie,Watch A Movie,"Go see a movie","You spent the entire movie laughing out loud at the ridiculous jokes and hilarious situations. Your mood has significantly improved.",550,Happiness:+2,0.05
 3,gym,Go To The Gym,"Work out at the gym","You focused on lifting heavy weights, pushing your muscles to their absolute limit. You can already feel the gains!",350,Health:+5,0.15
-4,skincare,Do Skin Care,"Take time for yourself","You did the essentials: cleanser, toner, and moisturizer. Your skin feels clean, fresh, and hydrated.",150,Looks:+10,0.20
+4,skincare,Do Skin Care,"Take time for yourself","You did the essentials: cleanser, toner, and moisturizer. Your skin feels clean, fresh, and hydrated.",250,Looks:+10,0.20

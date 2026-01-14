@@ -8,7 +8,13 @@ class StatMassagePopup extends StatelessWidget {
   final String statTitle;
   final double statValue;
 
-  const StatMassagePopup({super.key, required this.title, required this.description, required this.statTitle, required this.statValue});
+  const StatMassagePopup({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.statTitle,
+    required this.statValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +83,9 @@ class StatMassagePopup extends StatelessWidget {
                         Container(
                           width: 160.w,
                           height: 18.h,
-                          decoration: BoxDecoration(color: Colors.grey.shade300),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                          ),
                         ),
                         Container(
                           width: (160 * statValue).w,

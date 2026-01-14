@@ -69,6 +69,8 @@ class Relationship extends HiveObject {
   @HiveField(7)
   double agreement;
 
+  late RxDouble agreementRx;
+
   Relationship({
     required this.type,
     required this.relation,
@@ -78,7 +80,10 @@ class Relationship extends HiveObject {
     required this.occupation,
     required this.imageUrl,
     required this.agreement,
-  });
+  }){
+    agreementRx = agreement.obs;
+    ever(agreementRx, (newValue) => agreement = newValue);
+  }
 }
 
 @HiveType(typeId: 2)
@@ -157,10 +162,6 @@ class Level extends HiveObject {
 
     // Listen for changes in ageRx and update the backing int field
     ever(ageRx, (newValue) => age = newValue);
-  }
-
-  void incrementAge() {
-    ageRx.value++;
   }
 }
 

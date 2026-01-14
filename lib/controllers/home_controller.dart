@@ -251,9 +251,7 @@ Relationship? calculateBirthLogic(User player) {
     age: 0,
     gender: isMaleBaby ? "Male" : "Female",
     occupation: "Baby",
-    imageUrl: isMaleBaby
-        ? "assets/images/relationships/boy/${babyData['imgBoy']}"
-        : "assets/images/relationships/girl/${babyData['imgGirl']}",
+    imageUrl: isMaleBaby ? "assets/images/relationships/boy/${babyData['imgBoy']}" : "assets/images/relationships/girl/${babyData['imgGirl']}",
     agreement: 0.30,
   );
 }

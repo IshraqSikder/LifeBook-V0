@@ -22,8 +22,6 @@ class ActivityScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Obx(() {
-        print("ActivityScreen Rebuilding! Balance: ${controller.player.gameStats.balanceRx.value}");
-
         return Column(
           children: [
             ProfileHeader(),
@@ -81,17 +79,12 @@ class ActivityScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final item = activityList[index];
 
-                  // 1. Get the current net balance
                   final int netBalance = controller.player.gameStats.balanceRx.value;
-                  // 2. Calculate Total Cost safely (Price + (Salary * DeductRate))
                   final num basePrice = num.tryParse(item["price"].toString()) ?? 0;
                   final double deductPercent = double.tryParse(item["deductBalance"].toString()) ?? 0.0;
                   final int currentSalary = controller.player.userInfo.job?.salary ?? 0;
-
-                  // This is the total price rounded
                   final int totalCost = (basePrice + (currentSalary * deductPercent)).round();
 
-                  // 3. Check if player can afford it
                   final bool isAffordable = netBalance >= totalCost;
 
                   return Opacity(

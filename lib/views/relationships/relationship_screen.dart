@@ -104,134 +104,136 @@ class RelationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Handle icon tap
-        Get.to(
-          () => RelationDetailScreen(relationship: data),
-          transition: Transition.rightToLeft,
-        );
-      },
-      child: Container(
-        width: double.infinity,
-        height: 70.h,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(width: 0.50.w, color: Colors.black),
+    return Obx(() {
+      return GestureDetector(
+        onTap: () {
+          // Handle icon tap
+          Get.to(() => RelationDetailScreen(relationship: data),
+            transition: Transition.rightToLeft,
+          );
+        },
+        child: Container(
+          width: double.infinity,
+          height: 70.h,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(width: 0.50.w, color: Colors.black),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                child: Row(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 5.w,
+                      children: [
+                        // image
+                        SizedBox(
+                          width: 35.w,
+                          height: 35.h,
+                          child: Image.asset(
+                            data.imageUrl,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 4.w),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 4.h,
+                            children: [
+                              // title
+                              Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  Text(
+                                    data.name,
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      color: AppColors.blueColor,
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  // subtitle
+                                  Text(
+                                    "(Age ${data.age})",
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      color: AppColors.blueColor,
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Relationship",
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      color: AppColors.blueColor,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Container(
+                                    width: 130.w,
+                                    height: 8.h,
+                                    alignment: Alignment.centerLeft,
+                                    color: AppColors.profileHeaderColor,
+                                    child: Container(
+                                      width: (130 * data.agreementRx.value).w,
+                                      decoration: BoxDecoration(
+                                        color: data.agreementRx.value >= 0.20
+                                            ? AppColors.greenColor
+                                            : AppColors.orangeColor,
+                                      ),
+                                      alignment: Alignment.centerRight,
+                                      padding: EdgeInsets.only(right: 5.w),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    // icon
+                    SizedBox(
+                      width: 20.w,
+                      height: 20.h,
+                      child: SvgPicture.asset(
+                        "assets/icons/right_button.svg",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-              child: Row(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 5.w,
-                    children: [
-                      // image
-                      SizedBox(
-                        width: 35.w,
-                        height: 35.h,
-                        child: Image.asset(
-                          data.imageUrl,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 4.w),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 4.h,
-                          children: [
-                            // title
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              children: [
-                                Text(
-                                  data.name,
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    color: AppColors.blueColor,
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                SizedBox(width: 3.w),
-                                // subtitle
-                                Text(
-                                  "(Age ${data.age})",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    color: AppColors.blueColor,
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Relationship",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    color: AppColors.blueColor,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                SizedBox(width: 5.w),
-                                Container(
-                                  width: 130.w,
-                                  height: 8.h,
-                                  alignment: Alignment.centerLeft,
-                                  color: AppColors.profileHeaderColor,
-                                  child: Container(
-                                    width: (130 * data.agreement).w,
-                                    decoration: BoxDecoration(
-                                      color: data.agreement >= 0.20
-                                          ? AppColors.greenColor
-                                          : AppColors.orangeColor,
-                                    ),
-                                    alignment: Alignment.centerRight,
-                                    padding: EdgeInsets.only(right: 5.w),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  // icon
-                  SizedBox(
-                    width: 20.w,
-                    height: 20.h,
-                    child: SvgPicture.asset(
-                      "assets/icons/right_button.svg",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      );
+    }
     );
   }
 }

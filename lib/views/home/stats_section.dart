@@ -117,17 +117,17 @@ class StatsSection extends StatelessWidget {
             decoration: BoxDecoration(color: AppColors.profileHeaderColor),
           ),
           Container(
-            width: (200 * (progress / 100)).w,
+            width: (200 * (progress.clamp(0, 100) / 100)).w,
             height: 20.h,
             decoration: BoxDecoration(
-              color: progress >= 20
+              color: progress.clamp(0, 100) >= 20
                   ? AppColors.greenColor
                   : AppColors.orangeColor,
             ),
             alignment: Alignment.centerRight,
             padding: EdgeInsets.only(right: 5.w),
             child: Text(
-              '$progress%',
+              '${progress.clamp(0, 100)}%',
               style: TextStyle(
                 fontFamily: 'Inter',
                 color: Colors.white,
