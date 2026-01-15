@@ -31,6 +31,8 @@ class UserInfo extends HiveObject {
   @HiveField(7)
   List<Relationship> activities;
 
+  // late RxList<Relationship> relationshipsRx;
+
   UserInfo({
     required this.id,
     required this.name,
@@ -41,6 +43,10 @@ class UserInfo extends HiveObject {
     required this.relationships,
     required this.activities,
   });
+  // {
+  //   relationshipsRx = relationships.obs;
+  //   ever<List<Relationship>>(relationshipsRx, (newValue) => relationships = newValue);
+  // }
 }
 
 @HiveType(typeId: 1)

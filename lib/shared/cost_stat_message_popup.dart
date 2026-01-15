@@ -121,9 +121,9 @@ class CostStatMessagePopup extends StatelessWidget {
                         decoration: BoxDecoration(color: Colors.grey.shade300),
                       ),
                       Container(
-                        width: (160 * currentStatPercentage).w,
+                        width: (160 * (currentStatPercentage).clamp(0.0, 1.0)).w,
                         height: 18.h,
-                        decoration: currentStatPercentage >= 0.20
+                        decoration: (currentStatPercentage).clamp(0.0, 1.0) >= 0.20
                             ? BoxDecoration(color: AppColors.greenColor)
                             : BoxDecoration(color: AppColors.orangeColor),
                         alignment: Alignment.centerRight,

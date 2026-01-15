@@ -10,6 +10,7 @@ import 'package:life_book/views/relationships/relation_profile_popup.dart';
 
 import '../../controllers/custom_animation_controller.dart';
 import '../../models/user.dart';
+import '../../shared/button_message_popup.dart';
 import '../../shared/cost_stat_message_popup.dart';
 import '../../shared/message_popup.dart';
 import '../../shared/stat_message_popup.dart';
@@ -22,7 +23,9 @@ class RelationDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
-    final RelationshipController relationshipController = Get.put(RelationshipController(),);
+    final RelationshipController relationshipController = Get.put(
+      RelationshipController(),
+    );
     final bool isMale = relationship.gender == 'Male';
 
     return Scaffold(
@@ -169,15 +172,17 @@ class RelationDetailScreen extends StatelessWidget {
                                           child: Container(
                                             width:
                                                 (130 *
-                                                        relationship
-                                                            .agreementRx
-                                                            .value)
+                                                        (relationship
+                                                                .agreementRx
+                                                                .value)
+                                                            .clamp(0.0, 1.0))
                                                     .w,
                                             decoration: BoxDecoration(
                                               color:
-                                                  relationship
-                                                          .agreementRx
-                                                          .value >=
+                                                  (relationship
+                                                              .agreementRx
+                                                              .value)
+                                                          .clamp(0.0, 1.0) >=
                                                       0.20
                                                   ? AppColors.greenColor
                                                   : AppColors.orangeColor,
@@ -228,20 +233,18 @@ class RelationDetailScreen extends StatelessWidget {
               ),
             ),
           ),
-          Obx(
-            () => RelationshipActivityCard(
-              title: 'Conversation',
-              subtitle: 'Have a conversation with ${isMale ? 'him' : 'her'}',
-              imageUrl: 'assets/images/relationships/conversation.png',
-              onTap: StatMassagePopup(
-                title: "Let's talk",
-                description:
-                    "You and your ${relationship.relation} had a conversation about which animal you would like to be.",
-                statTitle: "Agreement",
-                statValue: relationship.agreementRx.value,
-              ),
-              relationship: relationship,
+          RelationshipActivityCard(
+            title: 'Conversation',
+            subtitle: 'Have a conversation with ${isMale ? 'him' : 'her'}',
+            imageUrl: 'assets/images/relationships/conversation.png',
+            onTap: StatMassagePopup(
+              title: "Let's talk",
+              description:
+                  "You and your ${relationship.relation} had a conversation about which animal you would like to be.",
+              statTitle: "Agreement",
+              statValue: relationship.agreementRx,
             ),
+            relationship: relationship,
           ),
           RelationshipActivityCard(
             title: 'Spend Time',
@@ -262,7 +265,7 @@ class RelationDetailScreen extends StatelessWidget {
                 title: "Make Love",
                 description: "You and your wife, Max, made love.",
                 statTitle: "Enjoyment",
-                statValue: 0.8,
+                statValue: 0.8.obs,
               ),
               relationship: relationship,
             ),
@@ -300,7 +303,7 @@ class RelationDetailScreen extends StatelessWidget {
                 title: "Make Love",
                 description: "You and your wife, Max, made love.",
                 statTitle: "Enjoyment",
-                statValue: 0.8,
+                statValue: 0.8.obs,
               ),
               relationship: relationship,
             ),
@@ -337,7 +340,7 @@ class RelationDetailScreen extends StatelessWidget {
                 title: "Make Love",
                 description: "You and your wife, Max, made love.",
                 statTitle: "Enjoyment",
-                statValue: 0.8,
+                statValue: 0.8.obs,
               ),
               relationship: relationship,
             ),
@@ -378,54 +381,55 @@ class RelationDetailScreen extends StatelessWidget {
             ),
           ] else if (relationship.type == 'Friends') ...[
             Obx(() {
-              final int netBalance = homeController.player.gameStats.balanceRx.value;
-              final int currentSalary = homeController.player.userInfo.job?.salary ?? 0;
+              final int netBalance =
+                  homeController.player.gameStats.balanceRx.value;
+              final int currentSalary =
+                  homeController.player.userInfo.job?.salary ?? 0;
               final int totalCost = (5000 + (currentSalary * 0.10)).round();
 
               final bool isAffordable = netBalance >= totalCost;
 
               return RelationshipActivityCard(
                 title: 'Party',
-                subtitle: 'Party with him',
+                subtitle:
+                    'Throwing a party will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/liquor.png',
                 onTap: CostStatMessagePopup(
                   title: "Party",
                   description: 'You did party with ${relationship.name}',
                   cost: relationshipController.getPartyAndGiftCost(),
-                  effectStatKey: 'Happiness',
-                  currentStatPercentage:
-                      homeController.player.gameStats.happinessRx.value / 100,
+                  effectStatKey: 'Agreement',
+                  currentStatPercentage: relationship.agreementRx.value,
                 ),
                 relationship: relationship,
                 isAffordable: isAffordable,
               );
-            },
-            ),
+            }),
             Obx(() {
-                final int netBalance = homeController.player.gameStats.balanceRx.value;
-                final int currentSalary = homeController.player.userInfo.job?.salary ?? 0;
-                final int totalCost = (5000 + (currentSalary * 0.10)).round();
+              final int netBalance =
+                  homeController.player.gameStats.balanceRx.value;
+              final int currentSalary =
+                  homeController.player.userInfo.job?.salary ?? 0;
+              final int totalCost = (5000 + (currentSalary * 0.10)).round();
+              final bool isAffordable = netBalance >= totalCost;
 
-                final bool isAffordable = netBalance >= totalCost;
-
-                return RelationshipActivityCard(
+              return RelationshipActivityCard(
                 title: 'Gift',
-                subtitle: 'Give her a gift',
+                subtitle:
+                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/gift-box.png',
                 onTap: CostStatMessagePopup(
                   title: "Gift",
                   description:
-                      "You’ve presented a beautiful ring to your wife, Max. It’s a moment that neither of you will ever forget.",
+                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
                   cost: relationshipController.getPartyAndGiftCost(),
-                  effectStatKey: "Happiness",
-                  currentStatPercentage:
-                      homeController.player.gameStats.happinessRx.value / 100,
+                  effectStatKey: "Agreement",
+                  currentStatPercentage: relationship.agreementRx.value,
                 ),
                 relationship: relationship,
                 isAffordable: isAffordable,
               );
-              },
-            ),
+            }),
             // RelationshipActivityCard(
             //   title: 'Sleepover',
             //   subtitle: 'Have a sleepover with him',
@@ -436,25 +440,31 @@ class RelationDetailScreen extends StatelessWidget {
             //   ),
             //   relationship: relationship,
             // ),
-            RelationshipActivityCard(
-              title: 'Make Lover',
-              subtitle: 'Be my lover',
-              imageUrl: 'assets/images/relationships/breakup.png',
-              onTap: MessagePopup(
-                title: "Make Lover",
-                message: "You and Dustin can not be lover",
-                negative: true,
-              ),
-              relationship: relationship,
-            ),
+            if (relationship.gender != homeController.player.userInfo.gender)
+              Obx(() {
+                final bool canBeLover = relationship.age >= 15 && homeController.player.gameStats.levelsRx.last.ageRx.value >= 15 && relationship.agreementRx.value > 0.6;
+                return RelationshipActivityCard(
+                  title: 'Make Lover',
+                  subtitle: 'Be my lover',
+                  imageUrl: 'assets/images/relationships/breakup.png',
+                  onTap: ButtonMessagePopup(
+                    title: "Make Lover",
+                    message: "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
+                    func: () => relationshipController.makeLoverLogic(relationship),
+                  ),
+                  relationship: relationship,
+                  isAffordable: canBeLover,
+                );
+              }),
             RelationshipActivityCard(
               title: 'Unfriend',
-              subtitle: 'Unfriend him',
+              subtitle: 'Unfriend ${isMale ? 'him' : 'her'}',
               imageUrl: 'assets/images/relationships/unfriend.png',
-              onTap: MessagePopup(
+              onTap: ButtonMessagePopup(
                 title: "Unfriend",
-                message: "You ended your friendship with Dustin",
-                negative: true,
+                message: "Are you sure you want to end friendship with ${relationship.name}?",
+                rel: relationship,
+                func: () => relationshipController.unfriendLogic(relationship),
               ),
               relationship: relationship,
             ),
@@ -490,7 +500,8 @@ class RelationshipActivityCard extends StatelessWidget {
     return Opacity(
       opacity: canPerformAction ? 1.0 : 0.5,
       child: GestureDetector(
-        onTap: !canPerformAction? null: () {
+        onTap: canPerformAction
+            ? () {
                 // Agreement Changed according to the percentage
                 if (title == 'Conversation' ||
                     title == 'Spend Time' ||
@@ -508,7 +519,8 @@ class RelationshipActivityCard extends StatelessWidget {
                   barrierColor: Colors.black.withValues(alpha: 0.95),
                   onTap,
                 );
-              },
+              }
+            : null,
         child: Container(
           width: double.infinity,
           height: 70.h,
@@ -570,7 +582,9 @@ class RelationshipActivityCard extends StatelessWidget {
                                 subtitle,
                                 style: TextStyle(
                                   fontFamily: 'Inter',
-                                  color: canPerformAction? AppColors.blueColor: Colors.grey[800],
+                                  color: canPerformAction
+                                      ? AppColors.blueColor
+                                      : Colors.grey[800],
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
                                   letterSpacing: 0.36.sp,
@@ -589,7 +603,12 @@ class RelationshipActivityCard extends StatelessWidget {
                       child: SvgPicture.asset(
                         "assets/images/menu/three-dot.svg",
                         fit: BoxFit.contain,
-                        colorFilter: canPerformAction? null: ColorFilter.mode(Colors.grey[800]!, BlendMode.srcIn),
+                        colorFilter: canPerformAction
+                            ? null
+                            : ColorFilter.mode(
+                                Colors.grey[800]!,
+                                BlendMode.srcIn,
+                              ),
                       ),
                     ),
                   ],

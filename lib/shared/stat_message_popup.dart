@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:life_book/theme.dart';
 
 class StatMassagePopup extends StatelessWidget {
   final String title;
   final String description;
   final String statTitle;
-  final double statValue;
+  final RxDouble statValue;
 
   const StatMassagePopup({
     super.key,
@@ -59,47 +60,48 @@ class StatMassagePopup extends StatelessWidget {
               ),
             ),
             SizedBox(height: 35.h),
-            SizedBox(
-              width: double.infinity,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    statTitle,
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      color: AppColors.blueColor,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w800,
+            Obx(() => SizedBox(
+                width: double.infinity,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      statTitle,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: AppColors.blueColor,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10.w),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: 160.w,
-                          height: 18.h,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 160.w,
+                            height: 18.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: (160 * statValue).w,
-                          height: 18.h,
-                          decoration: statValue >= 0.20
-                              ? BoxDecoration(color: AppColors.greenColor)
-                              : BoxDecoration(color: AppColors.orangeColor),
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.only(right: 5.w),
-                        ),
-                      ],
+                          Container(
+                            width: (160 * statValue.value.clamp(0.0, 1.0)).w,
+                            height: 18.h,
+                            decoration: statValue.value.clamp(0.0, 1.0) >= 0.20
+                                ? BoxDecoration(color: AppColors.greenColor)
+                                : BoxDecoration(color: AppColors.orangeColor),
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.only(right: 5.w),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

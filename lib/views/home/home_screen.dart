@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(
-      HomeController(player: player, choice: choice),
+      HomeController(player: player, choice: choice), permanent: true,
     );
 
     final UserService userService = Get.find<UserService>();

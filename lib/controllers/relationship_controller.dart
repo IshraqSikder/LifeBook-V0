@@ -1,8 +1,11 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/home_controller.dart';
 
 import '../models/user.dart';
+import '../shared/message_popup.dart';
+import '../views/home/home_screen.dart';
 
 class RelationshipController extends GetxController {
   final HomeController controller = Get.find<HomeController>();
@@ -30,8 +33,9 @@ class RelationshipController extends GetxController {
         change = -0.02;
       }
     }
-    relationship.agreementRx.value = (relationship.agreementRx.value + change).clamp(0.0, 1.0);
-    // Save to Hive database
+    relationship.agreementRx.value = (relationship.agreementRx.value + change)
+        .clamp(0.0, 1.0);
+
     controller.player.save();
   }
 
@@ -40,13 +44,16 @@ class RelationshipController extends GetxController {
     return 5000 + (currentSalary * 0.05).round();
   }
 
-  void partyLogic(Relationship relationship){
+  void partyLogic(Relationship relationship) {
     final int partyCost = getPartyAndGiftCost();
 
     controller.player.gameStats.balanceRx.value -= partyCost;
-    controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
-    controller.player.gameStats.healthRx.value = (controller.player.gameStats.healthRx.value - 10).clamp(0, 100);
-    relationship.agreementRx.value = (relationship.agreementRx.value + 10).clamp(0, 100);
+    controller.player.gameStats.happinessRx.value =
+        (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
+    controller.player.gameStats.healthRx.value =
+        (controller.player.gameStats.healthRx.value - 10).clamp(0, 100);
+    relationship.agreementRx.value = (relationship.agreementRx.value + 0.1)
+        .clamp(0, 100);
 
     controller.player.save();
   }
@@ -55,8 +62,90 @@ class RelationshipController extends GetxController {
     final int partyCost = getPartyAndGiftCost();
 
     controller.player.gameStats.balanceRx.value -= partyCost;
-    controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.happinessRx.value =
+        (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
 
     controller.player.save();
+  }
+
+  void makeLoverLogic(Relationship relationship) async {
+    // Calculate count of existing lovers and spouses
+    int competitionCount = controller.player.userInfo.relationships
+        .where((rel) => rel.type == 'Lovers' || rel.type == 'Spouses')
+        .length;
+
+    print(competitionCount);
+    print(controller.player.userInfo.relationships.where((rel) => rel.type == 'Lovers').length);
+
+    double currentStat = relationship.agreementRx.value * 100;
+    double successPercentage = currentStat - (10 * (competitionCount + 1));
+
+    // Minimum 20% success rate check
+    if (successPercentage < 20) {
+      successPercentage = 20;
+    }
+
+    int roll = Random().nextInt(100) + 1;
+    bool isAccepted = roll <= successPercentage;
+
+    if (isAccepted) {
+      controller.player.gameStats.happinessRx.value =
+          (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
+      relationship.agreementRx.value = (relationship.agreementRx.value + 0.10)
+          .clamp(0.0, 1.0);
+
+      // Logic to change relationship type
+      relationship.type = 'Lovers';
+      relationship.relation = 'Lover';
+
+      // Get.back();
+
+      await _showResultDialog(
+        "Accepted",
+        "You and ${relationship.name} are now lovers!",
+      );
+    } else {
+      controller.player.gameStats.happinessRx.value =
+          (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
+      relationship.agreementRx.value = (relationship.agreementRx.value - 0.10)
+          .clamp(0.0, 1.0);
+
+      // Get.back();
+
+      await _showResultDialog(
+        "Rejected",
+        "${relationship.name} rejected your proposal.",
+        isNegative: true,
+      );
+    }
+    controller.player.save();
+    Get.offAll(() => HomeScreen(player: controller.player));
+  }
+
+  void unfriendLogic(relationship) async {
+    controller.player.userInfo.relationships.remove(relationship);
+
+    await controller.player.save();
+    Get.back();
+
+    await _showResultDialog(
+      "Unfriend",
+      "You ended your friendship with ${relationship.name}",
+    );
+
+    Get.offAll(() => HomeScreen(player: controller.player));
+  }
+
+  // Helper to show the outcome
+  Future<void> _showResultDialog(
+    String title,
+    String message, {
+    bool isNegative = false,
+  }) async {
+    return await Get.dialog(
+      MessagePopup(title: title, message: message, negative: isNegative),
+      barrierDismissible: true,
+      barrierColor: Colors.black54.withValues(alpha: 90),
+    );
   }
 }

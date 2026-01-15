@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/views/relationships/relationship_detail_screen.dart';
@@ -9,14 +10,15 @@ import 'package:life_book/views/relationships/relationship_detail_screen.dart';
 import '../../models/user.dart';
 
 class RelationshipScreen extends StatelessWidget {
-  final User user;
-  const RelationshipScreen({super.key, required this.user});
+  const RelationshipScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find<HomeController>();
+
     // 1. Group relationships by type
     final Map<String, List<Relationship>> groupedRelationships = {};
-    for (var rel in user.userInfo.relationships) {
+    for (var rel in controller.player.userInfo.relationships) {
       if (!groupedRelationships.containsKey(rel.type)) {
         groupedRelationships[rel.type] = [];
       }
@@ -31,68 +33,71 @@ class RelationshipScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            ProfileHeader(),
-            Container(
-              width: double.infinity,
-              height: 44,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(color: AppColors.blueColor),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: SvgPicture.asset(
-                      'assets/icons/cancel.svg',
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  SizedBox(width: 75.w),
-                  Text(
-                    'RELATIONSHIPS',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        
-            // 2. Map the list to widgets
-            ...groupedRelationships.entries.map((entry) {
-              String type = entry.key;
-              List<Relationship> relations = entry.value;
-              return Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 20,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(color: AppColors.textColor),
-                    child: Text(
-                      type,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+            children: [
+              ProfileHeader(),
+              Container(
+                width: double.infinity,
+                height: 44,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(color: AppColors.blueColor),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: SvgPicture.asset(
+                        'assets/icons/cancel.svg',
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.contain,
                       ),
                     ),
-                  ),
-                  ...relations.map((data) => RelationCard(data: data)),
-                ],
-              );
-            }),
-          ],
-        ),
+                    SizedBox(width: 75.w),
+                    Text(
+                      'RELATIONSHIPS',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // 2. Map the list to widgets
+              ...groupedRelationships.entries.map((entry) {
+                String type = entry.key;
+                List<Relationship> relations = entry.value;
+                return Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 20,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: AppColors.textColor),
+                      child: Text(
+                        type,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    ...relations.map((data) => RelationCard(data: data)),
+                  ],
+                );
+              }),
+            ],
+          ),
       ),
     );
   }
@@ -108,7 +113,8 @@ class RelationCard extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           // Handle icon tap
-          Get.to(() => RelationDetailScreen(relationship: data),
+          Get.to(
+            () => RelationDetailScreen(relationship: data),
             transition: Transition.rightToLeft,
           );
         },
@@ -233,7 +239,6 @@ class RelationCard extends StatelessWidget {
           ),
         ),
       );
-    }
-    );
+    });
   }
 }

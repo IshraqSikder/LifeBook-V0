@@ -87,10 +87,7 @@ class BottomNavBar extends StatelessWidget {
                               'Relationships',
                               'assets/icons/relationships.svg',
                               () {
-                                // USE THE NEW NAVIGATION METHOD
-                                animationController.navigateToTabWithAnimation(
-                                  RelationshipScreen(user: player),
-                                );
+                                animationController.navigateToTabWithAnimation(RelationshipScreen());
                               },
                             ),
                             _buildNavBarItem(
