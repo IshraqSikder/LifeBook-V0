@@ -13,6 +13,7 @@ import '../../models/user.dart';
 import '../../shared/button_message_popup.dart';
 import '../../shared/cost_stat_message_popup.dart';
 import '../../shared/message_popup.dart';
+import '../../shared/relationship_activity_card.dart';
 import '../../shared/stat_message_popup.dart';
 
 class RelationDetailScreen extends StatelessWidget {
@@ -27,6 +28,7 @@ class RelationDetailScreen extends StatelessWidget {
       RelationshipController(),
     );
     final bool isMale = relationship.gender == 'Male';
+    final bool hasSpouse = homeController.player.userInfo.relationships.any((r) => r.type == 'Spouses');
 
     return Scaffold(
       appBar: AppBar(
@@ -269,20 +271,31 @@ class RelationDetailScreen extends StatelessWidget {
               ),
               relationship: relationship,
             ),
-            RelationshipActivityCard(
-              title: 'Gift',
-              subtitle: 'Give her a gift',
-              imageUrl: 'assets/images/relationships/gift-box.png',
-              onTap: CostStatMessagePopup(
-                title: "Gift",
-                description:
-                    "You’ve presented a beautiful ring to your wife, Max. It’s a moment that neither of you will ever forget.",
-                cost: 1350,
-                effectStatKey: "Happiness",
-                currentStatPercentage: 0.30,
-              ),
-              relationship: relationship,
-            ),
+            Obx(() {
+              final int netBalance =
+                  homeController.player.gameStats.balanceRx.value;
+              final int currentSalary =
+                  homeController.player.userInfo.job?.salary ?? 0;
+              final int totalCost = (5000 + (currentSalary * 0.10)).round();
+              final bool isAffordable = netBalance >= totalCost;
+
+              return RelationshipActivityCard(
+                title: 'Gift',
+                subtitle:
+                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                imageUrl: 'assets/images/relationships/gift-box.png',
+                onTap: CostStatMessagePopup(
+                  title: "Gift",
+                  description:
+                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  cost: relationshipController.getPartyAndGiftCost(),
+                  effectStatKey: "Agreement",
+                  currentStatPercentage: relationship.agreementRx.value,
+                ),
+                relationship: relationship,
+                isAffordable: isAffordable,
+              );
+            }),
             RelationshipActivityCard(
               title: 'Divorce',
               subtitle: 'Apply for divorce',
@@ -307,20 +320,31 @@ class RelationDetailScreen extends StatelessWidget {
               ),
               relationship: relationship,
             ),
-            RelationshipActivityCard(
-              title: 'Gift',
-              subtitle: 'Give her a gift',
-              imageUrl: 'assets/images/relationships/gift-box.png',
-              onTap: CostStatMessagePopup(
-                title: "Gift",
-                description:
-                    "You’ve presented a beautiful ring to your wife, Max. It’s a moment that neither of you will ever forget.",
-                cost: 1350,
-                effectStatKey: "Happiness",
-                currentStatPercentage: 0.30,
-              ),
-              relationship: relationship,
-            ),
+            Obx(() {
+              final int netBalance =
+                  homeController.player.gameStats.balanceRx.value;
+              final int currentSalary =
+                  homeController.player.userInfo.job?.salary ?? 0;
+              final int totalCost = (5000 + (currentSalary * 0.10)).round();
+              final bool isAffordable = netBalance >= totalCost;
+
+              return RelationshipActivityCard(
+                title: 'Gift',
+                subtitle:
+                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                imageUrl: 'assets/images/relationships/gift-box.png',
+                onTap: CostStatMessagePopup(
+                  title: "Gift",
+                  description:
+                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  cost: relationshipController.getPartyAndGiftCost(),
+                  effectStatKey: "Agreement",
+                  currentStatPercentage: relationship.agreementRx.value,
+                ),
+                relationship: relationship,
+                isAffordable: isAffordable,
+              );
+            }),
             RelationshipActivityCard(
               title: 'Call',
               subtitle: 'Call her up',
@@ -344,38 +368,64 @@ class RelationDetailScreen extends StatelessWidget {
               ),
               relationship: relationship,
             ),
-            RelationshipActivityCard(
-              title: 'Gift',
-              subtitle: 'Give her a gift',
-              imageUrl: 'assets/images/relationships/gift-box.png',
-              onTap: CostStatMessagePopup(
-                title: "Gift",
-                description:
-                    "You’ve presented a beautiful ring to your wife, Max. It’s a moment that neither of you will ever forget.",
-                cost: 1350,
-                effectStatKey: "Happiness",
-                currentStatPercentage: 0.30,
-              ),
-              relationship: relationship,
-            ),
+            Obx(() {
+              final int netBalance =
+                  homeController.player.gameStats.balanceRx.value;
+              final int currentSalary =
+                  homeController.player.userInfo.job?.salary ?? 0;
+              final int totalCost = (5000 + (currentSalary * 0.10)).round();
+              final bool isAffordable = netBalance >= totalCost;
+
+              return RelationshipActivityCard(
+                title: 'Gift',
+                subtitle:
+                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                imageUrl: 'assets/images/relationships/gift-box.png',
+                onTap: CostStatMessagePopup(
+                  title: "Gift",
+                  description:
+                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  cost: relationshipController.getPartyAndGiftCost(),
+                  effectStatKey: "Agreement",
+                  currentStatPercentage: relationship.agreementRx.value,
+                ),
+                relationship: relationship,
+                isAffordable: isAffordable,
+              );
+            }),
+            // Obx(() {
+            //
+            // }),
             RelationshipActivityCard(
               title: 'Propose',
-              subtitle: 'Propose her',
+              subtitle: 'Propose to ${isMale ? 'him' : 'her'}',
               imageUrl: 'assets/images/relationships/ring.png',
-              onTap: MessagePopup(
-                title: "Propose",
-                message: "You proposed her and she agreed",
-              ),
               relationship: relationship,
+              onTap: hasSpouse
+                  ? MessagePopup(
+                      title: "Already Married",
+                      message:
+                          "Sorry, you already have a ${relationship.gender == 'Male' ? 'husband' : 'wife'}.",
+                      negative: true,
+                    )
+                  : ButtonMessagePopup(
+                      title: "Propose",
+                      message:
+                          "Are you sure you want to propose to ${isMale ? 'him' : 'her'}?",
+                      func: () {
+                        relationshipController.proposeLogic(relationship);
+                      },
+                    ),
             ),
             RelationshipActivityCard(
               title: 'Breakup',
-              subtitle: 'Breakup with her',
+              subtitle: 'Breakup with ${isMale ? 'him' : 'her'}',
               imageUrl: 'assets/images/relationships/breakup.png',
-              onTap: MessagePopup(
+              onTap: ButtonMessagePopup(
                 title: "Breakup",
-                message: "You broke up with her",
-                negative: true,
+                message:
+                    "Are you sure you want to breakup with ${relationship.name}?",
+                func: () => relationshipController.breakupLogic(relationship),
               ),
               relationship: relationship,
             ),
@@ -442,18 +492,32 @@ class RelationDetailScreen extends StatelessWidget {
             // ),
             if (relationship.gender != homeController.player.userInfo.gender)
               Obx(() {
-                final bool canBeLover = relationship.age >= 15 && homeController.player.gameStats.levelsRx.last.ageRx.value >= 15 && relationship.agreementRx.value > 0.6;
+                final bool canBeLover =
+                    relationship.age >= 15 &&
+                    homeController.player.gameStats.levelsRx.last.ageRx.value >=
+                        15 &&
+                    relationship.agreementRx.value > 0.6;
                 return RelationshipActivityCard(
                   title: 'Make Lover',
                   subtitle: 'Be my lover',
                   imageUrl: 'assets/images/relationships/breakup.png',
-                  onTap: ButtonMessagePopup(
-                    title: "Make Lover",
-                    message: "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
-                    func: () => relationshipController.makeLoverLogic(relationship),
-                  ),
+                  onTap: !canBeLover
+                      ? MessagePopup(
+                          title: 'Warning',
+                          message:
+                              'Sorry, you are unable to be ${isMale ? 'him' : 'her'} lover yet. Make more conversation or spend more time with ${isMale ? 'him' : 'her'}',
+                          negative: true,
+                        )
+                      : ButtonMessagePopup(
+                          title: "Make Lover",
+                          message:
+                              "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
+                          func: () => relationshipController.makeLoverLogic(
+                            relationship,
+                          ),
+                        ),
                   relationship: relationship,
-                  isAffordable: canBeLover,
+                  // isAffordable: canBeLover,
                 );
               }),
             RelationshipActivityCard(
@@ -462,161 +526,14 @@ class RelationDetailScreen extends StatelessWidget {
               imageUrl: 'assets/images/relationships/unfriend.png',
               onTap: ButtonMessagePopup(
                 title: "Unfriend",
-                message: "Are you sure you want to end friendship with ${relationship.name}?",
-                rel: relationship,
+                message:
+                    "Are you sure you want to end friendship with ${relationship.name}?",
                 func: () => relationshipController.unfriendLogic(relationship),
               ),
               relationship: relationship,
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class RelationshipActivityCard extends StatelessWidget {
-  final Relationship relationship;
-  final String title, subtitle, imageUrl;
-  final Widget onTap;
-  final bool? isAffordable;
-
-  const RelationshipActivityCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.imageUrl,
-    required this.onTap,
-    required this.relationship,
-    this.isAffordable,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final RelationshipController controller =
-        Get.find<RelationshipController>();
-    final bool canPerformAction = isAffordable ?? true;
-
-    return Opacity(
-      opacity: canPerformAction ? 1.0 : 0.5,
-      child: GestureDetector(
-        onTap: canPerformAction
-            ? () {
-                // Agreement Changed according to the percentage
-                if (title == 'Conversation' ||
-                    title == 'Spend Time' ||
-                    title == 'Call') {
-                  controller.processRelationStatBarLogic(relationship);
-                } else if (title == 'Party') {
-                  controller.partyLogic(relationship);
-                } else if (title == 'Gift') {
-                  controller.giftLogic();
-                }
-
-                // Handle icon tap
-                Get.dialog(
-                  barrierDismissible: true,
-                  barrierColor: Colors.black.withValues(alpha: 0.95),
-                  onTap,
-                );
-              }
-            : null,
-        child: Container(
-          width: double.infinity,
-          height: 70.h,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 0.50.w, color: Colors.black),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-                child: Row(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      spacing: 5.w,
-                      children: [
-                        // image
-                        SizedBox(
-                          width: 35.w,
-                          height: 35.h,
-                          child: Image.asset(
-                            imageUrl,
-                            fit: BoxFit.contain,
-                            color: canPerformAction ? null : Colors.grey[100],
-                            colorBlendMode: canPerformAction
-                                ? null
-                                : BlendMode.saturation,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 4.w),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 4.h,
-                            children: [
-                              // title
-                              Text(
-                                title,
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  color: canPerformAction
-                                      ? AppColors.blueColor
-                                      : Colors.grey[800],
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              // subtitle
-                              Text(
-                                subtitle,
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  color: canPerformAction
-                                      ? AppColors.blueColor
-                                      : Colors.grey[800],
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0.36.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    // icon
-                    SizedBox(
-                      width: 35.w,
-                      height: 35.h,
-                      child: SvgPicture.asset(
-                        "assets/images/menu/three-dot.svg",
-                        fit: BoxFit.contain,
-                        colorFilter: canPerformAction
-                            ? null
-                            : ColorFilter.mode(
-                                Colors.grey[800]!,
-                                BlendMode.srcIn,
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

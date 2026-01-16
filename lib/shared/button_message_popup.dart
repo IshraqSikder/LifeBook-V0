@@ -3,19 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:life_book/theme.dart';
 
-import '../models/user.dart';
-
 class ButtonMessagePopup extends StatelessWidget {
   final String title;
   final String message;
-  final Relationship? rel;
   final VoidCallback func;
 
   const ButtonMessagePopup({
     super.key,
     required this.title,
     required this.message,
-    this.rel,
     required this.func,
   });
 

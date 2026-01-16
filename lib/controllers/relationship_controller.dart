@@ -131,12 +131,78 @@ class RelationshipController extends GetxController {
     await _showResultDialog(
       "Unfriend",
       "You ended your friendship with ${relationship.name}",
+      isNegative: true,
     );
 
     Get.offAll(() => HomeScreen(player: controller.player));
   }
 
-  // Helper to show the outcome
+  void breakupLogic(relationship) async {
+    controller.player.userInfo.relationships.remove(relationship);
+
+    await controller.player.save();
+    Get.back();
+
+    await _showResultDialog(
+      "Breakup",
+      "You broke up with ${relationship.name}",
+      isNegative: true,
+    );
+
+    Get.offAll(() => HomeScreen(player: controller.player));
+  }
+
+  void proposeLogic(Relationship relationship) {
+    if (Get.isDialogOpen ?? false) Get.back();
+
+    final int cost = getPartyAndGiftCost();
+
+    if (controller.player.gameStats.balanceRx.value < cost) {
+      Get.dialog(
+        barrierDismissible: true,
+        barrierColor: Colors.black54.withValues(alpha: 0.90),
+        MessagePopup(
+            title: 'Not Enough Money',
+            message: 'You can\'t afford a ring right now!',
+            negative: true
+        ),
+      );
+      return;
+    }
+
+    controller.player.gameStats.balanceRx.value -= cost;
+
+    final double randomValue = Random().nextDouble();
+    final bool isAccepted = randomValue <= relationship.agreementRx.value;
+
+    if (isAccepted) {
+      controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
+      relationship.agreementRx.value = (relationship.agreementRx.value + 0.10).clamp(0.0, 1.0);
+
+      relationship.type = 'Spouses';
+      relationship.relation = relationship.gender == 'Male' ? 'Husband' : 'Wife';
+
+      Get.dialog(
+        MessagePopup(
+          title: "Propose",
+          message: "You proposed ${relationship.name} and ${relationship.gender == 'Male' ? 'he' : 'she'} agreed",
+        ),
+      );
+    } else {
+      controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
+      relationship.agreementRx.value = (relationship.agreementRx.value - 0.10).clamp(0.0, 1.0);
+
+      Get.dialog(
+        MessagePopup(
+          title: "Propose",
+          message: "You proposed ${relationship.name} and got rejected",
+          negative: true,
+        ),
+      );
+    }
+    controller.player.save();
+  }
+
   Future<void> _showResultDialog(
     String title,
     String message, {
