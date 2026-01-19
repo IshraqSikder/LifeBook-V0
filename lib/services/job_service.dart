@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/job_model.dart';
 
-import 'CSV_services.dart';
+import 'csv_services.dart';
 
 class JobService extends GetxService {
   static const String _jobBoxName = 'jobItemsBox';

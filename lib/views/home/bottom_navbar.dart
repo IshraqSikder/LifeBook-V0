@@ -14,8 +14,7 @@ import 'package:life_book/views/relationships/relationship_screen.dart';
 import '../../models/user.dart';
 
 class BottomNavBar extends StatelessWidget {
-  final User player;
-  const BottomNavBar({super.key, required this.player});
+  const BottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {

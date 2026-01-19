@@ -28,7 +28,13 @@ class RelationDetailScreen extends StatelessWidget {
       RelationshipController(),
     );
     final bool isMale = relationship.gender == 'Male';
-    final bool hasSpouse = homeController.player.userInfo.relationships.any((r) => r.type == 'Spouses');
+    final bool hasSpouse = homeController.player.userInfo.relationships.any(
+      (r) => r.type == 'Spouses',
+    );
+    final bool canBeLover =
+        relationship.age >= 15 &&
+        homeController.player.gameStats.levelsRx.last.ageRx.value >= 15 &&
+        relationship.agreementRx.value > 0.6;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,12 +80,10 @@ class RelationDetailScreen extends StatelessWidget {
           ),
           Obx(() {
             return GestureDetector(
-              onTap: () {
-                topToCenterAnimationPopup(
+              onTap: () => topToCenterAnimationPopup(
                   RelationProfilePopup(relationship: relationship),
                   false,
-                );
-              },
+                ),
               child: Container(
                 width: double.infinity,
                 height: 70.h,
@@ -358,13 +362,14 @@ class RelationDetailScreen extends StatelessWidget {
           ] else if (relationship.type == 'Lovers') ...[
             RelationshipActivityCard(
               title: 'Make Love',
-              subtitle: 'Make love to her',
+              subtitle: 'Make love to ${isMale ? 'him' : 'her'}',
               imageUrl: 'assets/images/relationships/make-love.png',
               onTap: StatMassagePopup(
                 title: "Make Love",
-                description: "You and your wife, Max, made love.",
-                statTitle: "Enjoyment",
-                statValue: 0.8.obs,
+                description:
+                    "You and your ${relationship.relation}, ${relationship.name}, made love.",
+                statTitle: "Agreement",
+                statValue: relationship.agreementRx,
               ),
               relationship: relationship,
             ),
@@ -378,8 +383,7 @@ class RelationDetailScreen extends StatelessWidget {
 
               return RelationshipActivityCard(
                 title: 'Gift',
-                subtitle:
-                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                subtitle: 'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/gift-box.png',
                 onTap: CostStatMessagePopup(
                   title: "Gift",
@@ -393,9 +397,6 @@ class RelationDetailScreen extends StatelessWidget {
                 isAffordable: isAffordable,
               );
             }),
-            // Obx(() {
-            //
-            // }),
             RelationshipActivityCard(
               title: 'Propose',
               subtitle: 'Propose to ${isMale ? 'him' : 'her'}',
@@ -491,35 +492,26 @@ class RelationDetailScreen extends StatelessWidget {
             //   relationship: relationship,
             // ),
             if (relationship.gender != homeController.player.userInfo.gender)
-              Obx(() {
-                final bool canBeLover =
-                    relationship.age >= 15 &&
-                    homeController.player.gameStats.levelsRx.last.ageRx.value >=
-                        15 &&
-                    relationship.agreementRx.value > 0.6;
-                return RelationshipActivityCard(
-                  title: 'Make Lover',
-                  subtitle: 'Be my lover',
-                  imageUrl: 'assets/images/relationships/breakup.png',
-                  onTap: !canBeLover
-                      ? MessagePopup(
-                          title: 'Warning',
-                          message:
-                              'Sorry, you are unable to be ${isMale ? 'him' : 'her'} lover yet. Make more conversation or spend more time with ${isMale ? 'him' : 'her'}',
-                          negative: true,
-                        )
-                      : ButtonMessagePopup(
-                          title: "Make Lover",
-                          message:
-                              "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
-                          func: () => relationshipController.makeLoverLogic(
-                            relationship,
-                          ),
-                        ),
-                  relationship: relationship,
-                  // isAffordable: canBeLover,
-                );
-              }),
+              RelationshipActivityCard(
+                title: 'Make Lover',
+                subtitle: 'Be my lover',
+                imageUrl: 'assets/images/relationships/breakup.png',
+                onTap: !canBeLover
+                    ? MessagePopup(
+                        title: 'Warning',
+                        message:
+                            'Sorry, you are unable to be ${isMale ? 'him' : 'her'} lover yet. Either both be 15 above or Make more conversation or spend more time with ${isMale ? 'him' : 'her'}',
+                        negative: true,
+                      )
+                    : ButtonMessagePopup(
+                        title: "Make Lover",
+                        message:
+                            "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
+                        func: () =>
+                            relationshipController.makeLoverLogic(relationship),
+                      ),
+                relationship: relationship,
+              ),
             RelationshipActivityCard(
               title: 'Unfriend',
               subtitle: 'Unfriend ${isMale ? 'him' : 'her'}',

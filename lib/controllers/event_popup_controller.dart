@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/custom_animation_controller.dart';
-import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/services/csv_services.dart';
 import 'package:life_book/views/event/choice_event_popup.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/views/home/life_story.dart';

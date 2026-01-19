@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/asset_model.dart';
-import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/services/csv_services.dart';
 
 class AssetService extends GetxService {
   static const String _assetBoxName = 'assetItemsBox';

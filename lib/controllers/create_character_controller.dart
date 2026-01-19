@@ -5,7 +5,7 @@ import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/start/tutorial_screen.dart';
 
-import '../services/CSV_services.dart';
+import '../services/csv_services.dart';
 
 class CreateCharacterController extends GetxController {
   final TextEditingController nameController = TextEditingController();

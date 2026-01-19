@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/custom_animation_controller.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
-import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/services/csv_services.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/death/death_screen.dart';
@@ -24,8 +24,8 @@ class HomeController extends GetxController {
 
   final UserService userService = Get.find<UserService>();
 
-  final ScrollController scrollController =
-      ScrollController(); // Define Scroll Controller here
+  // Define Scroll Controller here
+  final ScrollController scrollController = ScrollController();
 
   @override
   void onInit() {
@@ -251,7 +251,9 @@ Relationship? calculateBirthLogic(User player) {
     age: 0,
     gender: isMaleBaby ? "Male" : "Female",
     occupation: "Baby",
-    imageUrl: isMaleBaby ? "assets/images/relationships/boy/${babyData['imgBoy']}" : "assets/images/relationships/girl/${babyData['imgGirl']}",
+    imageUrl: isMaleBaby
+        ? "assets/images/relationships/boy/${babyData['imgBoy']}"
+        : "assets/images/relationships/girl/${babyData['imgGirl']}",
     agreement: 0.30,
   );
 }
@@ -270,7 +272,9 @@ Relationship? findNewFriendLogic(User player) {
   if (genderSelectionChance <= 60) {
     friendGender = playerGender; // 60% chance: Same gender
   } else {
-    friendGender = (playerGender.toLowerCase() == "male") ? "Female" : "Male"; // 40% chance: Opposite gender
+    friendGender = (playerGender.toLowerCase() == "male")
+        ? "Female"
+        : "Male"; // 40% chance: Opposite gender
   }
 
   // Friend's Age Selection (Based on a fresh random number 1-100)

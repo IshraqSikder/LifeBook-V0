@@ -43,6 +43,8 @@ class RelationshipActivityCard extends StatelessWidget {
             controller.partyLogic(relationship);
           } else if (title == 'Gift') {
             controller.giftLogic();
+          } else if (title == 'Make Love') {
+            controller.makeLoveLogic(relationship);
           }
 
           // Handle icon tap
@@ -146,4 +148,3 @@ class RelationshipActivityCard extends StatelessWidget {
     );
   }
 }
-

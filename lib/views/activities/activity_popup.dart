@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/home_controller.dart';
-import 'package:life_book/services/CSV_services.dart';
+import 'package:life_book/services/csv_services.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/theme.dart';
 
@@ -164,6 +164,7 @@ Future<dynamic> showActivityPopup(
 
   // Decrease current year salary by csv percentage %
   homeController.player.gameStats.balanceRx.value -= totalCost;
+  print("Controller Rx Instance: ${identityHashCode(homeController.player.gameStats.balanceRx)}");
 
   // Apply Stats Changes
   String? effectString = item["effect"];
@@ -172,6 +173,9 @@ Future<dynamic> showActivityPopup(
     parsedEffects = parseEffects(effectString);
     homeController.applyStatChanges(parsedEffects);
   }
+
+  homeController.player.save();
+
   return showDialog(
     context: context,
     barrierDismissible: true,

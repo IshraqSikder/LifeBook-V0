@@ -201,6 +201,12 @@ class RelationshipController extends GetxController {
       );
     }
     controller.player.save();
+    Get.offAll(() => HomeScreen(player: controller.player));
+  }
+
+  void makeLoveLogic(Relationship relationship) async {
+    controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.healthRx.value = (controller.player.gameStats.healthRx.value + 5).clamp(0, 100);
   }
 
   Future<void> _showResultDialog(
