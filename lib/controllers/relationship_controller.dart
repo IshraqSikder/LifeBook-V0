@@ -74,9 +74,6 @@ class RelationshipController extends GetxController {
         .where((rel) => rel.type == 'Lovers' || rel.type == 'Spouses')
         .length;
 
-    print(competitionCount);
-    print(controller.player.userInfo.relationships.where((rel) => rel.type == 'Lovers').length);
-
     double currentStat = relationship.agreementRx.value * 100;
     double successPercentage = currentStat - (10 * (competitionCount + 1));
 
@@ -94,11 +91,8 @@ class RelationshipController extends GetxController {
       relationship.agreementRx.value = (relationship.agreementRx.value + 0.10)
           .clamp(0.0, 1.0);
 
-      // Logic to change relationship type
       relationship.type = 'Lovers';
       relationship.relation = 'Lover';
-
-      // Get.back();
 
       await _showResultDialog(
         "Accepted",
@@ -109,8 +103,6 @@ class RelationshipController extends GetxController {
           (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
       relationship.agreementRx.value = (relationship.agreementRx.value - 0.10)
           .clamp(0.0, 1.0);
-
-      // Get.back();
 
       await _showResultDialog(
         "Rejected",
@@ -126,7 +118,7 @@ class RelationshipController extends GetxController {
     controller.player.userInfo.relationships.remove(relationship);
 
     await controller.player.save();
-    Get.back();
+    if (Get.isDialogOpen ?? false) Get.back();
 
     await _showResultDialog(
       "Unfriend",
@@ -141,7 +133,7 @@ class RelationshipController extends GetxController {
     controller.player.userInfo.relationships.remove(relationship);
 
     await controller.player.save();
-    Get.back();
+    if (Get.isDialogOpen ?? false) Get.back();
 
     await _showResultDialog(
       "Breakup",
@@ -152,22 +144,44 @@ class RelationshipController extends GetxController {
     Get.offAll(() => HomeScreen(player: controller.player));
   }
 
-  void proposeLogic(Relationship relationship) {
+  void divorceLogic(Relationship relationship) async {
+    for (var rel in controller.player.userInfo.relationships) {
+      if (rel.type == 'Children') {
+        rel.agreementRx.value = (rel.agreementRx.value - 0.20).clamp(0.0, 1.0);
+      }
+    }
+
+    relationship.agreementRx.value = 0.0;
+
+    relationship.type = 'Ex-Spouses';
+    relationship.relation = relationship.gender == 'Male'
+        ? 'Ex-Husband'
+        : 'Ex-Wife';
+
+    await controller.player.save();
+
+    if (Get.isDialogOpen ?? false) Get.back();
+
+    await _showResultDialog(
+      "Divorce",
+      "You divorced your ${relationship.gender == 'Male' ? 'husband' : 'wife'}. ${relationship.relation.contains('Children') ? 'Your children are upset by the news.' : ''} ",
+      isNegative: true,
+    );
+
+    Get.offAll(() => HomeScreen(player: controller.player));
+  }
+
+  Future<void> proposeLogic(Relationship relationship) async {
     if (Get.isDialogOpen ?? false) Get.back();
 
     final int cost = getPartyAndGiftCost();
 
     if (controller.player.gameStats.balanceRx.value < cost) {
-      Get.dialog(
-        barrierDismissible: true,
-        barrierColor: Colors.black54.withValues(alpha: 0.90),
-        MessagePopup(
-            title: 'Not Enough Money',
-            message: 'You can\'t afford a ring right now!',
-            negative: true
-        ),
+      await _showResultDialog(
+        "Not Enough Money",
+        "You can't afford a ring right now! The ring will cost \$$cost",
+        isNegative: true,
       );
-      return;
     }
 
     controller.player.gameStats.balanceRx.value -= cost;
@@ -176,28 +190,30 @@ class RelationshipController extends GetxController {
     final bool isAccepted = randomValue <= relationship.agreementRx.value;
 
     if (isAccepted) {
-      controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
-      relationship.agreementRx.value = (relationship.agreementRx.value + 0.10).clamp(0.0, 1.0);
+      controller.player.gameStats.happinessRx.value =
+          (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
+      relationship.agreementRx.value = (relationship.agreementRx.value + 0.10)
+          .clamp(0.0, 1.0);
 
       relationship.type = 'Spouses';
-      relationship.relation = relationship.gender == 'Male' ? 'Husband' : 'Wife';
+      relationship.relation = relationship.gender == 'Male'
+          ? 'Husband'
+          : 'Wife';
 
-      Get.dialog(
-        MessagePopup(
-          title: "Propose",
-          message: "You proposed ${relationship.name} and ${relationship.gender == 'Male' ? 'he' : 'she'} agreed",
-        ),
+      await _showResultDialog(
+        "Propose",
+        "You proposed ${relationship.name} and ${relationship.gender == 'Male' ? 'he' : 'she'} agreed",
       );
     } else {
-      controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
-      relationship.agreementRx.value = (relationship.agreementRx.value - 0.10).clamp(0.0, 1.0);
+      controller.player.gameStats.happinessRx.value =
+          (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
+      relationship.agreementRx.value = (relationship.agreementRx.value - 0.10)
+          .clamp(0.0, 1.0);
 
-      Get.dialog(
-        MessagePopup(
-          title: "Propose",
-          message: "You proposed ${relationship.name} and got rejected",
-          negative: true,
-        ),
+      await _showResultDialog(
+        "Propose",
+        "You proposed ${relationship.name} and got rejected",
+        isNegative: true,
       );
     }
     controller.player.save();
@@ -205,8 +221,10 @@ class RelationshipController extends GetxController {
   }
 
   void makeLoveLogic(Relationship relationship) async {
-    controller.player.gameStats.happinessRx.value = (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
-    controller.player.gameStats.healthRx.value = (controller.player.gameStats.healthRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.happinessRx.value =
+        (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.healthRx.value =
+        (controller.player.gameStats.healthRx.value + 5).clamp(0, 100);
   }
 
   Future<void> _showResultDialog(

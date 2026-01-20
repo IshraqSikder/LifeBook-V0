@@ -31,73 +31,75 @@ class RelationshipScreen extends StatelessWidget {
         toolbarHeight: 0.h,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-            children: [
-              ProfileHeader(),
-              Container(
-                width: double.infinity,
-                height: 44,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
+      body: Column(
+        children: [
+          ProfileHeader(),
+          Container(
+            width: double.infinity,
+            height: 44,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(color: AppColors.blueColor),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: SvgPicture.asset(
+                    'assets/icons/cancel.svg',
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                decoration: BoxDecoration(color: AppColors.blueColor),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: SvgPicture.asset(
-                        'assets/icons/cancel.svg',
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    SizedBox(width: 75.w),
-                    Text(
-                      'RELATIONSHIPS',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
+                SizedBox(width: 75.w),
+                Text(
+                  'RELATIONSHIPS',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-
-              // 2. Map the list to widgets
-              ...groupedRelationships.entries.map((entry) {
-                String type = entry.key;
-                List<Relationship> relations = entry.value;
-                return Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 20,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: AppColors.textColor),
-                      child: Text(
-                        type,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    ...relations.map((data) => RelationCard(data: data)),
-                  ],
-                );
-              }),
-            ],
+              ],
+            ),
           ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // 2. Map the list to widgets
+                  ...groupedRelationships.entries.map((entry) {
+                    String type = entry.key;
+                    List<Relationship> relations = entry.value;
+                    return Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 20,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(color: AppColors.textColor),
+                          child: Text(
+                            type,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        ...relations.map((data) => RelationCard(data: data)),
+                      ],
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
