@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'asset_model.g.dart';
 
-@HiveType(typeId: 6)
+@HiveType(typeId: 7)
 class AssetModel extends HiveObject {
   @HiveField(0)
   final int id;

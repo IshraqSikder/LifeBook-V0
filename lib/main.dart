@@ -22,14 +22,15 @@ void main() async {
   // Initialize Hive
   await Hive.initFlutter();
 
-  // Register Adapters
-  Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(UserInfoAdapter());
-  Hive.registerAdapter(RelationshipAdapter());
-  Hive.registerAdapter(GameStatsAdapter());
-  Hive.registerAdapter(LevelAdapter());
-  Hive.registerAdapter(AssetModelAdapter());
-  Hive.registerAdapter(JobModelAdapter());
+  // Register Adapters safely
+  if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(UserInfoAdapter());
+  if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(RelationshipAdapter());
+  if (!Hive.isAdapterRegistered(2)) Hive.registerAdapter(GameStatsAdapter());
+  if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(LevelAdapter());
+  if (!Hive.isAdapterRegistered(4)) Hive.registerAdapter(UserAdapter());
+  if (!Hive.isAdapterRegistered(5)) Hive.registerAdapter(CoreStatsAdapter());
+  if (!Hive.isAdapterRegistered(6)) Hive.registerAdapter(JobModelAdapter());
+  if (!Hive.isAdapterRegistered(7)) Hive.registerAdapter(AssetModelAdapter());
 
   // await Hive.deleteBoxFromDisk('usersBox');
 

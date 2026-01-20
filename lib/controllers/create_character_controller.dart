@@ -68,6 +68,7 @@ class CreateCharacterController extends GetxController {
         occupation: "${fatherData['occupation']}",
         imageUrl: "assets/images/relationships/man/${fatherData['imgMan']}",
         agreement: 0.3,
+        stats: generateRandomNPCStats(),
       ),
     );
 
@@ -83,6 +84,7 @@ class CreateCharacterController extends GetxController {
         occupation: "${motherData['occupation']}",
         imageUrl: "assets/images/relationships/woman/${motherData['imgWoman']}",
         agreement: 0.3,
+        stats: generateRandomNPCStats(),
       ),
     );
 
@@ -101,6 +103,7 @@ class CreateCharacterController extends GetxController {
           occupation: "${elderSibData['occupation']}",
           imageUrl: sibIsMale? "assets/images/relationships/boy/${elderSibData['imgBoy']}" : "assets/images/relationships/girl/${elderSibData['imgGirl']}",
           agreement: 0.15,
+          stats: generateRandomNPCStats(),
         ),
       );
     }
@@ -118,15 +121,18 @@ class CreateCharacterController extends GetxController {
     );
 
     // Create initial GameStats
+    final rnd = Random();
     final GameStats gameStats = GameStats(
       levels: [
         Level(age: 0, experience: ["You're now 0 years old"]),
       ],
       balance: 0,
-      happiness: 50,
-      health: 50,
-      smarts: 50,
-      looks: 50,
+      coreStats: CoreStats(
+        happiness: rnd.nextInt(30) + 35, // 35-65
+        health: rnd.nextInt(30) + 35, // 35-65
+        smarts: rnd.nextInt(30) + 35, // 35-65
+        looks: rnd.nextInt(30) + 35, // 35-65
+      ),
     );
 
     // Create the full User object
@@ -136,5 +142,16 @@ class CreateCharacterController extends GetxController {
     await _userService.saveUser(newPlayer);
 
     Get.offAll(() => TutorialScreen(player: newPlayer));
+  }
+
+  // Helper method for random stats
+  CoreStats generateRandomNPCStats() {
+    final r = Random();
+    return CoreStats(
+      happiness: r.nextInt(50) + 15, // 15-65
+      health: r.nextInt(50) + 15, // 15-65
+      smarts: r.nextInt(50) + 15, // 15-65
+      looks: r.nextInt(50) + 15, // 15-65
+    );
   }
 }

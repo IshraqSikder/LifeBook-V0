@@ -48,10 +48,10 @@ class RelationshipController extends GetxController {
     final int partyCost = getPartyAndGiftCost();
 
     controller.player.gameStats.balanceRx.value -= partyCost;
-    controller.player.gameStats.happinessRx.value =
-        (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
-    controller.player.gameStats.healthRx.value =
-        (controller.player.gameStats.healthRx.value - 10).clamp(0, 100);
+    controller.player.gameStats.coreStats.happinessRx.value =
+        (controller.player.gameStats.coreStats.happinessRx.value + 10).clamp(0, 100);
+    controller.player.gameStats.coreStats.healthRx.value =
+        (controller.player.gameStats.coreStats.healthRx.value - 10).clamp(0, 100);
     relationship.agreementRx.value = (relationship.agreementRx.value + 0.1)
         .clamp(0, 100);
 
@@ -62,8 +62,8 @@ class RelationshipController extends GetxController {
     final int partyCost = getPartyAndGiftCost();
 
     controller.player.gameStats.balanceRx.value -= partyCost;
-    controller.player.gameStats.happinessRx.value =
-        (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.coreStats.happinessRx.value =
+        (controller.player.gameStats.coreStats.happinessRx.value + 5).clamp(0, 100);
 
     controller.player.save();
   }
@@ -86,8 +86,8 @@ class RelationshipController extends GetxController {
     bool isAccepted = roll <= successPercentage;
 
     if (isAccepted) {
-      controller.player.gameStats.happinessRx.value =
-          (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
+      controller.player.gameStats.coreStats.happinessRx.value =
+          (controller.player.gameStats.coreStats.happinessRx.value + 10).clamp(0, 100);
       relationship.agreementRx.value = (relationship.agreementRx.value + 0.10)
           .clamp(0.0, 1.0);
 
@@ -99,8 +99,8 @@ class RelationshipController extends GetxController {
         "You and ${relationship.name} are now lovers!",
       );
     } else {
-      controller.player.gameStats.happinessRx.value =
-          (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
+      controller.player.gameStats.coreStats.happinessRx.value =
+          (controller.player.gameStats.coreStats.happinessRx.value - 10).clamp(0, 100);
       relationship.agreementRx.value = (relationship.agreementRx.value - 0.10)
           .clamp(0.0, 1.0);
 
@@ -182,6 +182,7 @@ class RelationshipController extends GetxController {
         "You can't afford a ring right now! The ring will cost \$$cost",
         isNegative: true,
       );
+      return;
     }
 
     controller.player.gameStats.balanceRx.value -= cost;
@@ -190,8 +191,8 @@ class RelationshipController extends GetxController {
     final bool isAccepted = randomValue <= relationship.agreementRx.value;
 
     if (isAccepted) {
-      controller.player.gameStats.happinessRx.value =
-          (controller.player.gameStats.happinessRx.value + 10).clamp(0, 100);
+      controller.player.gameStats.coreStats.happinessRx.value =
+          (controller.player.gameStats.coreStats.happinessRx.value + 10).clamp(0, 100);
       relationship.agreementRx.value = (relationship.agreementRx.value + 0.10)
           .clamp(0.0, 1.0);
 
@@ -205,8 +206,8 @@ class RelationshipController extends GetxController {
         "You proposed ${relationship.name} and ${relationship.gender == 'Male' ? 'he' : 'she'} agreed",
       );
     } else {
-      controller.player.gameStats.happinessRx.value =
-          (controller.player.gameStats.happinessRx.value - 10).clamp(0, 100);
+      controller.player.gameStats.coreStats.happinessRx.value =
+          (controller.player.gameStats.coreStats.happinessRx.value - 10).clamp(0, 100);
       relationship.agreementRx.value = (relationship.agreementRx.value - 0.10)
           .clamp(0.0, 1.0);
 
@@ -221,10 +222,10 @@ class RelationshipController extends GetxController {
   }
 
   void makeLoveLogic(Relationship relationship) async {
-    controller.player.gameStats.happinessRx.value =
-        (controller.player.gameStats.happinessRx.value + 5).clamp(0, 100);
-    controller.player.gameStats.healthRx.value =
-        (controller.player.gameStats.healthRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.coreStats.happinessRx.value =
+        (controller.player.gameStats.coreStats.happinessRx.value + 5).clamp(0, 100);
+    controller.player.gameStats.coreStats.healthRx.value =
+        (controller.player.gameStats.coreStats.healthRx.value + 5).clamp(0, 100);
   }
 
   Future<void> _showResultDialog(

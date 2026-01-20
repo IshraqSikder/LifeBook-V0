@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/services/csv_services.dart';
-import 'package:life_book/services/user_service.dart';
 import 'package:life_book/theme.dart';
-
-import '../../shared/cost_stat_message_popup.dart';
 
 class ActivityPopup extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -18,11 +14,11 @@ class ActivityPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserService userService = Get.find<UserService>();
+    final HomeController controller = Get.find<HomeController>();
 
     String effectStatKey = effects.entries.first.key;
 
-    int effectStatValue = userService.activeUser!.gameStats.allStats[effectStatKey]!.value;
+    int effectStatValue = controller.allStatsPlayer[effectStatKey]!.value;
 
     double currentStatPercentage = (effectStatValue) / 100;
 

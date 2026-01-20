@@ -80,13 +80,14 @@ class RelationshipAdapter extends TypeAdapter<Relationship> {
       occupation: fields[5] as String,
       imageUrl: fields[6] as String,
       agreement: fields[7] as double,
+      stats: fields[8] as CoreStats,
     );
   }
 
   @override
   void write(BinaryWriter writer, Relationship obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.type)
       ..writeByte(1)
@@ -102,7 +103,9 @@ class RelationshipAdapter extends TypeAdapter<Relationship> {
       ..writeByte(6)
       ..write(obj.imageUrl)
       ..writeByte(7)
-      ..write(obj.agreement);
+      ..write(obj.agreement)
+      ..writeByte(8)
+      ..write(obj.stats);
   }
 
   @override
@@ -129,29 +132,20 @@ class GameStatsAdapter extends TypeAdapter<GameStats> {
     return GameStats(
       levels: (fields[0] as List).cast<Level>(),
       balance: fields[1] as int,
-      happiness: fields[2] as int,
-      health: fields[3] as int,
-      smarts: fields[4] as int,
-      looks: fields[5] as int,
+      coreStats: fields[2] as CoreStats,
     );
   }
 
   @override
   void write(BinaryWriter writer, GameStats obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.levels)
       ..writeByte(1)
       ..write(obj.balance)
       ..writeByte(2)
-      ..write(obj.happiness)
-      ..writeByte(3)
-      ..write(obj.health)
-      ..writeByte(4)
-      ..write(obj.smarts)
-      ..writeByte(5)
-      ..write(obj.looks);
+      ..write(obj.coreStats);
   }
 
   @override
@@ -235,6 +229,49 @@ class UserAdapter extends TypeAdapter<User> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is UserAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class CoreStatsAdapter extends TypeAdapter<CoreStats> {
+  @override
+  final int typeId = 5;
+
+  @override
+  CoreStats read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return CoreStats(
+      happiness: fields[0] as int,
+      health: fields[1] as int,
+      smarts: fields[2] as int,
+      looks: fields[3] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CoreStats obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.happiness)
+      ..writeByte(1)
+      ..write(obj.health)
+      ..writeByte(2)
+      ..write(obj.smarts)
+      ..writeByte(3)
+      ..write(obj.looks);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CoreStatsAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

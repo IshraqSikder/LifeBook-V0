@@ -31,8 +31,6 @@ class UserInfo extends HiveObject {
   @HiveField(7)
   List<Relationship> activities;
 
-  // late RxList<Relationship> relationshipsRx;
-
   UserInfo({
     required this.id,
     required this.name,
@@ -43,10 +41,6 @@ class UserInfo extends HiveObject {
     required this.relationships,
     required this.activities,
   });
-  // {
-  //   relationshipsRx = relationships.obs;
-  //   ever<List<Relationship>>(relationshipsRx, (newValue) => relationships = newValue);
-  // }
 }
 
 @HiveType(typeId: 1)
@@ -75,6 +69,9 @@ class Relationship extends HiveObject {
   @HiveField(7)
   double agreement;
 
+  @HiveField(8)
+  CoreStats stats;
+
   late RxDouble agreementRx;
 
   Relationship({
@@ -86,71 +83,93 @@ class Relationship extends HiveObject {
     required this.occupation,
     required this.imageUrl,
     required this.agreement,
+    required this.stats,
   }){
     agreementRx = agreement.obs;
     ever(agreementRx, (newValue) => agreement = newValue);
   }
 }
 
+// @HiveType(typeId: 2)
+// class GameStats extends HiveObject {
+//   @HiveField(0)
+//   List<Level> levels;
+//
+//   @HiveField(1)
+//   int balance;
+//
+//   @HiveField(2)
+//   int happiness;
+//
+//   @HiveField(3)
+//   int health;
+//
+//   @HiveField(4)
+//   int smarts;
+//
+//   @HiveField(5)
+//   int looks;
+//
+//   late RxList<Level> levelsRx;
+//   late RxInt balanceRx;
+//   late RxInt happinessRx;
+//   late RxInt healthRx;
+//   late RxInt smartsRx;
+//   late RxInt looksRx;
+//
+//   GameStats({
+//     required this.levels,
+//     required this.balance,
+//     required this.happiness,
+//     required this.health,
+//     required this.smarts,
+//     required this.looks,
+//   }) {
+//     // Initialize reactive variables from stored values
+//     levelsRx = levels.obs;
+//     balanceRx = balance.obs;
+//     happinessRx = happiness.obs;
+//     healthRx = health.obs;
+//     smartsRx = smarts.obs;
+//     looksRx = looks.obs;
+//
+//     // Listen for changes in RxInts and update the backing int fields
+//     // This is crucial for syncing changes back to Hive.
+//     ever<List<Level>>(levelsRx, (newValue) => levels = newValue);
+//     ever(balanceRx, (newValue) => balance = newValue);
+//     ever(happinessRx, (newValue) => happiness = newValue);
+//     ever(healthRx, (newValue) => health = newValue);
+//     ever(smartsRx, (newValue) => smarts = newValue);
+//     ever(looksRx, (newValue) => looks = newValue);
+//   }
+//
+//   Map<String, RxInt> get allStats => {
+//     "Happiness": happinessRx,
+//     "Health": healthRx,
+//     "Smarts": smartsRx,
+//     "Looks": looksRx,
+//   };
+// }
+
 @HiveType(typeId: 2)
 class GameStats extends HiveObject {
-  @HiveField(0)
-  List<Level> levels;
-
-  @HiveField(1)
-  int balance;
-
-  @HiveField(2)
-  int happiness;
-
-  @HiveField(3)
-  int health;
-
-  @HiveField(4)
-  int smarts;
-
-  @HiveField(5)
-  int looks;
+  @HiveField(0) List<Level> levels;
+  @HiveField(1) int balance;
+  @HiveField(2) CoreStats coreStats;
 
   late RxList<Level> levelsRx;
   late RxInt balanceRx;
-  late RxInt happinessRx;
-  late RxInt healthRx;
-  late RxInt smartsRx;
-  late RxInt looksRx;
 
   GameStats({
     required this.levels,
     required this.balance,
-    required this.happiness,
-    required this.health,
-    required this.smarts,
-    required this.looks,
+    required this.coreStats,
   }) {
-    // Initialize reactive variables from stored values
     levelsRx = levels.obs;
     balanceRx = balance.obs;
-    happinessRx = happiness.obs;
-    healthRx = health.obs;
-    smartsRx = smarts.obs;
-    looksRx = looks.obs;
-
-    // Listen for changes in RxInts and update the backing int fields
-    // This is crucial for syncing changes back to Hive.
-    ever<List<Level>>(levelsRx, (newValue) => levels = newValue);
-    ever(balanceRx, (newValue) => balance = newValue);
-    ever(happinessRx, (newValue) => happiness = newValue);
-    ever(healthRx, (newValue) => health = newValue);
-    ever(smartsRx, (newValue) => smarts = newValue);
-    ever(looksRx, (newValue) => looks = newValue);
+    ever<List<Level>>(levelsRx, (val) => levels = val);
+    ever(balanceRx, (val) => balance = val);
   }
-
-  Map<String, RxInt> get allStats => {
-    "Happiness": happinessRx,
-    "Health": healthRx,
-    "Smarts": smartsRx,
-    "Looks": looksRx,
-  };
 }
 
 @HiveType(typeId: 3)
@@ -180,6 +199,43 @@ class User extends HiveObject {
   GameStats gameStats;
 
   User({required this.userInfo, required this.gameStats});
+}
+
+@HiveType(typeId: 5)
+class CoreStats extends HiveObject {
+  @HiveField(0) int happiness;
+  @HiveField(1) int health;
+  @HiveField(2) int smarts;
+  @HiveField(3) int looks;
+
+  late RxInt happinessRx;
+  late RxInt healthRx;
+  late RxInt smartsRx;
+  late RxInt looksRx;
+
+  CoreStats({
+    required this.happiness,
+    required this.health,
+    required this.smarts ,
+    required this.looks,
+  }) {
+    happinessRx = happiness.obs;
+    healthRx = health.obs;
+    smartsRx = smarts.obs;
+    looksRx = looks.obs;
+
+    ever(happinessRx, (val) => happiness = val);
+    ever(healthRx, (val) => health = val);
+    ever(smartsRx, (val) => smarts = val);
+    ever(looksRx, (val) => looks = val);
+  }
+
+  // Map<String, RxInt> get allStats => {
+  //   "Happiness": happinessRx,
+  //   "Health": healthRx,
+  //   "Smarts": smartsRx,
+  //   "Looks": looksRx,
+  // };
 }
 
 // Structure

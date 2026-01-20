@@ -151,7 +151,7 @@ class ProfilePopup extends StatelessWidget {
                           // Column 1: Labels
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: controller.allStats.entries
+                            children: controller.allStatsPlayer.entries
                                 .map((stat) => _buildStatLabel(stat.key))
                                 .toList(),
                           ),
@@ -175,7 +175,7 @@ class ProfilePopup extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: controller.allStats.entries
+                              children: controller.allStatsPlayer.entries
                                   .map(
                                     (stat) => Obx(
                                       () => _buildStatProgressBar(

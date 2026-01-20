@@ -144,7 +144,7 @@ class RelationProfilePopup extends StatelessWidget {
                           // Column 1: Labels
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: controller.allStats.entries
+                            children: controller.allStatsNpc(relationship).entries
                                 .map((stat) => _buildStatLabel(stat.key))
                                 .toList(),
                           ),
@@ -168,7 +168,7 @@ class RelationProfilePopup extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: controller.allStats.entries.map(
+                              children: controller.allStatsNpc(relationship).entries.map(
                                     (stat) => Obx(
                                       () => _buildStatProgressBar(
                                         stat.value.value,
@@ -293,7 +293,7 @@ Widget _buildStatProgressBar(int progress) {
                 : AppColors.orangeColor,
           ),
           alignment: Alignment.centerRight,
-          padding: EdgeInsets.only(right: 5.w),
+          padding: EdgeInsets.only(right: 3.w),
           child: Text(
             '${progress.clamp(0, 100)}%',
             style: TextStyle(

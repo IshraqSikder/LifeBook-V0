@@ -171,7 +171,7 @@ class FriendRequestPopup extends StatelessWidget {
                           // Column 1: Labels
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: controller.allStats.entries
+                            children: controller.allStatsNpc(profile).entries
                                 .map((stat) => _buildStatLabel(stat.key))
                                 .toList(),
                           ),
@@ -195,7 +195,7 @@ class FriendRequestPopup extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: controller.allStats.entries
+                              children: controller.allStatsNpc(profile).entries
                                   .map(
                                     (stat) => Obx(
                                       () => _buildStatProgressBar(

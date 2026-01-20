@@ -173,17 +173,24 @@ class HomeController extends GetxController {
     return false;
   }
 
-  Map<String, RxInt> get allStats => {
-    "Happiness": player.gameStats.happinessRx,
-    "Health": player.gameStats.healthRx,
-    "Smarts": player.gameStats.smartsRx,
-    "Looks": player.gameStats.looksRx,
+  Map<String, RxInt> get allStatsPlayer => {
+    "Happiness": player.gameStats.coreStats.happinessRx,
+    "Health": player.gameStats.coreStats.healthRx,
+    "Smarts": player.gameStats.coreStats.smartsRx,
+    "Looks": player.gameStats.coreStats.looksRx,
   };
+
+  Map<String, RxInt> allStatsNpc(Relationship npc) => {
+      "Happiness": npc.stats.happinessRx,
+      "Health": npc.stats.healthRx,
+      "Smarts": npc.stats.smartsRx,
+      "Looks": npc.stats.looksRx,
+    };
 
   // Method to apply stat changes
   void applyStatChanges(Map<String, dynamic> changes) async {
     changes.forEach((statName, value) {
-      final RxInt? stat = allStats[statName];
+      final RxInt? stat = allStatsPlayer[statName];
       if (stat != null && value is int) {
         stat.value += value;
         stat.value = stat.value.clamp(0, 100);
@@ -255,6 +262,7 @@ Relationship? calculateBirthLogic(User player) {
         ? "assets/images/relationships/boy/${babyData['imgBoy']}"
         : "assets/images/relationships/girl/${babyData['imgGirl']}",
     agreement: 0.30,
+    stats: generateRandomNPCStats(),
   );
 }
 
@@ -314,5 +322,17 @@ Relationship? findNewFriendLogic(User player) {
     occupation: friendAge < 18 ? "Student" : "${friendData['occupation']}",
     imageUrl: "assets/images/relationships/$folder/${friendData[imgKey]}",
     agreement: 0.5, // Default friendship starting point
+    stats: generateRandomNPCStats(),
+  );
+}
+
+// Helper method for random stats
+CoreStats generateRandomNPCStats() {
+  final r = Random();
+  return CoreStats(
+    happiness: r.nextInt(50) + 15, // 15-65
+    health: r.nextInt(50) + 15, // 15-65
+    smarts: r.nextInt(50) + 15, // 15-65
+    looks: r.nextInt(50) + 15, // 15-65
   );
 }

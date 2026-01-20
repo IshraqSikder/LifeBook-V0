@@ -8,7 +8,7 @@ part of 'job_model.dart';
 
 class JobModelAdapter extends TypeAdapter<JobModel> {
   @override
-  final int typeId = 5;
+  final int typeId = 6;
 
   @override
   JobModel read(BinaryReader reader) {
