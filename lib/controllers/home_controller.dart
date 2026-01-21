@@ -13,19 +13,18 @@ import 'package:life_book/views/school/school_popup.dart';
 
 class HomeController extends GetxController {
   final User player;
-  final dynamic choice;
 
-  HomeController({required this.player, this.choice});
-
-  RxBool isMenuToggled = false.obs;
-  final RxList<LifeStory> lifeStoryDiaryEntries = [
-    LifeStory(age: 0, description: "You're now 0 years old!"),
-  ].obs;
+  HomeController({required this.player});
 
   final UserService userService = Get.find<UserService>();
 
   // Define Scroll Controller here
   final ScrollController scrollController = ScrollController();
+
+  RxBool isMenuToggled = false.obs;
+  final RxList<LifeStory> lifeStoryDiaryEntries = [
+    LifeStory(age: 0, description: "You're now 0 years old!"),
+  ].obs;
 
   @override
   void onInit() {
@@ -112,28 +111,49 @@ class HomeController extends GetxController {
 
     // Check for School Popup
     if (newAge == 5) {
-      Get.dialog(
-        SchoolPopup(player: player),
-        barrierDismissible: false,
-        barrierColor: Colors.black54.withValues(alpha: 0.90),
-      );
+        await topToCenterAnimationPopup(SchoolPopup(player: player), false);
     }
 
     if (newAge > 5) {
-      // Check for Birth Logic
-      final newBaby = calculateBirthLogic(player);
-      if (newBaby != null) {
-        player.userInfo.relationships.add(newBaby);
+      // Check for a Younger Siblings
+      final newSibling = checkSiblingBirth(player);
+      if (newSibling != null) {
+        player.userInfo.relationships.add(newSibling);
+        // Add a note to the diary so the player knows!
+        addEventToCurrentAge("Your mother gave birth to a ${newSibling.relation} named ${newSibling.name}!");
       }
+
+      // Check for Players Child (If married)
+      final newChild = checkPlayerChildBirth(player);
+      if (newChild != null) {
+        topToCenterAnimationPopup(
+          RelationRequestPopup(
+            profile: newChild,
+            onAccept: () {
+              player.userInfo.relationships.add(newChild);
+            },
+            requestTitle: "New Baby",
+            requestSubtitle: "A new baby alert!",
+            acceptButtonText: "Accept the Baby",
+            rejectButtonText: "Reject the Baby",
+          ),
+          false,
+        );
+      }
+
       // Check for Find Friend Logic
       final newFriend = findNewFriendLogic(player);
       if (newFriend != null) {
         topToCenterAnimationPopup(
-          FriendRequestPopup(
+          RelationRequestPopup(
             profile: newFriend,
             onAccept: () {
               player.userInfo.relationships.add(newFriend);
             },
+            requestTitle: "New Friend",
+            requestSubtitle: "Your classmate, ${newFriend.name} wants to become your friend.",
+            acceptButtonText: "Becoming friends with ${newFriend.gender == 'Male'? 'him' : 'her'}",
+            rejectButtonText: "Reject ${newFriend.gender == 'Male'? 'him' : 'her'}",
           ),
           false,
         );
@@ -141,7 +161,7 @@ class HomeController extends GetxController {
     }
 
     // Check for Death
-    if (newAge == 35) {
+    if (newAge == 65) {
       Get.to(() => DeathScreen(player: player));
     }
 
@@ -207,63 +227,94 @@ class HomeController extends GetxController {
   }
 }
 
-Relationship? calculateBirthLogic(User player) {
+final rndAgreement = Random();
+
+Relationship? _performBirthCheck({
+  required String type, // "Siblings" or "Children"
+  required int motherAge,
+  required int existingCount,
+}) {
   final random = Random();
-  final int? motherAge = player.userInfo.relationships
-      .firstWhereOrNull((rel) => rel.relation == 'Mother')
-      ?.age;
 
+  // 1. Birth Rate Table (Based on Mother's Age)
   int birthRate = 0;
-  if (motherAge != null) {
-    if (motherAge >= 17 && motherAge <= 25) {
-      birthRate = 30; // 30%
-    } else if (motherAge > 25 && motherAge <= 35) {
-      birthRate = 20; // 20%
-    } else if (motherAge > 35 && motherAge <= 40) {
-      birthRate = 5; // 5%
-    } else {
-      birthRate = 0; // 0% (age > 40)
-    }
-  }
-
-  // First Roll: Attempt to conceive
-  if (random.nextInt(100) > birthRate) return null; // No baby
-
-  int existingChildrenCount = player.userInfo.relationships
-      .where((e) => e.type == "Siblings")
-      .length;
-
-  int passRate = 0;
-  if (existingChildrenCount == 0) {
-    passRate = 50; // 50%
-  } else if (existingChildrenCount == 1) {
-    passRate = 30; // 30%
-  } else if (existingChildrenCount == 2) {
-    passRate = 10; // 10%
+  if (motherAge >= 17 && motherAge <= 25) {
+    birthRate = 30;
+  } else if (motherAge > 25 && motherAge <= 35) {
+    birthRate = 20;
+  } else if (motherAge > 35 && motherAge <= 40) {
+    birthRate = 5;
   } else {
-    passRate = 0; // 0% (3+ babies)
+    birthRate = 0; // age > 40 or < 17
   }
 
-  // Second Roll: Does the pregnancy "Pass"?
-  if (random.nextInt(100) > passRate) return null; // Fail
+  if (random.nextInt(100) >= birthRate) return null;
 
-  // Gender Determination (50% Male / 50% Female)
-  bool isMaleBaby = random.nextBool();
+  // 2. Pass or Fail Table (Based on existing babies)
+  int passRate = 0;
+  if (existingCount == 0) {
+    passRate = 50;
+  } else if (existingCount == 1) {
+    passRate = 30;
+  } else if (existingCount == 2) {
+    passRate = 10;
+  } else {
+    passRate = 0; // 3+ babies
+  }
+
+  if (random.nextInt(100) >= passRate) return null;
+
+  // 3. Gender Determination (50/50)
+  bool isMale = random.nextBool();
   final babyData = getRandomProfile();
 
+  // Determine Relation String
+  String relationStr = "";
+  if (type == "Siblings") {
+    relationStr = isMale ? "Brother" : "Sister";
+  } else {
+    relationStr = isMale ? "Son" : "Daughter";
+  }
+
   return Relationship(
-    type: "Siblings",
-    relation: isMaleBaby ? "Brother" : "Sister",
+    type: type,
+    relation: relationStr,
     name: "${babyData['firstName']} ${babyData['lastName']}",
     age: 0,
-    gender: isMaleBaby ? "Male" : "Female",
-    occupation: "Baby",
-    imageUrl: isMaleBaby
+    gender: isMale ? "Male" : "Female",
+    occupation: "None",
+    imageUrl: isMale
         ? "assets/images/relationships/boy/${babyData['imgBoy']}"
         : "assets/images/relationships/girl/${babyData['imgGirl']}",
-    agreement: 0.30,
+    agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15, // 15-65 %
     stats: generateRandomNPCStats(),
   );
+}
+
+// Logic for Siblings
+Relationship? checkSiblingBirth(User player) {
+  final mother = player.userInfo.relationships.firstWhereOrNull((rel) => rel.relation == 'Mother');
+  if (mother == null) return null;
+
+  int count = player.userInfo.relationships.where((e) => e.type == "Siblings").length;
+  // This uses your helper method from the previous response
+  return _performBirthCheck(type: "Siblings", motherAge: mother.age, existingCount: count);
+}
+
+// Logic for Player's Children
+Relationship? checkPlayerChildBirth(User player) {
+  final spouse = player.userInfo.relationships.firstWhereOrNull(
+          (rel) => rel.relation == 'Wife' || rel.relation == 'Husband'
+  );
+
+  // If player is not married then do nothing
+  if (spouse == null) return null;
+
+  bool isPlayerMother = player.userInfo.gender.toLowerCase() == "female";
+  int motherAge = isPlayerMother ? player.gameStats.levelsRx.last.age : spouse.age;
+
+  int count = player.userInfo.relationships.where((e) => e.type == "Children").length;
+  return _performBirthCheck(type: "Children", motherAge: motherAge, existingCount: count);
 }
 
 Relationship? findNewFriendLogic(User player) {
@@ -321,7 +372,7 @@ Relationship? findNewFriendLogic(User player) {
     gender: friendGender,
     occupation: friendAge < 18 ? "Student" : "${friendData['occupation']}",
     imageUrl: "assets/images/relationships/$folder/${friendData[imgKey]}",
-    agreement: 0.5, // Default friendship starting point
+    agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15, // 15-65 %
     stats: generateRandomNPCStats(),
   );
 }

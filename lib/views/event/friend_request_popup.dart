@@ -6,14 +6,22 @@ import 'package:life_book/theme.dart';
 
 import '../../models/user.dart';
 
-class FriendRequestPopup extends StatelessWidget {
+class RelationRequestPopup extends StatelessWidget {
   final Relationship profile;
   final VoidCallback onAccept;
+  final String requestTitle;
+  final String requestSubtitle;
+  final String acceptButtonText;
+  final String rejectButtonText;
 
-  const FriendRequestPopup({
+  const RelationRequestPopup({
     super.key,
     required this.profile,
     required this.onAccept,
+    required this.requestTitle,
+    required this.requestSubtitle,
+    required this.acceptButtonText,
+    required this.rejectButtonText,
   });
 
   @override
@@ -102,7 +110,8 @@ class FriendRequestPopup extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                     Text(
-                      'New Friend',
+                      // 'New Friend',
+                      requestTitle,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 18.sp,
@@ -118,7 +127,7 @@ class FriendRequestPopup extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 32.0.w, vertical: 22.h),
                   child: Text(
-                    'Your classmate, ${profile.name} wants to become your friend.',
+                    requestSubtitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Inter',
@@ -212,9 +221,9 @@ class FriendRequestPopup extends StatelessWidget {
                     ],
                   ),
                 ),
-                _buildChoiceButton(context, 'Becoming friends with ${profile.gender == 'Male'? 'him' : 'her'}', onAccept),
+                _buildChoiceButton(context, acceptButtonText, onAccept),
                 SizedBox(height: 10.h),
-                _buildChoiceButton(context, 'Reject ${profile.gender == 'Male'? 'him' : 'her'}', () {}),
+                _buildChoiceButton(context, rejectButtonText, () {}),
                 SizedBox(height: 25.h),
               ],
             ),

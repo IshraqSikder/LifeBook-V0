@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:life_book/models/user.dart';
-import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/appbar/custom_appbar.dart';
 import 'package:life_book/views/home/bottom_navbar.dart';
 import 'package:life_book/controllers/home_controller.dart';
@@ -12,16 +11,13 @@ import 'package:life_book/views/menu/menu_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final User player;
-  final dynamic choice;
-  const HomeScreen({super.key, required this.player, this.choice});
+  const HomeScreen({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(
-      HomeController(player: player, choice: choice), permanent: true,
+      HomeController(player: player), permanent: true,
     );
-
-    final UserService userService = Get.find<UserService>();
 
     return Scaffold(
       appBar: CustomAppBarNew(),
@@ -33,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   ProfileHeader(),
                   Expanded(
                     child: Obx(() {
-                      final levels = userService.activeUser!.gameStats.levelsRx;
+                      final levels = controller.player.gameStats.levelsRx;
 
                       return ListView.separated(
                         controller: controller.scrollController,

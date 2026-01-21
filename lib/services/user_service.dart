@@ -12,26 +12,6 @@ class UserService extends GetxService {
   final Rx<User?> _activeUser = Rx<User?>(null);
   User? get activeUser => _activeUser.value;
 
-  // Make onInit truly handle all initialization logic and be async
-  // @override
-  // Future<void> onInit() async {
-  //   super.onInit();
-  //
-  //   // These lines are the critical part that must be awaited.
-  //   _userBox = await Hive.openBox<User>(_userBoxName);
-  //   _sessionBox = await Hive.openBox(_sessionBoxName);
-  //
-  //   final int? activeUserId = _sessionBox.get('activeUserId');
-  //   if (activeUserId != null) {
-  //     _activeUser.value = _userBox.get(activeUserId);
-  //   }
-  // }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   // 2. Create a dedicated init method
   Future<UserService> init() async {
     _userBox = await Hive.openBox<User>(_userBoxName);

@@ -27,6 +27,8 @@ class RelationDetailScreen extends StatelessWidget {
     final RelationshipController relationshipController = Get.put(
       RelationshipController(),
     );
+    // final RelationshipController relationshipController = Get.find<RelationshipController>();
+
     final bool isMale = relationship.gender == 'Male';
     final bool hasSpouse = homeController.player.userInfo.relationships.any(
       (r) => r.type == 'Spouses',

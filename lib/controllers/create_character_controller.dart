@@ -55,6 +55,8 @@ class CreateCharacterController extends GetxController {
     // 60% chance for no siblings, 30% chance for 2 siblings, 10% chance for 1 siblings
     int elderSiblingCount = (rndNumber > 60 && rndNumber <= 90) ? 2 : (rndNumber > 90 ? 1 : 0);
 
+    final rndAgreement = Random();
+
     List<Relationship> initialRelationships = [];
     // Add Father
     final fatherData = getRandomProfile();
@@ -67,7 +69,7 @@ class CreateCharacterController extends GetxController {
         gender: 'Male',
         occupation: "${fatherData['occupation']}",
         imageUrl: "assets/images/relationships/man/${fatherData['imgMan']}",
-        agreement: 0.3,
+        agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15, // 15-65 %
         stats: generateRandomNPCStats(),
       ),
     );
@@ -83,7 +85,7 @@ class CreateCharacterController extends GetxController {
         gender: 'Female',
         occupation: "${motherData['occupation']}",
         imageUrl: "assets/images/relationships/woman/${motherData['imgWoman']}",
-        agreement: 0.3,
+        agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15, // 15-65 %
         stats: generateRandomNPCStats(),
       ),
     );
@@ -98,11 +100,11 @@ class CreateCharacterController extends GetxController {
           type: "Siblings",
           relation: sibIsMale ? 'Brother' : 'Sister',
           name: "${elderSibData['firstName']} ${elderSibData['lastName']}",
-          age: 1 + Random().nextInt(10), // min age 1, max age 10
+          age: Random().nextInt(10) + 1, // min age 1, max age 10
           gender: sibIsMale ? 'Male' : 'Female',
           occupation: "${elderSibData['occupation']}",
           imageUrl: sibIsMale? "assets/images/relationships/boy/${elderSibData['imgBoy']}" : "assets/images/relationships/girl/${elderSibData['imgGirl']}",
-          agreement: 0.15,
+          agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15, // 15-65 %
           stats: generateRandomNPCStats(),
         ),
       );
@@ -128,10 +130,10 @@ class CreateCharacterController extends GetxController {
       ],
       balance: 0,
       coreStats: CoreStats(
-        happiness: rnd.nextInt(30) + 35, // 35-65
-        health: rnd.nextInt(30) + 35, // 35-65
-        smarts: rnd.nextInt(30) + 35, // 35-65
-        looks: rnd.nextInt(30) + 35, // 35-65
+        happiness: rnd.nextInt(31) + 35, // 35-65
+        health: rnd.nextInt(31) + 35, // 35-65
+        smarts: rnd.nextInt(31) + 35, // 35-65
+        looks: rnd.nextInt(31) + 35, // 35-65
       ),
     );
 
@@ -148,10 +150,10 @@ class CreateCharacterController extends GetxController {
   CoreStats generateRandomNPCStats() {
     final r = Random();
     return CoreStats(
-      happiness: r.nextInt(50) + 15, // 15-65
-      health: r.nextInt(50) + 15, // 15-65
-      smarts: r.nextInt(50) + 15, // 15-65
-      looks: r.nextInt(50) + 15, // 15-65
+      happiness: r.nextInt(51) + 15, // 15-65
+      health: r.nextInt(51) + 15, // 15-65
+      smarts: r.nextInt(51) + 15, // 15-65
+      looks: r.nextInt(51) + 15, // 15-65
     );
   }
 }
