@@ -123,7 +123,7 @@ class DeathScreen extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'Animator\n', // From player.career
+                          text: '${player.userInfo.job?.title ?? 'None'}\n',
                           style: TextStyle(
                             color: const Color(0xFFDBDBD3),
                             fontFamily: 'Inter',
@@ -141,7 +141,7 @@ class DeathScreen extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'University', // From player.education
+                          text: 'University',
                           style: TextStyle(
                             color: const Color(0xFFDBDBD3),
                             fontFamily: 'Inter',
@@ -158,7 +158,7 @@ class DeathScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    'My whole life felt like it was defined by my name. Slaughter. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds.', // From player.deathNarrative or similar
+                    'My whole life felt like it was defined by my name, ${player.userInfo.name}. On the football field, that’s who I was. From a kid in Colorado to a champion at Alabama and then a superstar for the Chicago Bears, my life was a highlight reel of hard hits and roaring crowds.', // From player.deathNarrative or similar
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: const Color(0xFFB1B3A6),
@@ -177,7 +177,7 @@ class DeathScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Agreement',
+                          'Happiness',
                           textAlign: TextAlign.right,
                           style: TextStyle(
                             color: const Color(0xFFB1B3A6),
@@ -207,18 +207,17 @@ class DeathScreen extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                width: (180 * 0.6)
-                                    .w, // This 0.6 should be player.agreementPercentage
+                                width: (180 * (player.gameStats.coreStats.happinessRx.value)/100).w,
                                 height: 20.h,
                                 decoration: BoxDecoration(
-                                  color: 0.6 >= 0.20
+                                  color: (player.gameStats.coreStats.happinessRx.value)/100 >= 0.20
                                       ? AppColors.greenColor
                                       : AppColors.orangeColor,
                                 ),
                                 alignment: Alignment.centerRight,
                                 padding: EdgeInsets.only(right: 5.w),
                                 child: Text(
-                                  '${(0.6 * 100).toInt()}%', // Display player.agreementPercentage
+                                  '${((player.gameStats.coreStats.happinessRx.value)/100 * 100).toInt()}%',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Inter',

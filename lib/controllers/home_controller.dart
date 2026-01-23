@@ -97,7 +97,6 @@ class HomeController extends GetxController {
     // Calculate salary (default to 0 if no job)
     int currentSalary = player.userInfo.job?.salary ?? 0;
 
-    // Update the RxInt value explicitly
     player.gameStats.balanceRx.value += currentSalary;
 
     // Save the age and add the diary entry
@@ -129,9 +128,7 @@ class HomeController extends GetxController {
         topToCenterAnimationPopup(
           RelationRequestPopup(
             profile: newChild,
-            onAccept: () {
-              player.userInfo.relationships.add(newChild);
-            },
+            onAccept: () => player.userInfo.relationships.add(newChild),
             requestTitle: "New Baby",
             requestSubtitle: "A new baby alert!",
             acceptButtonText: "Accept the Baby",
@@ -147,9 +144,7 @@ class HomeController extends GetxController {
         topToCenterAnimationPopup(
           RelationRequestPopup(
             profile: newFriend,
-            onAccept: () {
-              player.userInfo.relationships.add(newFriend);
-            },
+            onAccept: () => player.userInfo.relationships.add(newFriend),
             requestTitle: "New Friend",
             requestSubtitle: "Your classmate, ${newFriend.name} wants to become your friend.",
             acceptButtonText: "Becoming friends with ${newFriend.gender == 'Male'? 'him' : 'her'}",
@@ -160,9 +155,27 @@ class HomeController extends GetxController {
       }
     }
 
+    if(newAge >= 15) {
+      // Check for Find Lover Logic
+      final newLover = findNewLoverLogic(player);
+      if(newLover != null) {
+        topToCenterAnimationPopup(
+          RelationRequestPopup(
+            profile: newLover,
+            onAccept: () => player.userInfo.relationships.add(newLover),
+            requestTitle: "New Lover",
+            requestSubtitle: "${newLover.name} wants to become your lover",
+            acceptButtonText: "Make Lover",
+            rejectButtonText: "Reject ${newLover.gender == 'Male'? 'him' : 'her'}",
+          ),
+          false,
+        );
+      }
+    }
+
     // Check for Death
-    if (newAge == 65) {
-      Get.to(() => DeathScreen(player: player));
+    if (checkDeathLogic(player)) {
+      Get.offAll(() => DeathScreen(player: player));
     }
 
     // Force UI update if necessary (since we didn't use the Rx variable inside the list item)
@@ -375,6 +388,103 @@ Relationship? findNewFriendLogic(User player) {
     agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15, // 15-65 %
     stats: generateRandomNPCStats(),
   );
+}
+
+Relationship? findNewLoverLogic(User player) {
+  final random = Random();
+  int playerAge = player.gameStats.levelsRx.last.age;
+
+  int basePercentage = 0;
+  if (playerAge >= 15 && playerAge <= 20) {
+    basePercentage = 40;
+  } else if (playerAge >= 21 && playerAge <= 30) {
+    basePercentage = 60;
+  } else if (playerAge >= 31 && playerAge <= 40) {
+    basePercentage = 30;
+  } else {
+    basePercentage = 20;
+  }
+
+  int existingLoverSpouseCount = player.userInfo.relationships.where((rel) => rel.type == "Lovers" || rel.type == 'Spouses').length;
+
+  int finalChance = basePercentage - (existingLoverSpouseCount * 10);
+
+  if (random.nextInt(100) + 1 >= finalChance) return null;
+
+  int ageRoll = random.nextInt(100) + 1;
+  int loverAge;
+
+  if (ageRoll <= 5) {
+    loverAge = playerAge + (random.nextInt(21) - 10);
+  } else if (ageRoll <= 25) {
+    loverAge = playerAge + (random.nextInt(11) - 5);
+  } else if (ageRoll <= 75) {
+    loverAge = playerAge + (random.nextInt(5) - 2);
+  } else {
+    loverAge = playerAge;
+  }
+
+  if (loverAge < 15) loverAge = 15;
+
+  String loverGender = player.userInfo.gender.toLowerCase() == "male" ? "Female" : "Male";
+  bool isMale = loverGender == "Male";
+  final loverData = getRandomProfile();
+
+  String folder = isMale? (loverAge < 18 ? "boy" : "man") : (loverAge < 18 ? "girl" : "woman");
+  String imgKey = isMale? (loverAge < 18 ? "imgBoy" : "imgMan") : (loverAge < 18 ? "imgGirl" : "imgWoman");
+
+  return Relationship(
+    type: "Lovers",
+    relation: "Lover",
+    name: "${loverData['firstName']} ${loverData['lastName']}",
+    age: loverAge,
+    gender: loverGender,
+    occupation: loverAge < 18 ? "Student" : "${loverData['occupation']}",
+    imageUrl: "assets/images/relationships/$folder/${loverData[imgKey]}",
+    agreement: rndAgreement.nextDouble() * (0.65 - 0.15) + 0.15,
+    stats: generateRandomNPCStats(),
+  );
+}
+
+bool checkDeathLogic(User player) {
+  final random = Random();
+  int currentAge = player.gameStats.levelsRx.last.age;
+  int currentHealth = player.gameStats.coreStats.healthRx.value;
+
+  // 1. Death Rate Calculation Table
+  int baseChance = 0;
+  if (currentAge < 70) {
+    baseChance = 0;
+  } else if (currentAge >= 70 && currentAge < 75) {
+    baseChance = 15;
+  } else if (currentAge >= 75 && currentAge < 80) {
+    baseChance = 25;
+  } else if (currentAge >= 80 && currentAge < 90) {
+    baseChance = 50;
+  } else if (currentAge >= 90 && currentAge < 100) {
+    baseChance = 70;
+  } else {
+    baseChance = 90;
+  }
+
+  // 2. Additional Death Calculation Table Based on Health Stat
+  int healthStatChance = 0;
+  if (currentHealth <= 20) {
+    healthStatChance = 5;
+  } else if (currentHealth > 20 && currentHealth <= 60) {
+    healthStatChance = 0;
+  } else if (currentHealth > 60 && currentHealth <= 80) {
+    healthStatChance = -10;
+  } else if (currentHealth > 80) {
+    healthStatChance = -25;
+  }
+
+  int combinedPercentage = (baseChance + healthStatChance).clamp(0, 100);
+
+  if (combinedPercentage <= 0) return false;
+
+  int roll = random.nextInt(100) + 1;
+  return roll <= combinedPercentage;
 }
 
 // Helper method for random stats

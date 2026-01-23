@@ -283,13 +283,11 @@ class RelationDetailScreen extends StatelessWidget {
 
               return RelationshipActivityCard(
                 title: 'Gift',
-                subtitle:
-                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                subtitle: 'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/gift-box.png',
                 onTap: CostStatMessagePopup(
                   title: "Gift",
-                  description:
-                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  description: "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
                   cost: relationshipController.getPartyAndGiftCost(),
                   effectStatKey: "Agreement",
                   currentStatPercentage: relationship.agreementRx.value,
@@ -323,22 +321,18 @@ class RelationDetailScreen extends StatelessWidget {
               relationship: relationship,
             ),
             Obx(() {
-              final int netBalance =
-                  homeController.player.gameStats.balanceRx.value;
-              final int currentSalary =
-                  homeController.player.userInfo.job?.salary ?? 0;
+              final int netBalance = homeController.player.gameStats.balanceRx.value;
+              final int currentSalary = homeController.player.userInfo.job?.salary ?? 0;
               final int totalCost = (5000 + (currentSalary * 0.10)).round();
               final bool isAffordable = netBalance >= totalCost;
 
               return RelationshipActivityCard(
                 title: 'Gift',
-                subtitle:
-                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                subtitle: 'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/gift-box.png',
                 onTap: CostStatMessagePopup(
                   title: "Gift",
-                  description:
-                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  description: "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
                   cost: relationshipController.getPartyAndGiftCost(),
                   effectStatKey: "Agreement",
                   currentStatPercentage: relationship.agreementRx.value,
@@ -364,8 +358,7 @@ class RelationDetailScreen extends StatelessWidget {
               imageUrl: 'assets/images/relationships/make-love.png',
               onTap: StatMassagePopup(
                 title: "Make Love",
-                description:
-                    "You and your ${relationship.relation}, ${relationship.name}, made love together",
+                description: "You and your ${relationship.relation}, ${relationship.name}, made love together",
                 statTitle: "Agreement",
                 statValue: relationship.agreementRx,
               ),
@@ -385,8 +378,7 @@ class RelationDetailScreen extends StatelessWidget {
                 imageUrl: 'assets/images/relationships/gift-box.png',
                 onTap: CostStatMessagePopup(
                   title: "Gift",
-                  description:
-                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  description: "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
                   cost: relationshipController.getPartyAndGiftCost(),
                   effectStatKey: "Agreement",
                   currentStatPercentage: relationship.agreementRx.value,
@@ -403,17 +395,13 @@ class RelationDetailScreen extends StatelessWidget {
               onTap: hasSpouse
                   ? MessagePopup(
                       title: "Already Married",
-                      message:
-                          "Sorry, you already have a ${relationship.gender == 'Male' ? 'husband' : 'wife'}.",
+                      message: "Sorry, you already have a ${relationship.gender == 'Male' ? 'husband' : 'wife'}.",
                       negative: true,
                     )
                   : ButtonMessagePopup(
                       title: "Propose",
-                      message:
-                          "Are you sure you want to propose to ${isMale ? 'him' : 'her'}?",
-                      func: () {
-                        relationshipController.proposeLogic(relationship);
-                      },
+                      message: "Are you sure you want to propose to ${isMale ? 'him' : 'her'}?",
+                      func: () => relationshipController.proposeLogic(relationship),
                     ),
             ),
             RelationshipActivityCard(
@@ -422,8 +410,7 @@ class RelationDetailScreen extends StatelessWidget {
               imageUrl: 'assets/images/relationships/breakup.png',
               onTap: ButtonMessagePopup(
                 title: "Breakup",
-                message:
-                    "Are you sure you want to breakup with ${relationship.name}?",
+                message: "Are you sure you want to breakup with ${relationship.name}?",
                 func: () => relationshipController.breakupLogic(relationship),
               ),
               relationship: relationship,
@@ -440,8 +427,7 @@ class RelationDetailScreen extends StatelessWidget {
 
               return RelationshipActivityCard(
                 title: 'Party',
-                subtitle:
-                    'Throwing a party will cost \$${relationshipController.getPartyAndGiftCost()}',
+                subtitle: 'Throwing a party will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/liquor.png',
                 onTap: CostStatMessagePopup(
                   title: "Party",
@@ -464,13 +450,11 @@ class RelationDetailScreen extends StatelessWidget {
 
               return RelationshipActivityCard(
                 title: 'Gift',
-                subtitle:
-                    'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
+                subtitle: 'A gift will cost \$${relationshipController.getPartyAndGiftCost()}',
                 imageUrl: 'assets/images/relationships/gift-box.png',
                 onTap: CostStatMessagePopup(
                   title: "Gift",
-                  description:
-                      "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
+                  description: "You’ve presented a beautiful ring to your ${relationship.relation}, ${relationship.name}. It’s a moment that neither of you will ever forget.",
                   cost: relationshipController.getPartyAndGiftCost(),
                   effectStatKey: "Agreement",
                   currentStatPercentage: relationship.agreementRx.value,
@@ -491,8 +475,7 @@ class RelationDetailScreen extends StatelessWidget {
             // ),
             if (relationship.gender != homeController.player.userInfo.gender)
               Obx(() {
-                final bool canBeLover =
-                    relationship.age >= 15 && homeController.player.gameStats.levelsRx.last.ageRx.value >= 15 && relationship.agreementRx.value > 0.6;
+                final bool canBeLover = relationship.age >= 15 && homeController.player.gameStats.levelsRx.last.ageRx.value >= 15 && relationship.agreementRx.value > 0.6;
                 return RelationshipActivityCard(
                   title: 'Make Lover',
                   subtitle: 'Be my lover',
@@ -500,16 +483,13 @@ class RelationDetailScreen extends StatelessWidget {
                   onTap: !canBeLover
                       ? MessagePopup(
                           title: 'Warning',
-                          message:
-                              'Sorry, you are unable to be ${isMale ? 'him' : 'her'} lover yet. Either both be 15 above or Make more conversation or spend more time with ${isMale ? 'him' : 'her'}',
+                          message: 'Sorry, you are unable to be ${isMale ? 'him' : 'her'} lover yet. Either both be 15 above or Make more conversation or spend more time with ${isMale ? 'him' : 'her'}',
                           negative: true,
                         )
                       : ButtonMessagePopup(
                           title: "Make Lover",
-                          message:
-                              "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
-                          func: () =>
-                              relationshipController.makeLoverLogic(relationship),
+                          message: "Are you sure you want to make ${isMale ? 'him' : 'her'} your lover?",
+                          func: () => relationshipController.makeLoverLogic(relationship),
                         ),
                   relationship: relationship,
                 );
@@ -521,8 +501,7 @@ class RelationDetailScreen extends StatelessWidget {
               imageUrl: 'assets/images/relationships/unfriend.png',
               onTap: ButtonMessagePopup(
                 title: "Unfriend",
-                message:
-                    "Are you sure you want to end friendship with ${relationship.name}?",
+                message: "Are you sure you want to end friendship with ${relationship.name}?",
                 func: () => relationshipController.unfriendLogic(relationship),
               ),
               relationship: relationship,

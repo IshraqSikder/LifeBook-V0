@@ -38,11 +38,11 @@ class RelationshipActivityCard extends StatelessWidget {
           if (title == 'Conversation' ||
               title == 'Spend Time' ||
               title == 'Call') {
-            controller.processRelationStatBarLogic(relationship);
+            controller.relationStatsBarLogic(relationship);
           } else if (title == 'Party') {
             controller.partyLogic(relationship);
           } else if (title == 'Gift') {
-            controller.giftLogic();
+            controller.giftLogic(relationship);
           } else if (title == 'Make Love') {
             controller.makeLoveLogic(relationship);
           }
