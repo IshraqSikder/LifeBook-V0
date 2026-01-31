@@ -9,6 +9,7 @@ import 'package:life_book/theme.dart';
 import 'package:life_book/views/relationships/relation_profile_popup.dart';
 
 import '../../controllers/custom_animation_controller.dart';
+import '../../controllers/sound_service.dart';
 import '../../models/user.dart';
 import '../../shared/button_message_popup.dart';
 import '../../shared/cost_stat_message_popup.dart';
@@ -54,7 +55,10 @@ class RelationDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Get.find<SoundService>().cancelClick();
+                    Navigator.pop(context);
+                  },
                   child: SvgPicture.asset(
                     'assets/icons/cancel.svg',
                     width: 24,
@@ -78,10 +82,13 @@ class RelationDetailScreen extends StatelessWidget {
           ),
           Obx(() {
             return GestureDetector(
-              onTap: () => topToCenterAnimationPopup(
+              onTap: () {
+                Get.find<SoundService>().eventSound();
+                topToCenterAnimationPopup(
                   RelationProfilePopup(relationship: relationship),
                   false,
-                ),
+                );
+              },
               child: Container(
                 width: double.infinity,
                 height: 70.h,
@@ -174,20 +181,9 @@ class RelationDetailScreen extends StatelessWidget {
                                           alignment: Alignment.centerLeft,
                                           color: AppColors.profileHeaderColor,
                                           child: Container(
-                                            width:
-                                                (130 *
-                                                        (relationship
-                                                                .agreementRx
-                                                                .value)
-                                                            .clamp(0.0, 1.0))
-                                                    .w,
+                                            width: (130 *(relationship.agreementRx.value).clamp(0.0, 1.0)).w,
                                             decoration: BoxDecoration(
-                                              color:
-                                                  (relationship
-                                                              .agreementRx
-                                                              .value)
-                                                          .clamp(0.0, 1.0) >=
-                                                      0.20
+                                              color: (relationship.agreementRx.value).clamp(0.0, 1.0) >=0.20
                                                   ? AppColors.greenColor
                                                   : AppColors.orangeColor,
                                             ),

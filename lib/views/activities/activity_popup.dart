@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/custom_animation_controller.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/services/csv_services.dart';
 import 'package:life_book/theme.dart';
@@ -160,7 +161,6 @@ Future<dynamic> showActivityPopup(
 
   // Decrease current year salary by csv percentage %
   homeController.player.gameStats.balanceRx.value -= totalCost;
-  print("Controller Rx Instance: ${identityHashCode(homeController.player.gameStats.balanceRx)}");
 
   // Apply Stats Changes
   String? effectString = item["effect"];
@@ -172,12 +172,6 @@ Future<dynamic> showActivityPopup(
 
   homeController.player.save();
 
-  return showDialog(
-    context: context,
-    barrierDismissible: true,
-    barrierColor: Colors.black54.withValues(alpha: 0.95),
-    builder: (BuildContext context) {
-      return ActivityPopup(item: item, effects: parsedEffects, totalCost: totalCost);
-    },
-  );
+  return topToCenterAnimationPopup(
+    ActivityPopup(item: item, effects: parsedEffects, totalCost: totalCost), true);
 }

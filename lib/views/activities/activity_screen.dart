@@ -8,6 +8,7 @@ import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/theme.dart';
 
 import '../../controllers/home_controller.dart';
+import '../../controllers/sound_service.dart';
 
 class ActivityScreen extends StatelessWidget {
   const ActivityScreen({super.key});
@@ -36,7 +37,10 @@ class ActivityScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Get.find<SoundService>().cancelClick();
+                    Get.back();
+                  },
                   child: SvgPicture.asset(
                     'assets/icons/cancel.svg',
                     width: 24,
@@ -88,16 +92,13 @@ class ActivityScreen extends StatelessWidget {
 
                     final bool isAffordable = netBalance >= totalCost;
 
-                    print(isAffordable);
-
-                    print("UI Rx Instance: ${identityHashCode(controller.player.gameStats.balanceRx)}");
-
                     return Opacity(
                       opacity: isAffordable ? 1.0 : 0.5,
                       child: GestureDetector(
-                        onTap: () => isAffordable
-                            ? showActivityPopup(context, item, totalCost)
-                            : null,
+                        onTap: () => isAffordable? {
+                          showActivityPopup(context, item, totalCost),
+                          Get.find<SoundService>().eventSound()
+                        } : null,
                         child: Container(
                           width: double.infinity,
                           height: 70.h,
@@ -194,12 +195,7 @@ class ActivityScreen extends StatelessWidget {
                                       child: SvgPicture.asset(
                                         "assets/images/menu/three-dot.svg",
                                         fit: BoxFit.contain,
-                                        colorFilter: isAffordable
-                                            ? null
-                                            : ColorFilter.mode(
-                                          Colors.grey[800]!,
-                                          BlendMode.srcIn,
-                                        ),
+                                        colorFilter: isAffordable? null : ColorFilter.mode(Colors.grey[800]!,BlendMode.srcIn),
                                       ),
                                     ),
                                   ],

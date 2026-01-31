@@ -47,6 +47,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   uuid: ^4.5.1
   csv: ^6.0.0
+  audioplayers: ^6.5.1
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +87,7 @@ flutter:
     - assets/images/real_estates/
     - assets/events/
     - assets/csv_list/
+    - assets/audio/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

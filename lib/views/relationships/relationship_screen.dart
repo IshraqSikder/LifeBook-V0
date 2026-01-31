@@ -7,6 +7,7 @@ import 'package:life_book/views/home/profile_header.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/views/relationships/relationship_detail_screen.dart';
 
+import '../../controllers/sound_service.dart';
 import '../../models/user.dart';
 
 class RelationshipScreen extends StatelessWidget {
@@ -45,7 +46,10 @@ class RelationshipScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Get.find<SoundService>().cancelClick();
+                    Get.back();
+                  },
                   child: SvgPicture.asset(
                     'assets/icons/cancel.svg',
                     width: 24,
@@ -114,7 +118,7 @@ class RelationCard extends StatelessWidget {
     return Obx(() {
       return GestureDetector(
         onTap: () {
-          // Handle icon tap
+          Get.find<SoundService>().singleKeyPress();
           Get.to(
             () => RelationDetailScreen(relationship: data),
             transition: Transition.rightToLeft,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:life_book/controllers/custom_animation_controller.dart';
 import 'package:life_book/controllers/event_popup_controller.dart';
+import 'package:life_book/controllers/sound_service.dart';
 import 'package:life_book/services/csv_services.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
@@ -63,6 +64,7 @@ class HomeController extends GetxController {
   // Method to toggle the menu state
   void toggleMenu() {
     isMenuToggled.value = !isMenuToggled.value;
+    Get.find<SoundService>().singleKeyPress();
   }
 
   // Method to handle age increment and add a new entry
@@ -111,6 +113,7 @@ class HomeController extends GetxController {
     // Check for School Popup
     if (newAge == 5) {
         await topToCenterAnimationPopup(SchoolPopup(player: player), false);
+        Get.find<SoundService>().eventSound();
     }
 
     if (newAge > 5) {
@@ -175,6 +178,7 @@ class HomeController extends GetxController {
 
     // Check for Death
     if (checkDeathLogic(player)) {
+      Get.find<SoundService>().saberCut();
       Get.offAll(() => DeathScreen(player: player));
     }
 
@@ -198,7 +202,7 @@ class HomeController extends GetxController {
   bool _eventOccurs() {
     final random = Random();
     int number = random.nextInt(100) + 1; // 1 to 100
-    if (number <= 40) // 40% of chances
+    if (number <= 60) // 60% of chances
     {
       showEventPopupGetX(player.gameStats.levelsRx.last.age);
       return true;

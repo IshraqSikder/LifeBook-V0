@@ -8,6 +8,8 @@ import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/views/home/profile_header.dart';
 
+import '../../controllers/sound_service.dart';
+
 class AssetScreen extends StatelessWidget {
   const AssetScreen({super.key, required this.player});
 
@@ -41,7 +43,10 @@ class AssetScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => Get.back(),
+                        onTap: () {
+                          Get.find<SoundService>().cancelClick();
+                          Get.back();
+                        },
                         child: SvgPicture.asset(
                           'assets/icons/cancel.svg',
                           width: 24.w, height: 24.h, fit: BoxFit.contain,
@@ -140,7 +145,7 @@ class AssetScreen extends StatelessWidget {
       return Opacity(
         opacity: isActive ? 1.0 : 0.5,
         child: GestureDetector(
-          onTap: isActive ? () => controller.handleAssetTap(context, item) : null,
+          onTap: isActive ? () => controller.handleAssetTap(item) : null,
           child: Container(
             width: double.infinity,
             height: 70.h,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/job_controller.dart';
 import 'package:life_book/theme.dart';
 import 'package:life_book/models/job_model.dart';
+
+import '../../controllers/sound_service.dart';
 
 class JobDetailsPopup extends StatelessWidget {
   const JobDetailsPopup({super.key, required this.item});
@@ -155,7 +156,10 @@ class JobDetailsPopup extends StatelessWidget {
             top: -10.h,
             left: -10.w,
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () {
+                Get.find<SoundService>().cancelClick();
+                Navigator.of(context).pop();
+              },
               child: Container(
                 width: 32.w,
                 height: 32.h,

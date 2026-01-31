@@ -13,6 +13,8 @@ import 'package:life_book/views/start/splash_screen.dart';
 import 'package:life_book/views/start/start_screen.dart';
 import 'package:life_book/theme.dart';
 
+import 'controllers/sound_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -37,6 +39,13 @@ void main() async {
   runApp(const LifeBook());
 }
 
+class InitialBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(SoundService(), permanent: true);
+  }
+}
+
 class LifeBook extends StatelessWidget {
   const LifeBook({super.key});
 
@@ -48,6 +57,7 @@ class LifeBook extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: primaryTheme,
+          initialBinding: InitialBinding(), // This runs as soon as the app starts
           initialRoute: '/splash',
           getPages: [
             GetPage(name: '/splash', page: () => const SplashScreen()),

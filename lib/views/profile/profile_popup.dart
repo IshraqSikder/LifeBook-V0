@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:life_book/controllers/custom_animation_controller.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
+
+import '../../controllers/sound_service.dart';
 
 class ProfilePopup extends StatelessWidget {
   final User player;
@@ -182,8 +184,7 @@ class ProfilePopup extends StatelessWidget {
                                         stat.value.value,
                                       ),
                                     ),
-                                  )
-                                  .toList(),
+                                  ).toList(),
                             ),
                           ),
                         ],
@@ -200,7 +201,10 @@ class ProfilePopup extends StatelessWidget {
             top: -10.h,
             left: -10.w,
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () {
+                Get.find<SoundService>().cancelClick();
+                Navigator.of(context).pop();
+              },
               child: Container(
                 width: 32.w,
                 height: 32.h,
@@ -319,12 +323,5 @@ Widget _buildStatProgressBar(int progress) {
 
 // Function to show the profile popup
 void showProfilePopup(BuildContext context, User character) {
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    barrierColor: Colors.black54.withValues(alpha: 0.90),
-    builder: (BuildContext context) {
-      return ProfilePopup(player: character);
-    },
-  );
+  topToCenterAnimationPopup(ProfilePopup(player: character), false);
 }

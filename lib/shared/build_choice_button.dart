@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../controllers/event_popup_controller.dart';
+import '../controllers/sound_service.dart';
 
 class BuildChoiceButton extends StatelessWidget {
   final EventPopupController controller;
@@ -32,6 +34,7 @@ class BuildChoiceButton extends StatelessWidget {
         ),
         onPressed: () {
           controller.handleChoice(choiceKey); // Call controller method
+          Get.find<SoundService>().eventSound();
         },
         child: Text(
           choice,

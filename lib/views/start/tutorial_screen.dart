@@ -113,9 +113,7 @@ class TutorialScreen extends StatelessWidget {
 
   Widget _buildTAB(TutorialScreenController controller) {
     return GestureDetector(
-      onTap: () {
-        controller.goToHomeScreen(); // called controller method
-      },
+      onTap: () => controller.goToHomeScreen(), // called controller method
       child: Container(
         height: 110.h,
         width: 100.w,

@@ -1,9 +1,11 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:life_book/theme.dart';
+
+import '../../controllers/sound_service.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -46,6 +48,7 @@ class StartScreen extends StatelessWidget {
   Widget _buildNLB() {
     return GestureDetector(
       onTap: () {
+        Get.find<SoundService>().playClick();
         Get.toNamed('/create'); // go to create character screen
       },
       child: Container(

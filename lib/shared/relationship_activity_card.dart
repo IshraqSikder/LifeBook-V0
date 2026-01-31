@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../controllers/relationship_controller.dart';
+import '../controllers/sound_service.dart';
 import '../models/user.dart';
 import '../theme.dart';
 
@@ -32,8 +33,7 @@ class RelationshipActivityCard extends StatelessWidget {
     return Opacity(
       opacity: canPerformAction ? 1.0 : 0.5,
       child: GestureDetector(
-        onTap: canPerformAction
-            ? () {
+        onTap: canPerformAction ? () {
           // Agreement Changed according to the percentage
           if (title == 'Conversation' ||
               title == 'Spend Time' ||
@@ -53,8 +53,8 @@ class RelationshipActivityCard extends StatelessWidget {
             barrierColor: Colors.black.withValues(alpha: 0.95),
             onTap,
           );
-        }
-            : null,
+          Get.find<SoundService>().eventSound();
+        } : null,
         child: Container(
           width: double.infinity,
           height: 70.h,

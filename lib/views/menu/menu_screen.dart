@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/death_controller.dart';
-import 'package:life_book/models/user.dart';
 import 'package:life_book/theme.dart';
+
+import '../../controllers/sound_service.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -20,10 +20,31 @@ class MenuScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               controller.endGame();
+              Get.find<SoundService>().playPress();
             },
             child: _buildMenuItem(menuItems[0]),
           ), // Start New Life
-          _buildMenuItem(menuItems[1]), // Sound Effects
+          GestureDetector(
+            onTap: () {
+              Get.find<SoundService>().playPress();
+              Get.find<SoundService>().toggleSound();
+            },
+            // child: _buildMenuItem(menuItems[1])
+            child: Obx(() => _buildMenuItem(
+              menuItems[1],
+              trailing: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFEBEB), // Light pinkish background from screenshot
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+                child: Icon(
+                  Icons.check,
+                  color: Get.find<SoundService>().isSoundEnabled.value? const Color(0xFFD32F2F) : Colors.transparent,
+                  size: 35.sp,
+                ),
+              ),
+            )),
+          ), // Sound Effects
           Container(
             width: double.infinity,
             height: 68.h,
@@ -64,7 +85,7 @@ class MenuScreen extends StatelessWidget {
   }
 }
 
-Widget _buildMenuItem(MenuItem item) {
+Widget _buildMenuItem(MenuItem item, {Widget? trailing}) {
   return Container(
     width: double.infinity,
     height: 70.h,
@@ -138,7 +159,7 @@ Widget _buildMenuItem(MenuItem item) {
               SizedBox(
                 width: 35.w,
                 height: 35.h,
-                child: SvgPicture.asset(item.iconUrl, fit: BoxFit.contain),
+                child: trailing ?? SvgPicture.asset(item.iconUrl, fit: BoxFit.contain),
               ),
             ],
           ),

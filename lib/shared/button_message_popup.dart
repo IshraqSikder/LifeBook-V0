@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:life_book/theme.dart';
 
+import '../controllers/sound_service.dart';
+
 class ButtonMessagePopup extends StatelessWidget {
   final String title;
   final String message;
@@ -63,6 +65,7 @@ class ButtonMessagePopup extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    Get.find<SoundService>().singleKeyPress();
                     Get.back();
                   },
                   style: ElevatedButton.styleFrom(
@@ -83,6 +86,7 @@ class ButtonMessagePopup extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     func();
+                    Get.find<SoundService>().eventSound();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.greenColor,

@@ -11,6 +11,7 @@ import 'package:life_book/views/jobs/job_screen.dart';
 import 'package:life_book/views/real_estates/asset_screen.dart';
 import 'package:life_book/views/relationships/relationship_screen.dart';
 
+import '../../controllers/sound_service.dart';
 import '../../models/user.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -25,9 +26,7 @@ class BottomNavBar extends StatelessWidget {
     return Obx(
       () => AnimatedSlide(
         // If visible, offset is 0. If not, offset is 1 (completely shifted down)
-        offset: animationController.isNavBarVisible.value
-            ? Offset.zero
-            : const Offset(0, 1),
+        offset: animationController.isNavBarVisible.value? Offset.zero : const Offset(0, 1),
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
         child: Column(
@@ -61,9 +60,8 @@ class BottomNavBar extends StatelessWidget {
                                       'assets/icons/job.svg',
                                       () {
                                         // USE THE NEW NAVIGATION METHOD
-                                        animationController.navigateToTabWithAnimation(
-                                          JobScreen(player: controller.player),
-                                        );
+                                        animationController.navigateToTabWithAnimation(JobScreen(player: controller.player));
+                                        Get.find<SoundService>().playPress();
                                       },
                                     ),
                             ),
@@ -72,9 +70,8 @@ class BottomNavBar extends StatelessWidget {
                               'assets/icons/assets.svg',
                               () {
                                 // USE THE NEW NAVIGATION METHOD
-                                animationController.navigateToTabWithAnimation(
-                                  AssetScreen(player: controller.player),
-                                );
+                                animationController.navigateToTabWithAnimation(AssetScreen(player: controller.player));
+                                Get.find<SoundService>().playPress();
                               },
                             ),
                           ],
@@ -87,6 +84,7 @@ class BottomNavBar extends StatelessWidget {
                               'assets/icons/relationships.svg',
                               () {
                                 animationController.navigateToTabWithAnimation(RelationshipScreen());
+                                Get.find<SoundService>().playPress();
                               },
                             ),
                             _buildNavBarItem(
@@ -94,9 +92,8 @@ class BottomNavBar extends StatelessWidget {
                               'assets/icons/activities.svg',
                               () {
                                 // USE THE NEW NAVIGATION METHOD
-                                animationController.navigateToTabWithAnimation(
-                                  ActivityScreen(),
-                                );
+                                animationController.navigateToTabWithAnimation(ActivityScreen());
+                                Get.find<SoundService>().playPress();
                               },
                             ),
                           ],
@@ -172,6 +169,7 @@ class BottomNavBar extends StatelessWidget {
   Widget _buildFAB(HomeController controller) {
     return GestureDetector(
       onTap: () {
+        Get.find<SoundService>().playClick();
         controller.incrementAge();
       },
       child: Container(

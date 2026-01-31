@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/custom_animation_controller.dart';
+import 'package:life_book/controllers/sound_service.dart';
 import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/asset_service.dart';
@@ -59,6 +61,7 @@ class AssetController extends GetxController {
 
     player.userInfo.assets = assetItem;
     userService.saveUser(player);
+    Get.find<SoundService>().singleKeyPress();
     Get.back();
   }
 
@@ -71,25 +74,19 @@ class AssetController extends GetxController {
 
     player.userInfo.assets = null;
     userService.saveUser(player);
+    Get.find<SoundService>().singleKeyPress();
     Get.back();
   }
 
   // Method to handle showing a job detail popup or similar
-  void handleAssetTap(BuildContext context, AssetModel item) {
+  void handleAssetTap(AssetModel item) {
     bool isCurrent = currentAsset.contains(item);
-    showAssetDetailsPopup(context, item, isCurrent);
+    showAssetDetailsPopup(item, isCurrent);
+    Get.find<SoundService>().saberCut();
   }
 
   // Function to show the asset details popup
-  void showAssetDetailsPopup(
-    BuildContext context,
-    AssetModel item,
-    bool isCurrent,
-  ) {
-    Get.dialog(
-      AssetDetailsPopup(item: item, isCurrent: isCurrent),
-      barrierDismissible: true,
-      barrierColor: Colors.black54.withValues(alpha: 0.90),
-    );
+  void showAssetDetailsPopup(AssetModel item, bool isCurrent) {
+    topToCenterAnimationPopup(AssetDetailsPopup(item: item, isCurrent: isCurrent), true);
   }
 }

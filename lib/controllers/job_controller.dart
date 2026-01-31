@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/custom_animation_controller.dart';
+import 'package:life_book/controllers/sound_service.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/jobs/job_details_popup.dart';
@@ -30,18 +32,13 @@ class JobController extends GetxController {
       await jobService.applyForNewJob(jobItem);
       player.gameStats.balanceRx += jobItem.salary;
 
-      Get.dialog(
-        barrierDismissible: true,
-        barrierColor: Colors.black54.withValues(alpha: 0.95),
-        JobPopup(item: jobItem),
-      );
+      topToCenterAnimationPopup(JobPopup(item: jobItem), true);
+
     } else {
-      Get.dialog(
-        barrierDismissible: true,
-        barrierColor: Colors.black54.withValues(alpha: 0.95),
-        alreadyApplyJob(),
-      );
+      topToCenterAnimationPopup(alreadyApplyJob(), true);
     }
+
+    Get.find<SoundService>().eventSound();
 
     player.userInfo.job = jobItem;
     userService.saveUser(player);
@@ -51,6 +48,7 @@ class JobController extends GetxController {
     final JobModel? jobToResign = currentJob.value;
     if (jobToResign != null) {
       await jobService.resignCurrentJob();
+      Get.find<SoundService>().singleKeyPress();
     }
 
     player.userInfo.job = null;
@@ -62,6 +60,7 @@ class JobController extends GetxController {
   void handleJobTap(BuildContext context, JobModel item) {
     if (currentJob.value == item) {
       showJobDetailsPopup(context, item);
+      Get.find<SoundService>().saberCut();
     } else if (availableJobItems.contains(item)) {
       applyForJob(item);
     }
@@ -69,10 +68,6 @@ class JobController extends GetxController {
 
   // Function to show the job details popup
   void showJobDetailsPopup(BuildContext context, JobModel item) {
-    Get.dialog(
-      JobDetailsPopup(item: item),
-      barrierDismissible: true,
-      barrierColor: Colors.black54.withValues(alpha: 0.90),
-    );
+    topToCenterAnimationPopup(JobDetailsPopup(item: item), true);
   }
 }

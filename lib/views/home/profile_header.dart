@@ -8,6 +8,8 @@ import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/profile/profile_popup.dart';
 import 'package:life_book/theme.dart';
 
+import '../../controllers/sound_service.dart';
+
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
 
@@ -24,7 +26,10 @@ class ProfileHeader extends StatelessWidget {
       }
 
       return GestureDetector(
-        onTap: () => showProfilePopup(context, player),
+        onTap: () {
+          showProfilePopup(context, player);
+          Get.find<SoundService>().eventSound();
+        },
         child: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),

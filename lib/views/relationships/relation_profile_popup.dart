@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:life_book/controllers/home_controller.dart';
 import 'package:life_book/theme.dart';
 
+import '../../controllers/sound_service.dart';
 import '../../models/user.dart';
 
 class RelationProfilePopup extends StatelessWidget {
@@ -192,7 +193,10 @@ class RelationProfilePopup extends StatelessWidget {
             top: -10.h,
             left: -10.w,
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () {
+                Get.find<SoundService>().cancelClick();
+                Navigator.of(context).pop();
+              },
               child: Container(
                 width: 32.w,
                 height: 32.h,

@@ -10,6 +10,8 @@ import 'package:life_book/controllers/job_controller.dart';
 import 'package:life_book/models/job_model.dart';
 import 'package:life_book/services/job_service.dart';
 
+import '../../controllers/sound_service.dart';
+
 class JobScreen extends StatelessWidget {
   const JobScreen({super.key, required this.player});
 
@@ -44,7 +46,10 @@ class JobScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => Get.back(), // Use Get.back() to navigate back
+                  onTap: () {
+                    Get.find<SoundService>().cancelClick();
+                    Get.back();
+                  },
                   child: SvgPicture.asset(
                     'assets/icons/cancel.svg',
                     width: 24.w,

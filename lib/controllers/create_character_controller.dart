@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:life_book/controllers/sound_service.dart';
 import 'package:life_book/models/user.dart';
 import 'package:life_book/services/user_service.dart';
 import 'package:life_book/views/start/tutorial_screen.dart';
@@ -12,6 +13,8 @@ class CreateCharacterController extends GetxController {
   late RxString selectedGender = RxString('');
 
   final UserService _userService = Get.put(UserService(), permanent: true);
+
+  final SoundService soundService = Get.find<SoundService>();
 
   @override
   void onClose() {
@@ -143,7 +146,10 @@ class CreateCharacterController extends GetxController {
     // Save the new player to Hive and set it as the active user
     await _userService.saveUser(newPlayer);
 
-    Get.offAll(() => TutorialScreen(player: newPlayer));
+    Get.offAll(() {
+      soundService.playPress();
+      return TutorialScreen(player: newPlayer);
+    });
   }
 
   // Helper method for random stats

@@ -5,6 +5,8 @@ import 'package:life_book/controllers/asset_controller.dart';
 import 'package:life_book/models/asset_model.dart';
 import 'package:life_book/theme.dart';
 
+import '../../controllers/sound_service.dart';
+
 class AssetDetailsPopup extends StatelessWidget {
   final AssetModel item;
   final bool isCurrent;
@@ -136,9 +138,7 @@ class AssetDetailsPopup extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            isCurrent
-                                ? controller.sellAsset(item)
-                                : controller.buyAsset(item);
+                            isCurrent? controller.sellAsset(item) : controller.buyAsset(item);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isCurrent
@@ -178,7 +178,10 @@ class AssetDetailsPopup extends StatelessWidget {
             top: -10.h,
             left: -10.w,
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () {
+                Get.find<SoundService>().cancelClick();
+                Navigator.of(context).pop();
+              },
               child: Container(
                 width: 32.w,
                 height: 32.h,

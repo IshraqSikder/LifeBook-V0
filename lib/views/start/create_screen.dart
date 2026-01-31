@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:life_book/controllers/create_character_controller.dart';
+import 'package:life_book/controllers/sound_service.dart';
 import 'package:life_book/theme.dart';
 
 class CreateCharacterScreen extends StatelessWidget {
@@ -10,9 +11,7 @@ class CreateCharacterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CreateCharacterController controller = Get.put(
-      CreateCharacterController(),
-    );
+    final CreateCharacterController controller = Get.put(CreateCharacterController());
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -129,9 +128,10 @@ class CreateCharacterScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => controller.selectGender(
-                              'Male',
-                            ), // Call controller method
+                            onTap: () {
+                              controller.selectGender('Male');
+                              Get.find<SoundService>().playPress();
+                            }, // Call controller method
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 16.w),
                               decoration: BoxDecoration(
@@ -156,9 +156,10 @@ class CreateCharacterScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => controller.selectGender(
-                              'Female',
-                            ), // Call controller method
+                            onTap: () {
+                              controller.selectGender('Female');
+                              Get.find<SoundService>().playPress();
+                            }, // Call controller method
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 16.r),
                               decoration: BoxDecoration(
@@ -194,8 +195,7 @@ class CreateCharacterScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 50.h,
                 child: ElevatedButton(
-                  onPressed: () =>
-                      controller.startLife(), // Call controller method
+                  onPressed: () => controller.startLife(), // Call controller method
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFE2FFE7),
                     foregroundColor: Colors.black,
